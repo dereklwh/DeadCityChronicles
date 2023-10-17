@@ -1,1 +1,0 @@
-## Here is our work for the phase 1 group project
