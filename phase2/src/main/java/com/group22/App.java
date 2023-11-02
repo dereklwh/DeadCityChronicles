@@ -1,6 +1,7 @@
 package com.group22;
 
 import javax.swing.JFrame;
+
 /**
  * Hello world!
  *
