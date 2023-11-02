@@ -1,5 +1,7 @@
 package com.group22;
 
+import java.awt.Color;
+import java.awt.Dimension;
 import javax.swing.JPanel;
 
 public class GamePanel extends JPanel{
@@ -10,9 +12,13 @@ public class GamePanel extends JPanel{
 
     public final int maxScreenCol = 40;
     public final int maxScreenRow = 22;
+    public int screenWidth = tileSize * maxScreenCol; //1920
+    public int screenHeight = tileSize * maxScreenRow; //1056
 
-    public int screenWidth = tileSize * maxScreenCol;
-    public int screenHeight = tileSize * maxScreenRow;
-
-    
+    public GamePanel(){
+        this.setPreferredSize(new Dimension(screenWidth, screenHeight));
+        this.setBackground(Color.black);
+        this.setDoubleBuffered(true);
+        
+    }
 }
