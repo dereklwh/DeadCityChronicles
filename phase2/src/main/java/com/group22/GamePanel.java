@@ -7,7 +7,7 @@ import javax.swing.JPanel;
 /**
  * Main controller for the game, handles all game systems
  */
-public class GamePanel extends JPanel implements Runnable{
+public class dGamePanel extends JPanel implements Runnable{
 
     private final int originalTileSize = 16;
     public int scale = 3;
