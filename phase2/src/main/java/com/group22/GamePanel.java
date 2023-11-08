@@ -7,10 +7,10 @@ import javax.swing.JPanel;
 /**
  * Main controller for the game, handles all game systems
  */
-public class dGamePanel extends JPanel implements Runnable{
+public class GamePanel extends JPanel implements Runnable{
 
     private final int originalTileSize = 16;
-    public int scale = 3;
+    public int scale = 3; //this is to scale 16
     public int tileSize = originalTileSize * scale;
 
     public final int maxScreenCol = 40;
@@ -31,7 +31,7 @@ public class dGamePanel extends JPanel implements Runnable{
         gameThread = new Thread(this);
         gameThread.start();
     }
-
+    @Override
     public void run(){
 
     }
