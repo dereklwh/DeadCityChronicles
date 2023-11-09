@@ -21,12 +21,19 @@ public class GamePanel extends JPanel implements Runnable{
     int FPS = 60;
     KeyHandler keyH = new KeyHandler();
     Thread gameThread;
+    public  AssetSetter aSetter = new AssetSetter(this);
+    //Sound
+    Sound sound = new Sound();
+    //Entity and Object
     Player player = new Player(this, keyH);
+    public SuperObject obj[] = new SuperObject[10]; //how many objects we can show
 
     //default player's position
     int playerX = 100;
     int playerY = 100;
     int playerSpeed = 4;
+
+    //
 
     public GamePanel(){
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
@@ -34,6 +41,11 @@ public class GamePanel extends JPanel implements Runnable{
         this.setDoubleBuffered(true);
         this.addKeyListener(keyH);
         this.setFocusable(true);
+    }
+
+    public void setupGame(){
+        aSetter.setObject();
+        playMusic(0);
     }
 
     public void startGameThread(){
@@ -74,7 +86,29 @@ public class GamePanel extends JPanel implements Runnable{
     public void paintComponent(Graphics g){
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
+        //Object
+        for(int i = 0; i < obj.length; i++){
+            if(obj[i] != null){
+                obj[i].draw(g2, this);
+            }
+        }
+        //Player
         player.draw(g2);
         g2.dispose();
+    }
+
+    public void playMusic(int i) {
+        sound.setFile(i);
+        sound.play();
+        sound.loop();
+    }
+
+    public void stopMusic(){
+        sound.stop();
+    }
+
+    public void playSE(int i){
+        sound.setFile(i);
+        sound.play();
     }
 }

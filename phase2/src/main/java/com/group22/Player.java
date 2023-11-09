@@ -9,10 +9,16 @@ import java.security.Key;
 public class Player extends Entity{
     GamePanel gp;
     KeyHandler keyH;
+    int hasKey = 0;
+    int hasVaccine = 0;
+    int hasHeart = 0;
 
     public Player(GamePanel gp, KeyHandler keyH){
         this.gp = gp;
         this.keyH = keyH;
+
+        solidAreaDefaultX = solidArea.x;
+        getSolidAreaDefaultY = solidArea.y;
 
         setDefaultValues();
         getPlayerImage();
@@ -59,6 +65,11 @@ public class Player extends Entity{
             x += speed;
         }
 
+        // Check object collision
+        int objectIndex = gp.cChecker.checkObject(this, true);
+        pickUpObject(objectIndex);
+
+
         spriteCounter++;
         if(spriteCounter > 12){ //player image changes every 12 frames
             if(spriteNum == 1) {
@@ -67,6 +78,34 @@ public class Player extends Entity{
                 spriteNum = 1;
             }
             spriteCounter = 0;
+        }
+    }
+
+    public void pickUpObject(int i){
+        if(i != 999){
+           String objectName = gp.obj[i].name;
+           switch(objectName){
+               case "Key":
+                   gp.playSE(1);
+                   hasKey++;
+                   gp.obj[i] = null;
+                   break;
+               case "Vaccine":
+                   gp.playSE(1);
+                   hasVaccine++;
+                   gp.obj[i] = null;
+                   break;
+               case"Heart":
+                   gp.playSE(1);
+                   hasHeart++;
+                   gp.obj[i] = null;
+                   break;
+               case "Trap":
+                   //implement later
+                   gp.playSE(3);
+                   hasHeart--;
+                   break;
+           }
         }
     }
 
