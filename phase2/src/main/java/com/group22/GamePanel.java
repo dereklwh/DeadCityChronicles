@@ -3,6 +3,8 @@ package com.group22;
 import java.awt.*;
 import javax.swing.JPanel;
 
+import tile.TileManager;
+
 /**
  * Main controller for the game, handles all game systems
  */
@@ -22,11 +24,15 @@ public class GamePanel extends JPanel implements Runnable{
     KeyHandler keyH = new KeyHandler();
     Thread gameThread;
     public  AssetSetter aSetter = new AssetSetter(this);
+
     //Sound
     Sound sound = new Sound();
     //Entity and Object
     Player player = new Player(this, keyH);
     public SuperObject obj[] = new SuperObject[10]; //how many objects we can show
+
+    //Tile
+    TileManager tileM = new TileManager(this);
 
     //default player's position
     int playerX = 100;
@@ -94,6 +100,8 @@ public class GamePanel extends JPanel implements Runnable{
         }
         //Player
         player.draw(g2);
+        //map
+        tileM.draw(g2);
         g2.dispose();
     }
 
