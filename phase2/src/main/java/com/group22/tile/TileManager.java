@@ -7,8 +7,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import javax.imageio.ImageIO;
-import com.group22.GamePanel;
 import java.awt.Graphics2D;
+import com.group22.GamePanel;
 
 // under package Tile;
 
