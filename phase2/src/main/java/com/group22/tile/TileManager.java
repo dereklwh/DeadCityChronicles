@@ -39,9 +39,11 @@ public class TileManager{
 
             tile[1] = new Tile();
             tile[1].image = ImageIO.read(getClass().getResourceAsStream("/tiles/wall.png"));
+            tile[1].collision = true;
 
             tile[2] = new Tile();
             tile[2].image = ImageIO.read(getClass().getResourceAsStream("/tiles/bush.png"));
+            tile[2].collision = true; //add this line to make solid
 
             tile[3] = new Tile();
             tile[3].image = ImageIO.read(getClass().getResourceAsStream("/tiles/xxx.png"));
@@ -104,8 +106,7 @@ public class TileManager{
 
         int worldCol = 0;
         int worldRow = 0;
-        //int x = 0;
-        //int y =0;
+       
 
         while(worldCol < gp.maxWorldCol && worldRow < gp.maxWorldRow){
 
