@@ -1,5 +1,12 @@
 package com.group22.tile;
 
+import java.awt.image.BufferedImage;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import javax.imageio.ImageIO;
 import com.group22.GamePanel;
 
 // under package Tile;
@@ -54,14 +61,14 @@ public class TileManager{
     public void loadMap(String filePath){
         try{
             InputStream is = getClass().getResourceAsStream(filePath);
-            BudderedReader br = new BufferedReader(new InputStreamReader(is));
+            BufferedReader br = new BufferedReader(new InputStreamReader(is));
 
         int col = 0;
         int row = 0;
 
         while(col<gp.maxWorldCol && row < gp.maxWorldRow){
 
-            String line = br.readLIne();
+            String line = br.readLine();
 
             while(col < gp.maxScreenCol){
                 String numbers[] = line.split(" ");

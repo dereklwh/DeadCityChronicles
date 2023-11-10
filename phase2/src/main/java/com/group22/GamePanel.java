@@ -3,7 +3,7 @@ package com.group22;
 import java.awt.*;
 import javax.swing.JPanel;
 
-import tile.TileManager;
+import com.group22.tile.TileManager;
 
 /**
  * Main controller for the game, handles all game systems
