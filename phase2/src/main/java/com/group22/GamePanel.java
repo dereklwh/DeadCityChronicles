@@ -2,6 +2,8 @@ package com.group22;
 
 import java.awt.*;
 import javax.swing.JPanel;
+import java.awt.Graphics2D;
+
 
 import com.group22.tile.TileManager;
 
