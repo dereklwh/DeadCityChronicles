@@ -109,9 +109,10 @@ public class GamePanel extends JPanel implements Runnable{
             }
         }
         //Player
+        tileM.draw(g2);
+
         player.draw(g2);
         //map
-        tileM.draw(g2);
         g2.dispose();
     }
 
