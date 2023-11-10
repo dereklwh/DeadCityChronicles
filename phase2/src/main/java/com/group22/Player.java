@@ -58,25 +58,43 @@ public class Player extends Entity{
     public void update(){
         if(keyH.upPressed){
             direction = "up";
-            worldY -= speed;
         }
         else if(keyH.downPressed){
             direction = "down";
-            worldY += speed;
         }
         else if(keyH.leftPressed){
             direction = "left";
-            worldX -= speed;
         }
         else if(keyH.rightPressed){
             direction = "right";
-            worldX += speed;
+            
         }
 
         // Check object collision
-        int objectIndex = gp.cChecker.checkObject(this, true);
-        pickUpObject(objectIndex);
 
+        //int objectIndex = gp.cChecker.checkObject(this, true);
+        //pickUpObject(objectIndex);
+
+        //Check tile collision
+        collisionOn = false;
+        gp.cChecker.checkTile(this);
+
+        if(collisionOn == false){
+            switch (direction) {
+                case "up":
+                    worldY -= speed;
+                    break;
+                case "down":
+                    worldY += speed;
+                    break;
+                case "left":
+                    worldX -= speed;
+                    break;
+                case "right":
+                    worldX += speed;
+                    break;
+            }
+        }
 
         spriteCounter++;
         if(spriteCounter > 12){ //player image changes every 12 frames

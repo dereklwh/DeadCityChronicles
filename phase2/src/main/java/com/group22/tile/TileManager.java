@@ -14,9 +14,9 @@ import com.group22.GamePanel;
 public class TileManager{
 
     GamePanel gp;
-    Tile[] tile;
+    public Tile[] tile;
     //need to create the map package and import data text file into pack.
-    int mapTileNum[][];
+    public int mapTileNum[][];
 
     public TileManager(GamePanel gp){
 
