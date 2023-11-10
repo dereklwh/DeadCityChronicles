@@ -43,5 +43,6 @@ public class KeyHandler implements KeyListener {
         if(code == KeyEvent.VK_S || code == KeyEvent.VK_DOWN){
             downPressed = false;
         }
+
     }
 }

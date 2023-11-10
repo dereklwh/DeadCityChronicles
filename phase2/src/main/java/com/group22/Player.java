@@ -57,16 +57,22 @@ public class Player extends Entity{
     }
 
     public void update(){
+        int deltaX = 0;
+        int deltaY = 0;
         if(keyH.upPressed){
+            deltaY = -speed;
             direction = "up";
         }
         else if(keyH.downPressed){
+            deltaY = speed;
             direction = "down";
         }
         else if(keyH.leftPressed){
+            deltaX = -speed;
             direction = "left";
         }
         else if(keyH.rightPressed){
+            deltaX = speed;
             direction = "right";
             
         }
@@ -81,7 +87,9 @@ public class Player extends Entity{
         gp.cChecker.checkTile(this);
 
         if(collisionOn == false){
-            switch (direction) {
+            worldX += deltaX;
+            worldY += deltaY;
+            /*switch (direction) {
                 case "up":
                     worldY -= speed;
                     break;
@@ -94,7 +102,7 @@ public class Player extends Entity{
                 case "right":
                     worldX += speed;
                     break;
-            }
+            }*/
         }
 
         spriteCounter++;
