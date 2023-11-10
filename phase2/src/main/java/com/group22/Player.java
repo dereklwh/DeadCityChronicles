@@ -41,14 +41,14 @@ public class Player extends Entity{
 
     public void getPlayerImage(){
         try{
-            up1 = ImageIO.read(getClass().getResourceAsStream("Adress of png"));
-            up2 = ImageIO.read(getClass().getResourceAsStream("Adress of png"));
-            down1 = ImageIO.read(getClass().getResourceAsStream("Adress of png"));
-            down2 = ImageIO.read(getClass().getResourceAsStream("Adress of png"));
-            left1 = ImageIO.read(getClass().getResourceAsStream("Adress of png"));
-            left2 = ImageIO.read(getClass().getResourceAsStream("Adress of png"));
-            right1 = ImageIO.read(getClass().getResourceAsStream("Adress of png"));
-            right2 = ImageIO.read(getClass().getResourceAsStream("Adress of png"));
+            up1 = ImageIO.read(getClass().getResourceAsStream("res/player/idle_0.png"));
+            up2 = ImageIO.read(getClass().getResourceAsStream("res/player/idle_0.png"));
+            down1 = ImageIO.read(getClass().getResourceAsStream("res/player/idle_0.png"));
+            down2 = ImageIO.read(getClass().getResourceAsStream("res/player/idle_0.png"));
+            left1 = ImageIO.read(getClass().getResourceAsStream("res/player/idle_0.png"));
+            left2 = ImageIO.read(getClass().getResourceAsStream("res/player/idle_0.png"));
+            right1 = ImageIO.read(getClass().getResourceAsStream("res/player/idle_0.png"));
+            right2 = ImageIO.read(getClass().getResourceAsStream("res/player/idle_0.png"));
 
         }catch(IOException e){
             e.printStackTrace();
