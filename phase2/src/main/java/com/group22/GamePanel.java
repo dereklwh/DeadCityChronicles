@@ -2,6 +2,10 @@ package com.group22;
 
 import java.awt.*;
 import javax.swing.JPanel;
+import java.awt.Graphics2D;
+
+
+import com.group22.tile.TileManager;
 
 /**
  * Main controller for the game, handles all game systems
@@ -17,16 +21,27 @@ public class GamePanel extends JPanel implements Runnable{
     public int screenWidth = tileSize * maxScreenCol; //1920
     public int screenHeight = tileSize * maxScreenRow; //1056
 
+    //WORLD SETTINGS
+    public final int maxWorldCol = 50;
+    public final int maxWorldRow = 50;
+    public final int worldWidth = tileSize * maxWorldCol;
+    public final int worldHeight = tileSize * maxWorldRow;
+
     //FPS
     int FPS = 60;
     KeyHandler keyH = new KeyHandler();
     Thread gameThread;
+    public CollisionChecker cChecker = new CollisionChecker(this);
     public  AssetSetter aSetter = new AssetSetter(this);
+
     //Sound
     Sound sound = new Sound();
     //Entity and Object
-    Player player = new Player(this, keyH);
+    public Player player = new Player(this, keyH);
     public SuperObject obj[] = new SuperObject[10]; //how many objects we can show
+
+    //Tile
+    TileManager tileM = new TileManager(this);
 
     //default player's position
     int playerX = 100;
@@ -94,6 +109,8 @@ public class GamePanel extends JPanel implements Runnable{
         }
         //Player
         player.draw(g2);
+        //map
+        tileM.draw(g2);
         g2.dispose();
     }
 

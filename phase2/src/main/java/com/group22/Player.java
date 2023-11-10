@@ -13,20 +13,28 @@ public class Player extends Entity{
     int hasVaccine = 0;
     int hasHeart = 0;
 
+    public final int screenX;
+    public final int screenY;
+
     public Player(GamePanel gp, KeyHandler keyH){
         this.gp = gp;
         this.keyH = keyH;
 
-        solidAreaDefaultX = solidArea.x;
-        getSolidAreaDefaultY = solidArea.y;
+        screenX = gp.screenWidth/2 - (gp.tileSize/2);
+        screenY = gp.screenHeight/2 - (gp.tileSize/2);
+
+        //solidAreaDefaultX = solidArea.x;
+        //getSolidAreaDefaultY = solidArea.y;
+
+        solidArea = new Rectangle(8,16,32,32); //x y width height
 
         setDefaultValues();
         getPlayerImage();
     }
 
     public void setDefaultValues(){
-        x = 100;
-        y = 100;
+        worldX = gp.tileSize * 23;
+        worldY = gp . tileSize * 21;
         speed = 4;
         direction = "down";
     }
@@ -50,25 +58,43 @@ public class Player extends Entity{
     public void update(){
         if(keyH.upPressed){
             direction = "up";
-            y -= speed;
         }
         else if(keyH.downPressed){
             direction = "down";
-            y += speed;
         }
         else if(keyH.leftPressed){
             direction = "left";
-            x -= speed;
         }
         else if(keyH.rightPressed){
             direction = "right";
-            x += speed;
+            
         }
 
         // Check object collision
-        int objectIndex = gp.cChecker.checkObject(this, true);
-        pickUpObject(objectIndex);
 
+        //int objectIndex = gp.cChecker.checkObject(this, true);
+        //pickUpObject(objectIndex);
+
+        //Check tile collision
+        collisionOn = false;
+        gp.cChecker.checkTile(this);
+
+        if(collisionOn == false){
+            switch (direction) {
+                case "up":
+                    worldY -= speed;
+                    break;
+                case "down":
+                    worldY += speed;
+                    break;
+                case "left":
+                    worldX -= speed;
+                    break;
+                case "right":
+                    worldX += speed;
+                    break;
+            }
+        }
 
         spriteCounter++;
         if(spriteCounter > 12){ //player image changes every 12 frames
@@ -116,7 +142,7 @@ public class Player extends Entity{
         BufferedImage image = null;
 
         switch(direction){
-            case "up"
+            case "up":
                 if(spriteNum == 1){
                     image = up1;
                 }else if(spriteNum == 2){
@@ -145,6 +171,6 @@ public class Player extends Entity{
                 }
                 break;
         }
-        g2.drawImage(image, x, y, gp.tileSize, gp.tileSize, null);
+        g2.drawImage(image, screenX, screenY, gp.tileSize, gp.tileSize, null);
     }
 }
