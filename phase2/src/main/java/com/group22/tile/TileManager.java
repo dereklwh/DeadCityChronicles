@@ -68,11 +68,11 @@ public class TileManager{
         int col = 0;
         int row = 0;
 
-        while(col<gp.maxWorldCol && row < gp.maxWorldRow){
+        while(col < gp.maxWorldCol && row < gp.maxWorldRow){
 
             String line = br.readLine();
 
-            while(col < gp.maxScreenCol){
+            while(col < gp.maxWorldCol){
                 String numbers[] = line.split(" ");
 
                 int num = Integer.parseInt(numbers[col]);
@@ -81,17 +81,12 @@ public class TileManager{
                 col++;
             }
 
-            if(col == gp.maxScreenCol){
+            if(col == gp.maxWorldCol){
                 col = 0;
                 row++;
             }
         }
         br.close();
-
-            
-
-
-
 
         }catch(Exception e){
         }
@@ -122,15 +117,13 @@ public class TileManager{
                 worldY + gp.tileSize > gp.player.worldY - gp.player.screenY &&
                 worldY - gp.tileSize < gp.player.worldY + gp.player.screenY){
 
-                    g2.drawImage(tile[tileNum].image,screenX,screenY,gp.tileSize,gp.tileSize,null);
+                g2.drawImage(tile[tileNum].image,screenX,screenY,gp.tileSize,gp.tileSize,null);
             }
             
             worldCol++;
            
-
-            if(worldCol == gp.maxScreenCol){
+            if(worldCol == gp.maxWorldCol){
                 worldCol = 0;
-           
                 worldRow++;
                 
             }
