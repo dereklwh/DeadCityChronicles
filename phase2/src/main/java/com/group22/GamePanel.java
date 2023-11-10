@@ -7,6 +7,7 @@ import java.awt.Graphics2D;
 
 import com.group22.tile.TileManager;
 
+
 /**
  * Main controller for the game, handles all game systems
  */
@@ -16,8 +17,8 @@ public class GamePanel extends JPanel implements Runnable{
     public int scale = 3; //this is to scale 16
     public int tileSize = originalTileSize * scale;
 
-    public final int maxScreenCol = 40;
-    public final int maxScreenRow = 22;
+    public final int maxScreenCol = 16; //40
+    public final int maxScreenRow = 12; //22
     public int screenWidth = tileSize * maxScreenCol; //1920
     public int screenHeight = tileSize * maxScreenRow; //1056
 
@@ -74,7 +75,7 @@ public class GamePanel extends JPanel implements Runnable{
         double nextDrawTime = System.nanoTime() + drawInterval;
 
         while(gameThread != null){
-            //system.out.println("game running!");
+            //System.out.println("game running!");
             update();
             repaint();
             try {

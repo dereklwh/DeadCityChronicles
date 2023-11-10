@@ -6,6 +6,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import javax.imageio.ImageIO;
 import java.awt.Graphics2D;
+
 import com.group22.GamePanel;
 
 // under package Tile;
@@ -26,21 +27,21 @@ public class TileManager{
 
 
         getTileImage();
-        //loadMap("/map/map01.txt");
-        loadMap("/map/world01.txt");
+        
+        loadMap("../res/map/world01.txt");
     }
 
     // grab image from the pack
     public void getTileImage(){
         try{
             tile[0] = new Tile();
-            tile[0].image = ImageIO.read(getClass().getResourceAsStream("../res/player/idle_0.png"));
+            tile[0].image = ImageIO.read(getClass().getResourceAsStream("../res/tiles/ground1.png"));
 
             tile[1] = new Tile();
-            tile[1].image = ImageIO.read(getClass().getResourceAsStream("../res/player/idle_0.png"));
+            tile[1].image = ImageIO.read(getClass().getResourceAsStream("../res/tiles/wall1.png"));
             //tile[1].collision = true;
 
-            tile[2] = new Tile();
+            /*tile[2] = new Tile();
             tile[2].image = ImageIO.read(getClass().getResourceAsStream("../res/player/idle_0.png"));
             //tile[2].collision = true; //add this line to make solid
 
@@ -51,7 +52,7 @@ public class TileManager{
             tile[4].image = ImageIO.read(getClass().getResourceAsStream("../res/player/idle_0.png"));
 
             tile[5] = new Tile();
-            tile[5].image = ImageIO.read(getClass().getResourceAsStream("../res/player/idle_0.png"));
+            tile[5].image = ImageIO.read(getClass().getResourceAsStream("../res/player/idle_0.png"));*/
 
         }catch(IOException e){
             e.printStackTrace();
