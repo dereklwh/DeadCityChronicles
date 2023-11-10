@@ -42,14 +42,19 @@ public class Player extends Entity{
 
     public void getPlayerImage(){
         try{
-            up1 = ImageIO.read(getClass().getResourceAsStream("res/player/idle_0.png")); //need sprite for player facing up
-            up2 = ImageIO.read(getClass().getResourceAsStream("res/player/idle_0.png"));
-            down1 = ImageIO.read(getClass().getResourceAsStream("res/player/idle_0.png"));
-            down2 = ImageIO.read(getClass().getResourceAsStream("res/player/idle_0.png"));
-            left1 = ImageIO.read(getClass().getResourceAsStream("res/player/run_left1.png"));
-            left2 = ImageIO.read(getClass().getResourceAsStream("res/player/run_left2.png"));
-            right1 = ImageIO.read(getClass().getResourceAsStream("res/player/run_right1.png"));
-            right2 = ImageIO.read(getClass().getResourceAsStream("res/player/run_right2.png"));
+            up1 = ImageIO.read(getClass().getResourceAsStream("res/newplayer/player_walk_up0.png")); //need sprite for player facing up
+            up2 = ImageIO.read(getClass().getResourceAsStream("res/newplayer/player_walk_up1.png"));
+            up3 = ImageIO.read(getClass().getResourceAsStream("res/newplayer/player_walk_up2.png"));
+            down1 = ImageIO.read(getClass().getResourceAsStream("res/newplayer/player_walk_down0.png"));
+            down2 = ImageIO.read(getClass().getResourceAsStream("res/newplayer/player_walk_down1.png"));
+            down3 = ImageIO.read(getClass().getResourceAsStream("res/newplayer/player_walk_down2.png"));
+            left1 = ImageIO.read(getClass().getResourceAsStream("res/newplayer/player_walk_left0.png"));
+            left2 = ImageIO.read(getClass().getResourceAsStream("res/newplayer/player_walk_left1.png"));
+            left3 = ImageIO.read(getClass().getResourceAsStream("res/newplayer/player_walk_left2.png"));
+            right1 = ImageIO.read(getClass().getResourceAsStream("res/newplayer/player_walk_right0.png"));
+            right2 = ImageIO.read(getClass().getResourceAsStream("res/newplayer/player_walk_right1.png"));
+            right3 = ImageIO.read(getClass().getResourceAsStream("res/newplayer/player_walk_right2.png"));
+            stop = ImageIO.read(getClass().getResourceAsStream("res/newplayer/player_walk_down0.png"));
 
         }catch(IOException e){
             e.printStackTrace();
@@ -68,7 +73,9 @@ public class Player extends Entity{
         }
         else if(keyH.rightPressed){
             direction = "right";
-            
+        }
+        else {
+        	direction = "stop";
         }
 
         // Check object collision
@@ -149,13 +156,17 @@ public class Player extends Entity{
                 }else if(spriteNum == 2){
                     image = up2;
                 }
+                else if(spriteNum == 3) {
+                	image = up3; }
                 break;
             case "down":
                 if(spriteNum == 1){
                     image = down1;
                 }else if(spriteNum == 2){
                     image = down2;
-                }
+                }else if(spriteNum == 3) {
+                	image = down3;}
+               
                 break;
             case "left":
                 if(spriteNum == 1){
@@ -163,6 +174,9 @@ public class Player extends Entity{
                 }else if(spriteNum == 2){
                     image = left2;
                 }
+                else if(spriteNum == 3) {
+                	image = left3;}
+              
                 break;
             case "right":
                 if(spriteNum == 1){
@@ -170,8 +184,12 @@ public class Player extends Entity{
                 }else if(spriteNum == 2){
                     image = right2;
                 }
+                else if(spriteNum == 3) {
+                	image = right3;}
+                
                 break;
+            case "stop":
+            	image = stop;
         }
-        g2.drawImage(image, screenX, screenY, gp.tileSize, gp.tileSize, null);
-    }
-}
+            	
+        g2.drawImage(image, screenX, screenY, gp.tileSize, gp.tileSize, null);}}
