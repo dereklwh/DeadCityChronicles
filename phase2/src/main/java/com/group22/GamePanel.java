@@ -19,6 +19,12 @@ public class GamePanel extends JPanel implements Runnable{
     public int screenWidth = tileSize * maxScreenCol; //1920
     public int screenHeight = tileSize * maxScreenRow; //1056
 
+    //WORLD SETTINGS
+    public final int maxWorldCol = 50;
+    public final int maxWorldRow = 50;
+    public final int worldWidth = tileSize * maxWorldCol;
+    public final int worldHeight = tileSize * maxWorldRow;
+
     //FPS
     int FPS = 60;
     KeyHandler keyH = new KeyHandler();
@@ -28,7 +34,7 @@ public class GamePanel extends JPanel implements Runnable{
     //Sound
     Sound sound = new Sound();
     //Entity and Object
-    Player player = new Player(this, keyH);
+    public Player player = new Player(this, keyH);
     public SuperObject obj[] = new SuperObject[10]; //how many objects we can show
 
     //Tile
