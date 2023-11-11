@@ -11,5 +11,6 @@ public class ObjectVaccine extends SuperObject{
         }catch(IOException e){
             e.printStackTrace();
         }
+        collision = true;
     }
 }
