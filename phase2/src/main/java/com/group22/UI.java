@@ -19,6 +19,8 @@ public class UI {
 
     public boolean messageOn = false;
     public String message = "";
+    int messageCounter = 0;
+
 
     public UI(GamePanel gp) {
         this.gp = gp;
@@ -54,6 +56,13 @@ public class UI {
 
             g2.setFont(g2.getFont().deriveFont(30F));
             g2.drawString(message, gp.tileSize/2, gp.tileSize*5);
+
+            messageCounter++;
+
+            if(messageCounter > 120){
+                messageCounter =0;
+                messageOn = false;
+            }
         }
     }
 }
