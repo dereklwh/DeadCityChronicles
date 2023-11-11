@@ -2,8 +2,6 @@ package com.group22;
 
 import java.awt.*;
 import javax.swing.JPanel;
-import java.awt.Graphics2D;
-
 
 import com.group22.tile.TileManager;
 
@@ -53,7 +51,8 @@ public class GamePanel extends JPanel implements Runnable{
 
     public GamePanel(){
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
-        this.setBackground(Color.black);
+        //this.setBackground(Color.black);
+        this.setBackground(new java.awt.Color(71, 53, 44));
         this.setDoubleBuffered(true);
         this.addKeyListener(keyH);
         this.setFocusable(true);
