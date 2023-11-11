@@ -10,9 +10,9 @@ public class Player extends Entity{
     GamePanel gp;
     KeyHandler keyH;
     
-    int hasKey = 0;
-    int hasVaccine = 0;
-    int hasHeart = 0;
+    public int hasKey = 0;
+    public int hasVaccine = 0;
+    public int hasHeart = 0;
 
     public final int screenX;
     public final int screenY;
@@ -24,11 +24,12 @@ public class Player extends Entity{
         screenX = gp.screenWidth/2 - (gp.tileSize/2);
         screenY = gp.screenHeight/2 - (gp.tileSize/2);
 
-        //solidAreaDefaultX = solidArea.x;
-        //getSolidAreaDefaultY = solidArea.y;
-
+    
         solidArea = new Rectangle(8,16,32,32); //x y width height
 
+        solidAreaDefaultX = solidArea.x;
+        solidAreaDefaultY = solidArea.y;
+        
         setDefaultValues();
         getPlayerImage();
     }
@@ -86,8 +87,8 @@ public class Player extends Entity{
 
         // Check object collision
 
-        //int objectIndex = gp.cChecker.checkObject(this, true);
-        //pickUpObject(objectIndex);
+        int objectIndex = gp.cChecker.checkObject(this, true);
+        pickUpObject(objectIndex);
 
         //Check tile collision
         collisionOn = false;
@@ -134,11 +135,21 @@ public class Player extends Entity{
                    gp.playSE(1);
                    hasKey++;
                    gp.obj[i] = null;
+
+                    gp.ui.showMessage("You got a key");
+
                    break;
                case "Vaccine":
                    gp.playSE(1);
                    hasVaccine++;
                    gp.obj[i] = null;
+                    
+                    gp.ui.showMessage("You got a vaccine");
+
+                    /*if (hasVaccine == 2){
+                        gp.ui.gameFinished = true;
+                    }*/
+
                    break;
                case"Heart":
                    gp.playSE(1);
@@ -149,6 +160,9 @@ public class Player extends Entity{
                    //implement later
                    gp.playSE(3);
                    hasHeart--;
+
+                   gp.ui.showMessage("You fell into a trap");
+
                    break;
            }
         }
