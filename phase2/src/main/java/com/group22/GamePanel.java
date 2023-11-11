@@ -34,7 +34,9 @@ public class GamePanel extends JPanel implements Runnable{
     public  AssetSetter aSetter = new AssetSetter(this);
 
     //Sound
-    Sound sound = new Sound();
+    Sound music = new Sound();
+    Sound se = new Sound();
+
     //Entity and Object
     public Player player = new Player(this, keyH);
     public Zombie zombie = new Zombie(this);
@@ -126,17 +128,17 @@ public class GamePanel extends JPanel implements Runnable{
     }
 
     public void playMusic(int i) {
-        sound.setFile(i);
-        sound.play();
-        sound.loop();
+        music.setFile(i);
+        music.play();
+        music.loop();
     }
 
     public void stopMusic(){
-        sound.stop();
+        music.stop();
     }
 
     public void playSE(int i){
-        sound.setFile(i);
-        sound.play();
+        se.setFile(i);
+        se.play();
     }
 }

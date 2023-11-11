@@ -143,6 +143,9 @@ public class Player extends Entity{
                    gp.playSE(1);
                    hasVaccine++;
                    gp.obj[i] = null;
+                    
+                    gp.ui.showMessage("You got a vaccine");
+
                    break;
                case"Heart":
                    gp.playSE(1);
