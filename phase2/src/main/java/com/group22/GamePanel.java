@@ -17,8 +17,13 @@ public class GamePanel extends JPanel implements Runnable{
     public int scale = 3; //this is to scale 16
     public int tileSize = originalTileSize * scale;
 
+<<<<<<< HEAD
+    public final int maxScreenCol = 16; //40
+    public final int maxScreenRow = 13; //22
+=======
     public final int maxScreenCol = 20; // make 20 for 16:9 ratio, 16 for 4:3
     public final int maxScreenRow = 12; //22
+>>>>>>> 7af1338bde36d21c4ae607be845c954f7ba93171
     public int screenWidth = tileSize * maxScreenCol; //1920
     public int screenHeight = tileSize * maxScreenRow; //1056
 
@@ -29,8 +34,8 @@ public class GamePanel extends JPanel implements Runnable{
     Graphics2D g2;
 
     //WORLD SETTINGS
-    public final int maxWorldCol = 50;
-    public final int maxWorldRow = 50;
+    public final int maxWorldCol = 60;
+    public final int maxWorldRow = 34;
     public final int worldWidth = tileSize * maxWorldCol;
     public final int worldHeight = tileSize * maxWorldRow;
 
