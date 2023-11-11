@@ -84,7 +84,7 @@ public class CollisionChecker {
                                 index = i;
                             }
                         }
-                        System.out.println("up collision");
+                        //System.out.println("up collision");
                         break;
                     case "down":
                         entity.solidArea.y += entity.speed;
@@ -97,7 +97,7 @@ public class CollisionChecker {
                             }
                         }
 
-                        System.out.println("down collision");
+                        //System.out.println("down collision");
                         break;
                     case "left":
                         entity.solidArea.x -= entity.speed;
@@ -111,7 +111,7 @@ public class CollisionChecker {
                             }
                         }
 
-                        System.out.println("left collision");
+                        //System.out.println("left collision");
                         break;
                     case "right":
                         entity.solidArea.x += entity.speed;
@@ -122,7 +122,7 @@ public class CollisionChecker {
                             if (player == true) {
                                 index = i;
                             }
-                            System.out.println("right collision");
+                            //System.out.println("right collision");
                             break;
                         }
                 }
