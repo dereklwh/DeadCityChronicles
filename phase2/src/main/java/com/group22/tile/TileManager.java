@@ -93,9 +93,9 @@ public class TileManager{
     }
 
 
-    //goto gamePanel class type "TileManager tileM = new TileManager(this)", then under paintComponent before line player.draw type "tileM.draw(g2)"
+    
     public void draw(Graphics2D g2){
-        //g2.drawImage(tile[0].image,0,0, gp.tileSize,gp.tileSze,null); // 0,0 is the cordinate, means x,y
+        //g2.drawImage(tile[0].image,0,0, gp.tileSize,gp.tileSze,null); // 0,0 is the coordinate, means x,y
         //g2.drawImage(tile[1].image,0,0, gp.tileSize,gp.tileSze,null);
         //g2.drawImage(tile[2].image,0,0, gp.tileSize,gp.tileSze,null);
 
