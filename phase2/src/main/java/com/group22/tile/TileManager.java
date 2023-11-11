@@ -48,11 +48,11 @@ public class TileManager{
             tile[1].image = ImageIO.read(getClass().getResourceAsStream("../res/tiles/wall1.png"));
             tile[1].collision = true;
 
-            /*tile[2] = new Tile();
-            tile[2].image = ImageIO.read(getClass().getResourceAsStream("../res/player/idle_0.png"));
-            //tile[2].collision = true; //add this line to make solid
+            tile[2] = new Tile();
+            tile[2].image = ImageIO.read(getClass().getResourceAsStream("../res/tiles/haystack/haystack1.png"));
+            tile[2].collision = true; //add this line to make solid
 
-            tile[3] = new Tile();
+            /*tile[3] = new Tile();
             tile[3].image = ImageIO.read(getClass().getResourceAsStream("../res/player/idle_0.png"));
 
             tile[4] = new Tile();
@@ -135,8 +135,9 @@ public class TileManager{
                 
             }
         }
-
+            
         //saving the map data to a text file
 
     }
+
 }
