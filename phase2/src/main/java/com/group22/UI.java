@@ -50,5 +50,10 @@ public class UI {
         g2.drawImage(vImage, gp.tileSize/2 + 150, gp.tileSize/2, gp.tileSize, gp.tileSize, null);
         g2.drawString("x " + gp.player.hasVaccine, 235, 60);
 
+        if(messageOn == true){
+
+            g2.setFont(g2.getFont().deriveFont(30F));
+            g2.drawString(message, gp.tileSize/2, gp.tileSize*5);
+        }
     }
 }

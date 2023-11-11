@@ -134,6 +134,9 @@ public class Player extends Entity{
                    gp.playSE(1);
                    hasKey++;
                    gp.obj[i] = null;
+
+                    gp.ui.showMessage("You got a key");
+
                    break;
                case "Vaccine":
                    gp.playSE(1);
