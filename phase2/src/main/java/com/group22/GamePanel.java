@@ -28,7 +28,7 @@ public class GamePanel extends JPanel implements Runnable{
 
     //FPS
     int FPS = 60;
-    KeyHandler keyH = new KeyHandler();
+    KeyHandler keyH = new KeyHandler(this);
     Thread gameThread;
     public CollisionChecker cChecker = new CollisionChecker(this);
     public  AssetSetter aSetter = new AssetSetter(this);
@@ -113,7 +113,7 @@ public class GamePanel extends JPanel implements Runnable{
             zombie.update();
         }
         if (gameState == pauseState){
-            
+
         }
         //System.out.println("Player Position: " + player.worldX + ", " + player.worldY);
         //System.out.println("Zombie Position: " + zombie.worldX + ", " + zombie.worldY);
