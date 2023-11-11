@@ -92,6 +92,22 @@ public class Zombie extends Entity{
                 worldX += speed;
                 break;
         }
+
+        spriteCounter++;
+        if(spriteCounter > 12){ //zombie image changes every 12 frames
+            if(spriteNum == 1) {
+                spriteNum = 2;
+            }else if (spriteNum == 2){
+                spriteNum = 3;
+            }
+            else if (spriteNum == 3){
+                spriteNum = 4;
+            }
+            else if (spriteNum == 4){
+                spriteNum = 1;
+            }
+            spriteCounter = 0;
+        }
     }
 
     public void draw(Graphics2D g2) {
