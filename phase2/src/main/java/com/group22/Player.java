@@ -146,6 +146,10 @@ public class Player extends Entity{
                     
                     gp.ui.showMessage("You got a vaccine");
 
+                    /*if (hasVaccine == 2){
+                        gp.ui.gameFinished = true;
+                    }*/
+
                    break;
                case"Heart":
                    gp.playSE(1);
@@ -158,7 +162,6 @@ public class Player extends Entity{
                    hasHeart--;
 
                    gp.ui.showMessage("You fell into a trap");
-
 
                    break;
            }
