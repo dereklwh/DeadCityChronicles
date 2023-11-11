@@ -42,6 +42,16 @@ public class Player extends Entity{
 
     public void getPlayerImage(){
         try{
+<<<<<<< HEAD
+            up1 = ImageIO.read(getClass().getResourceAsStream("res/player/idle_0.png")); //need sprite for player facing up
+            up2 = ImageIO.read(getClass().getResourceAsStream("res/player/run_right1.png"));
+            down1 = ImageIO.read(getClass().getResourceAsStream("res/player/idle_0.png"));
+            down2 = ImageIO.read(getClass().getResourceAsStream("res/player/run_right1.png"));
+            left1 = ImageIO.read(getClass().getResourceAsStream("res/player/run_left1.png"));
+            left2 = ImageIO.read(getClass().getResourceAsStream("res/player/run_left2.png"));
+            right1 = ImageIO.read(getClass().getResourceAsStream("res/player/run_right1.png"));
+            right2 = ImageIO.read(getClass().getResourceAsStream("res/player/run_right2.png"));
+=======
             up1 = ImageIO.read(getClass().getResourceAsStream("res/newplayer/player_walk_up0.png")); //need sprite for player facing up
             up2 = ImageIO.read(getClass().getResourceAsStream("res/newplayer/player_walk_up1.png"));
             up3 = ImageIO.read(getClass().getResourceAsStream("res/newplayer/player_walk_up2.png"));
@@ -55,6 +65,7 @@ public class Player extends Entity{
             right2 = ImageIO.read(getClass().getResourceAsStream("res/newplayer/player_walk_right1.png"));
             right3 = ImageIO.read(getClass().getResourceAsStream("res/newplayer/player_walk_right2.png"));
             stop = ImageIO.read(getClass().getResourceAsStream("res/newplayer/player_walk_down0.png"));
+>>>>>>> 8f1b00d909591dd7c965ff2d42f70a71bcbe9cd9
 
         }catch(IOException e){
             e.printStackTrace();
