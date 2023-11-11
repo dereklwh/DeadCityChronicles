@@ -29,8 +29,8 @@ public class GamePanel extends JPanel implements Runnable{
     Graphics2D g2;
 
     //WORLD SETTINGS
-    public final int maxWorldCol = 60;
-    public final int maxWorldRow = 33;
+    public final int maxWorldCol = 50;
+    public final int maxWorldRow = 50;
     public final int worldWidth = tileSize * maxWorldCol;
     public final int worldHeight = tileSize * maxWorldRow;
 
@@ -87,14 +87,14 @@ public class GamePanel extends JPanel implements Runnable{
        // setFullScreen();
     }
 
-    public void setFullScreen(){
+    /*public void setFullScreen(){
         GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
         GraphicsDevice gd = ge.getDefaultScreenDevice();
         gd.setFullScreenWindow(Main.window);
 
         screenWidth2 = Main.window.getWidth();
         screenHeight2 = Main.window.getHeight();
-    }
+    }*/
 
     public void startGameThread(){
         gameThread = new Thread(this);
