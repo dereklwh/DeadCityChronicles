@@ -6,6 +6,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import javax.imageio.ImageIO;
 import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
 
 import com.group22.GamePanel;
 
@@ -36,6 +37,10 @@ public class TileManager{
         try{
             tile[0] = new Tile();
             tile[0].image = ImageIO.read(getClass().getResourceAsStream("../res/tiles/ground1.png"));
+            BufferedImage scaledImage = new BufferedImage(gp.tileSize, gp.tileSize, tile[0].image.getType());
+            Graphics2D g2 = scaledImage.createGraphics();
+            g2.drawImage(tile[0].image, 0, 0, gp.tileSize, gp.tileSize, null);
+            tile[0].image = scaledImage;
 
             tile[1] = new Tile();
             tile[1].image = ImageIO.read(getClass().getResourceAsStream("../res/tiles/wall1.png"));
