@@ -2,6 +2,7 @@ package com.group22;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
+import java.text.DecimalFormat;
 import java.awt.Color;
 import java.awt.Font;
 
@@ -23,6 +24,7 @@ public class UI {
     public boolean gameFinished = false;
 
     double playTime;
+    DecimalFormat dFormat = new DecimalFormat("#0.00");
 
     public UI(GamePanel gp) {
         this.gp = gp;
@@ -86,8 +88,8 @@ public class UI {
             g2.drawString("x " + gp.player.hasVaccine, 235, 60);
             
             playTime += (double)1/60;
-            g2.drawString("Time:" + playTime, gp.tileSize*11, 60);
-            
+            g2.drawString("Time: " + dFormat.format(playTime), gp.tileSize*11, 60);
+
             if(messageOn == true){
 
                 g2.setFont(g2.getFont().deriveFont(30F));
