@@ -7,7 +7,7 @@ public class ObjectVaccine extends SuperObject{
     public ObjectVaccine(){
         name = "Vaccine";
         try{
-            image = ImageIO.read(getClass().getResourceAsStream("res/player/idle_0.png")); //just a placeholder
+            image = ImageIO.read(getClass().getResourceAsStream("res/object/vaccine.png")); //just a placeholder
         }catch(IOException e){
             e.printStackTrace();
         }
