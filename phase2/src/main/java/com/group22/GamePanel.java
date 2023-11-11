@@ -30,7 +30,7 @@ public class GamePanel extends JPanel implements Runnable{
 
     //WORLD SETTINGS
     public final int maxWorldCol = 60;
-    public final int maxWorldRow = 34;
+    public final int maxWorldRow = 33;
     public final int worldWidth = tileSize * maxWorldCol;
     public final int worldHeight = tileSize * maxWorldRow;
 
@@ -84,7 +84,7 @@ public class GamePanel extends JPanel implements Runnable{
         tempScreen = new BufferedImage(screenWidth, screenHeight, BufferedImage.TYPE_INT_ARGB);
         g2 = (Graphics2D)tempScreen.getGraphics();
 
-        setFullScreen();
+       // setFullScreen();
     }
 
     public void setFullScreen(){
@@ -109,9 +109,9 @@ public class GamePanel extends JPanel implements Runnable{
         while(gameThread != null){
             //System.out.println("game running!");
             update();
-            //repaint();
-            drawToTempScreen();
-            drawToScreen();
+            repaint();
+            //drawToTempScreen();
+            //drawToScreen();
             try {
                 double remainingTime = nextDrawTime - System.nanoTime();
                 remainingTime = remainingTime/1000000;
@@ -144,7 +144,7 @@ public class GamePanel extends JPanel implements Runnable{
     }
 
     //For fullscreen
-    public void drawToTempScreen(){
+    /*public void drawToTempScreen(){
         tileM.draw(g2);
         //Object
         for(int i = 0; i < obj.length; i++){
@@ -165,9 +165,9 @@ public class GamePanel extends JPanel implements Runnable{
         Graphics g = getGraphics();
         g.drawImage(tempScreen, 0, 0, screenWidth2, screenHeight2, null);
         g.dispose();
-    }
+    }*/
 
-    /*public void paintComponent(Graphics g){
+    public void paintComponent(Graphics g){
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
         //map
@@ -186,7 +186,7 @@ public class GamePanel extends JPanel implements Runnable{
         //UI
         ui.draw(g2);
         g2.dispose();
-    }*/
+    }
 
     public void playMusic(int i) {
         music.setFile(i);
