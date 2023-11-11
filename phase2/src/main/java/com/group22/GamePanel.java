@@ -90,7 +90,8 @@ public class GamePanel extends JPanel implements Runnable{
                 nextDrawTime += drawInterval;
 
             } catch (InterruptedException e) {
-                throw new RuntimeException(e);
+                //throw new RuntimeException(e);
+                e.printStackTrace();
             }
         }
     }
