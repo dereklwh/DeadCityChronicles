@@ -37,10 +37,12 @@ public class TileManager{
         try{
             tile[0] = new Tile();
             tile[0].image = ImageIO.read(getClass().getResourceAsStream("../res/tiles/ground1.png"));
-            BufferedImage scaledImage = new BufferedImage(gp.tileSize, gp.tileSize, tile[0].image.getType());
+
+            //For better rendering performance if need
+            /*BufferedImage scaledImage = new BufferedImage(gp.tileSize, gp.tileSize, tile[0].image.getType());
             Graphics2D g2 = scaledImage.createGraphics();
             g2.drawImage(tile[0].image, 0, 0, gp.tileSize, gp.tileSize, null);
-            tile[0].image = scaledImage;
+            tile[0].image = scaledImage;*/
 
             tile[1] = new Tile();
             tile[1].image = ImageIO.read(getClass().getResourceAsStream("../res/tiles/wall1.png"));
