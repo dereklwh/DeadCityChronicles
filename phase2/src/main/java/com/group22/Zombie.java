@@ -33,7 +33,7 @@ public class Zombie extends Entity{
         // We will just place the zombie at a random position within the world bounds
         worldX = gp.tileSize * 10;
         worldY = gp.tileSize * 5;
-        speed = 10; // Zombies are slower than the player
+        speed = 3; // Zombies are slower than the player
         direction = "down"; // Initial direction
     }
 
