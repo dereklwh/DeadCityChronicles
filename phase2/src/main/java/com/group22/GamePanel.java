@@ -48,7 +48,8 @@ public class GamePanel extends JPanel implements Runnable{
     int playerY = 100;
     int playerSpeed = 4;
 
-    //
+    //UI
+    public UI ui = new UI(this);
 
     public GamePanel(){
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
@@ -118,6 +119,9 @@ public class GamePanel extends JPanel implements Runnable{
         player.draw(g2);
         //Zombie1
         zombie.draw(g2);
+
+        //UI
+        ui.draw(g2);
         g2.dispose();
     }
 

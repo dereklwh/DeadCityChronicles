@@ -10,9 +10,9 @@ public class Player extends Entity{
     GamePanel gp;
     KeyHandler keyH;
     
-    int hasKey = 0;
-    int hasVaccine = 0;
-    int hasHeart = 0;
+    public int hasKey = 0;
+    public int hasVaccine = 0;
+    public int hasHeart = 0;
 
     public final int screenX;
     public final int screenY;
