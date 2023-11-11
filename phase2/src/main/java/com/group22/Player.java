@@ -14,8 +14,8 @@ public class Player extends Entity{
     public int hasVaccine = 0;
     public int hasHeart = 0;
 
-    public final int screenX;
-    public final int screenY;
+    public  int screenX;
+    public  int screenY;
 
     public Player(GamePanel gp, KeyHandler keyH){
         this.gp = gp;
