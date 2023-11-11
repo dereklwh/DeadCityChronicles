@@ -47,7 +47,7 @@ public class GamePanel extends JPanel implements Runnable{
 
     //Entity and Object
     public Player player = new Player(this, keyH);
-    public Zombie zombie = new Zombie(this);
+    public Zombie zombie[] = new Zombie[5];
     public SuperObject obj[] = new SuperObject[10]; //how many objects we can show
 
     //Tile
@@ -77,6 +77,7 @@ public class GamePanel extends JPanel implements Runnable{
 
     public void setupGame(){
         aSetter.setObject();
+        aSetter.setZombie();
         playMusic(0);
 
         gameState = playState;
@@ -134,7 +135,8 @@ public class GamePanel extends JPanel implements Runnable{
 
         if (gameState == playState){
             player.update();
-            zombie.update();
+            zombie[0].update();
+            zombie[1].update();
         }
         if (gameState == pauseState){
 
@@ -178,10 +180,17 @@ public class GamePanel extends JPanel implements Runnable{
                 obj[i].draw(g2, this);
             }
         }
+
+        //Zombie
+        for(int i = 0; i < zombie.length; i++){
+            if(zombie[i] != null){
+                zombie[i].draw(g2);
+            }
+        }
+
         //Player
         player.draw(g2);
-        //Zombie1
-        zombie.draw(g2);
+
 
         //UI
         ui.draw(g2);

@@ -19,6 +19,7 @@ public class Zombie extends Entity{
     public Zombie(GamePanel gp) {
         this.gp = gp;
 
+
         screenX = gp.screenWidth/2 - (gp.tileSize);
         screenY = gp.screenHeight/2 - (gp.tileSize/2);
 
@@ -31,8 +32,8 @@ public class Zombie extends Entity{
     public void setDefaultValues(){
         // Set the default values for the zombie here
         // We will just place the zombie at a random position within the world bounds
-        worldX = gp.tileSize * 10;
-        worldY = gp.tileSize * 5;
+        // worldX = gp.tileSize * 10;
+        // worldY = gp.tileSize * 5;
         speed = 3; // Zombies are slower than the player
         direction = "down"; // Initial direction
     }
@@ -77,6 +78,9 @@ public class Zombie extends Entity{
             direction = yDirection;
         }
 
+        collisionOn = false;
+        // gp.cChecker.checkTile(this);
+        if (collisionOn == false){
         // Move zombie in the chosen direction
         switch (direction) {
             case "up":
@@ -91,7 +95,9 @@ public class Zombie extends Entity{
             case "right":
                 worldX += speed;
                 break;
+            }
         }
+
 
         spriteCounter++;
         if(spriteCounter > 12){ //zombie image changes every 12 frames

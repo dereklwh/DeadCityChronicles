@@ -16,4 +16,16 @@ public class AssetSetter {
         gp.obj[1].worldX = 23 * gp.tileSize; //change this to anywhere we want to put the object
         gp.obj[1].worldY = 2 * gp.tileSize; //change this as well
     }
+
+    public void setZombie() {
+        gp.zombie[0] = new Zombie(gp);
+        gp.zombie[0].worldX = gp.tileSize * 23;
+        gp.zombie[0].worldY = gp.tileSize * 21;
+
+        gp.zombie[1] = new Zombie(gp);
+        gp.zombie[1].worldX = gp.tileSize * 25;
+        gp.zombie[1].worldY = gp.tileSize * 26;
+        gp.zombie[1].speed = 1;
+
+    }
 }
