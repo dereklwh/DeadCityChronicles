@@ -11,7 +11,7 @@ public class Zombie extends Entity{
     int speed;
     String direction;
 
-    BufferedImage up, down, left, right;
+    BufferedImage up1, up2, up3,up4, down1,down2,down3, down4,left1,left2,left3,left4,right1, right2,right3,right4;
 
     public final int screenX;
     public final int screenY;
@@ -40,10 +40,25 @@ public class Zombie extends Entity{
     // Load images for zombie
     public void getZombieImage() {
         try {
-            up = ImageIO.read(getClass().getResourceAsStream("res/zombie1/idle_0.png"));
-            down = ImageIO.read(getClass().getResourceAsStream("res/zombie1/idle_0.png"));
-            left = ImageIO.read(getClass().getResourceAsStream("res/zombie1/idle_0.png"));
-            right = ImageIO.read(getClass().getResourceAsStream("res/zombie1/idle_0.png"));
+            up1 = ImageIO.read(getClass().getResourceAsStream("res/zombie1/zombie1_run_right0.png"));
+            up2 = ImageIO.read(getClass().getResourceAsStream("res/zombie1/zombie1_run_right1.png"));
+            up3 = ImageIO.read(getClass().getResourceAsStream("res/zombie1/zombie1_run_right2.png"));
+            up4 = ImageIO.read(getClass().getResourceAsStream("res/zombie1/zombie1_run_right3.png"));
+         
+            down1 = ImageIO.read(getClass().getResourceAsStream("res/zombie1/zombie1_run_left0.png"));
+            down2 = ImageIO.read(getClass().getResourceAsStream("res/zombie1/zombie1_run_left1.png"));
+            down3 = ImageIO.read(getClass().getResourceAsStream("res/zombie1/zombie1_run_left2.png"));
+            down4 = ImageIO.read(getClass().getResourceAsStream("res/zombie1/zombie1_run_left3.png"));
+
+            left1 = ImageIO.read(getClass().getResourceAsStream("res/zombie1/zombie1_run_left0.png"));
+            left2 = ImageIO.read(getClass().getResourceAsStream("res/zombie1/zombie1_run_left1.png"));
+            left3 = ImageIO.read(getClass().getResourceAsStream("res/zombie1/zombie1_run_left2.png"));
+            left4 = ImageIO.read(getClass().getResourceAsStream("res/zombie1/zombie1_run_left3.png"));
+            
+            right1 = ImageIO.read(getClass().getResourceAsStream("res/zombie1/zombie1_run_right0.png"));
+            right2 = ImageIO.read(getClass().getResourceAsStream("res/zombie1/zombie1_run_right1.png"));
+            right3 = ImageIO.read(getClass().getResourceAsStream("res/zombie1/zombie1_run_right2.png"));
+            right4 = ImageIO.read(getClass().getResourceAsStream("res/zombie1/zombie1_run_right3.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -92,18 +107,51 @@ public class Zombie extends Entity{
         //draw the zombie at its screen position
         BufferedImage image = null;
         switch (direction) {
-            case "up":
-                image = up;
-                break;
-            case "down":
-                image = down;
-                break;
-            case "left":
-                image = left;
-                break;
-            case "right":
-                image = right;
-                break;
+        	case "up":
+        		if(spriteNum == 1){
+        			image = up1;
+        		}else if(spriteNum == 2){
+        			image = up2;
+        		}
+        		else if(spriteNum == 3) {
+        			image = up3; }
+        		else if(spriteNum == 4) {
+        			image = up4; }
+        		break;
+        	case "down":
+        		if(spriteNum == 1){
+        			image = down1;
+        		}else if(spriteNum == 2){
+        			image = down2;
+        		}else if(spriteNum == 3) {
+        			image = down3;}
+        		else if(spriteNum == 4) {
+        			image = down4; }
+        		
+        		break;
+        	case "left":
+        		if(spriteNum == 1){
+        			image = left1;
+        		}else if(spriteNum == 2){
+        			image = left2;
+        		}
+        		else if(spriteNum == 3) {
+        			image = left3;}
+        		else if(spriteNum == 4) {
+        			image = left4; }
+        		break;
+        	case "right":
+        		if(spriteNum == 1){
+        			image = right1;
+        		}else if(spriteNum == 2){
+        			image = right2;
+        		}
+        		else if(spriteNum == 3) {
+        			image = right3;}
+        		else if(spriteNum == 4) {
+        			image = right4; }
+            
+        		break;
         }
     
         g2.drawImage(image, zombieScreenX, zombieScreenY, gp.tileSize, gp.tileSize, null);
