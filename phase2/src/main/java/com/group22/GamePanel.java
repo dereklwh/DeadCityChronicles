@@ -2,8 +2,6 @@ package com.group22;
 
 import java.awt.*;
 import javax.swing.JPanel;
-import java.awt.Graphics2D;
-
 
 import com.group22.tile.TileManager;
 
@@ -39,6 +37,7 @@ public class GamePanel extends JPanel implements Runnable{
     Sound sound = new Sound();
     //Entity and Object
     public Player player = new Player(this, keyH);
+    public Zombie zombie = new Zombie(this);
     public SuperObject obj[] = new SuperObject[10]; //how many objects we can show
 
     //Tile
@@ -98,6 +97,9 @@ public class GamePanel extends JPanel implements Runnable{
 
     public void update(){
         player.update();
+        System.out.println("Player Position: " + player.worldX + ", " + player.worldY);
+        zombie.update();
+        System.out.println("Zombie Position: " + zombie.worldX + ", " + zombie.worldY);
     }
 
     public void paintComponent(Graphics g){
@@ -113,6 +115,8 @@ public class GamePanel extends JPanel implements Runnable{
         }
         //Player
         player.draw(g2);
+        //Zombie1
+        zombie.draw(g2);
         g2.dispose();
     }
 
