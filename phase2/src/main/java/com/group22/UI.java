@@ -56,12 +56,12 @@ public class UI {
 
         if(gp.gameState == gp.playState){
             playTime += (double)1/60;
-            g2.drawString("Time: " + dFormat.format(playTime), gp.tileSize*11, 60);
+            g2.drawString("Time: " + dFormat.format(playTime), gp.tileSize*15, 60);
 
         }
         if (gp.gameState == gp.pauseState){
             drawPauseScreen();
-            g2.drawString("Time: " + dFormat.format(playTime), gp.tileSize*11, 60);
+            g2.drawString("Time: " + dFormat.format(playTime), gp.tileSize*15, 60);
 
         }
 
