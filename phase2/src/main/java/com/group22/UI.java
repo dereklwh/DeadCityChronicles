@@ -55,10 +55,14 @@ public class UI {
         g2.setColor(Color.white); 
 
         if(gp.gameState == gp.playState){
+            playTime += (double)1/60;
+            g2.drawString("Time: " + dFormat.format(playTime), gp.tileSize*11, 60);
 
         }
         if (gp.gameState == gp.pauseState){
             drawPauseScreen();
+            g2.drawString("Time: " + dFormat.format(playTime), gp.tileSize*11, 60);
+
         }
 
         if (gameFinished == true){
@@ -107,8 +111,7 @@ public class UI {
             g2.drawImage(vImage, gp.tileSize/2 + 150, gp.tileSize/2, gp.tileSize, gp.tileSize, null);
             g2.drawString("x " + gp.player.hasVaccine, 235, 60);
             
-            playTime += (double)1/60;
-            g2.drawString("Time: " + dFormat.format(playTime), gp.tileSize*11, 60);
+            
 
             if(messageOn == true){
 
