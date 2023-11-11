@@ -49,19 +49,11 @@ public class TileManager{
             tile[1].collision = true;
 
             tile[2] = new Tile();
-<<<<<<< HEAD
-            tile[2].image = ImageIO.read(getClass().getResourceAsStream("../res/tiles/haystack/haystack1.png"));
-            tile[2].collision = true; //add this line to make solid
-
-            /*tile[3] = new Tile();
-            tile[3].image = ImageIO.read(getClass().getResourceAsStream("../res/player/idle_0.png"));
-=======
             tile[2].image = ImageIO.read(getClass().getResourceAsStream("../res/tiles/bush.png"));
             tile[2].collision = true; //add this line to make solid
 
             tile[3] = new Tile();
             tile[3].image = ImageIO.read(getClass().getResourceAsStream("../res/tiles/road/cross.png"));
->>>>>>> 2acc4b84216542c0cbdb8b15a88c84b28880bfe6
 
             tile[4] = new Tile();
             tile[4].image = ImageIO.read(getClass().getResourceAsStream("../res/tiles/road/horizontal.png"));
