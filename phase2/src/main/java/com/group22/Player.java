@@ -43,9 +43,9 @@ public class Player extends Entity{
     public void getPlayerImage(){
         try{
             up1 = ImageIO.read(getClass().getResourceAsStream("res/player/idle_0.png")); //need sprite for player facing up
-            up2 = ImageIO.read(getClass().getResourceAsStream("res/player/idle_0.png"));
+            up2 = ImageIO.read(getClass().getResourceAsStream("res/player/run_right1.png"));
             down1 = ImageIO.read(getClass().getResourceAsStream("res/player/idle_0.png"));
-            down2 = ImageIO.read(getClass().getResourceAsStream("res/player/idle_0.png"));
+            down2 = ImageIO.read(getClass().getResourceAsStream("res/player/run_right1.png"));
             left1 = ImageIO.read(getClass().getResourceAsStream("res/player/run_left1.png"));
             left2 = ImageIO.read(getClass().getResourceAsStream("res/player/run_left2.png"));
             right1 = ImageIO.read(getClass().getResourceAsStream("res/player/run_right1.png"));
