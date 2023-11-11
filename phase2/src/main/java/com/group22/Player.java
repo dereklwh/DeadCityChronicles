@@ -156,6 +156,10 @@ public class Player extends Entity{
                    //implement later
                    gp.playSE(3);
                    hasHeart--;
+
+                   gp.ui.showMessage("You fell into a trap");
+
+
                    break;
            }
         }
