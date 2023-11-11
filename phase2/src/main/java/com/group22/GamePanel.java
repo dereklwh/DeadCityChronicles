@@ -70,6 +70,8 @@ public class GamePanel extends JPanel implements Runnable{
     public void setupGame(){
         aSetter.setObject();
         playMusic(0);
+
+        gameState = playState;
     }
 
     public void startGameThread(){
@@ -105,10 +107,16 @@ public class GamePanel extends JPanel implements Runnable{
     }
 
     public void update(){
-        player.update();
-        System.out.println("Player Position: " + player.worldX + ", " + player.worldY);
-        zombie.update();
-        System.out.println("Zombie Position: " + zombie.worldX + ", " + zombie.worldY);
+
+        if (gameState == playState){
+            player.update();
+            zombie.update();
+        }
+        if (gameState == pauseState){
+            
+        }
+        //System.out.println("Player Position: " + player.worldX + ", " + player.worldY);
+        //System.out.println("Zombie Position: " + zombie.worldX + ", " + zombie.worldY);
     }
 
     public void paintComponent(Graphics g){
