@@ -80,30 +80,106 @@ public class AssetSetter {
     }
 
     public void setZombie() {
+
+        //3 = fast
+        //2 = medium speed
+        //1 = slow
+
         gp.zombie[0] = new Zombie(gp, 1);
-        gp.zombie[0].worldX = gp.tileSize * 23;
-        gp.zombie[0].worldY = gp.tileSize * 25;
+        gp.zombie[0].worldX = gp.tileSize * 15;
+        gp.zombie[0].worldY = gp.tileSize * 15;
         gp.zombie[0].speed = 1;
 
-        gp.zombie[1] = new Zombie(gp, 2);
+        gp.zombie[1] = new Zombie(gp, 1);
         gp.zombie[1].worldX = gp.tileSize * 20;
-        gp.zombie[1].worldY = gp.tileSize * 20;
+        gp.zombie[1].worldY = gp.tileSize * 19;
         gp.zombie[1].speed = 1;
 
-        gp.zombie[2] = new Zombie(gp, 3);
+        gp.zombie[2] = new Zombie(gp, 1);
         gp.zombie[2].worldX = gp.tileSize * 20;
         gp.zombie[2].worldY = gp.tileSize * 21;
-        gp.zombie[2].speed = 5;
+        gp.zombie[2].speed = 1;
 
-        gp.zombie[3] = new Zombie(gp, 2);
-        gp.zombie[3].worldX = gp.tileSize * 20;
-        gp.zombie[3].worldY = gp.tileSize * 17;
+        gp.zombie[3] = new Zombie(gp, 1);
+        gp.zombie[3].worldX = gp.tileSize * 10;
+        gp.zombie[3].worldY = gp.tileSize * 27;
         gp.zombie[3].speed = 1;
 
-        gp.zombie[4] = new Zombie(gp, 3);
-        gp.zombie[4].worldX = gp.tileSize * 20;
-        gp.zombie[4].worldY = gp.tileSize * 18;
-        gp.zombie[4].speed = 3;
+        gp.zombie[4] = new Zombie(gp, 1);
+        gp.zombie[4].worldX = gp.tileSize * 10;
+        gp.zombie[4].worldY = gp.tileSize * 26;
+        gp.zombie[4].speed = 1;
+
+        gp.zombie[5] = new Zombie(gp, 1);
+        gp.zombie[5].worldX = gp.tileSize * 42;
+        gp.zombie[5].worldY = gp.tileSize * 16;
+        gp.zombie[5].speed = 1;
+
+        gp.zombie[6] = new Zombie(gp, 1);
+        gp.zombie[6].worldX = gp.tileSize * 41;
+        gp.zombie[6].worldY = gp.tileSize * 15;
+        gp.zombie[6].speed = 1;
+
+        gp.zombie[7] = new Zombie(gp, 1);
+        gp.zombie[7].worldX = gp.tileSize * 39;
+        gp.zombie[7].worldY = gp.tileSize * 24;
+        gp.zombie[7].speed = 1;
+
+        gp.zombie[8] = new Zombie(gp, 1);
+        gp.zombie[8].worldX = gp.tileSize * 50;
+        gp.zombie[8].worldY = gp.tileSize * 10;
+        gp.zombie[8].speed = 1;
+
+        gp.zombie[9] = new Zombie(gp, 1);
+        gp.zombie[9].worldX = gp.tileSize * 50;
+        gp.zombie[9].worldY = gp.tileSize * 12;
+        gp.zombie[9].speed = 1;
+
+        gp.zombie[10] = new Zombie(gp, 1);
+        gp.zombie[10].worldX = gp.tileSize * 60;
+        gp.zombie[10].worldY = gp.tileSize * 15;
+        gp.zombie[10].speed = 1;
+
+        gp.zombie[11] = new Zombie(gp, 1);
+        gp.zombie[11].worldX = gp.tileSize * 12;
+        gp.zombie[11].worldY = gp.tileSize * 25;
+        gp.zombie[11].speed = 1;
+
+        gp.zombie[12] = new Zombie(gp, 1);
+        gp.zombie[12].worldX = gp.tileSize * 12;
+        gp.zombie[12].worldY = gp.tileSize * 28;
+        gp.zombie[12].speed = 1;
+
+        gp.zombie[13] = new Zombie(gp, 1);
+        gp.zombie[13].worldX = gp.tileSize * 13;
+        gp.zombie[13].worldY = gp.tileSize * 28;
+        gp.zombie[13].speed = 1;
+
+        gp.zombie[14] = new Zombie(gp, 2);
+        gp.zombie[14].worldX = gp.tileSize * 60;
+        gp.zombie[14].worldY = gp.tileSize * 11;
+
+        gp.zombie[15] = new Zombie(gp, 2);
+        gp.zombie[15].worldX = gp.tileSize * 61;
+        gp.zombie[15].worldY = gp.tileSize * 8;
+
+        gp.zombie[16] = new Zombie(gp, 2);
+        gp.zombie[16].worldX = gp.tileSize * 58;
+        gp.zombie[16].worldY = gp.tileSize * 12;
+
+        gp.zombie[17] = new Zombie(gp, 2);
+        gp.zombie[17].worldX = gp.tileSize * 54;
+        gp.zombie[17].worldY = gp.tileSize * 30;
+
+        gp.zombie[18] = new Zombie(gp, 2);
+        gp.zombie[18].worldX = gp.tileSize * 63;
+        gp.zombie[18].worldY = gp.tileSize * 33;
+
+        //OP ZOMBIE
+        // gp.zombie[19] = new Zombie(gp, 2);
+        // gp.zombie[19].worldX = gp.tileSize * 65;
+        // gp.zombie[19].worldY = gp.tileSize * 34;
+        // gp.zombie[19].speed = 6;
 
     }
 }

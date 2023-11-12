@@ -157,7 +157,7 @@ public class Player extends Entity{
         pickUpObject(objectIndex);
 
         int zombieIndex = gp.cChecker.checkEntity(this, gp.zombie);
-        interactNPC(zombieIndex);
+        interactZombie(zombieIndex);
 
         //Check event
         //gp.eHandler.checkEvent();
@@ -229,6 +229,7 @@ public class Player extends Entity{
                  if(invincible == false){
                     life -=1;
                     gp.playSE(3);
+                    isDamaged = true;
                     invincible = true;
                 }
                 break;
@@ -294,7 +295,7 @@ public class Player extends Entity{
         g2.drawImage(image, screenX, screenY, null);
         isDamaged = false;
     }
-        public void interactNPC(int i){
+        public void interactZombie(int i){
             if(i != 999) {
                 if(invincible == false){
                     life -=1;

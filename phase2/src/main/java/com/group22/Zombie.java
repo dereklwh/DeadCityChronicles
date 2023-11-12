@@ -104,10 +104,14 @@ public class Zombie extends Entity{
         gp.cChecker.checkEntity(this, gp.zombie);
 
         if (playerCollision){
-            collisionOn = true;
-            gp.player.isDamaged = true;
             //handle what happens when collision
-            //System.out.println("get rekt");
+            collisionOn = true;
+            if(gp.player.invincible == false){
+                gp.player.isDamaged = true;
+                gp.player.life -=1;
+                gp.player.invincible = true;
+                gp.playSE(3);
+            }
         }
 
         if (collisionOn) {
