@@ -42,7 +42,7 @@ public class Player extends Entity{
     }
 
     public void getPlayerImage(){
-        try{
+        /*try{
             up1 = ImageIO.read(getClass().getResourceAsStream("res/player/run_right0.png")); //need sprite for player facing up
             up2 = ImageIO.read(getClass().getResourceAsStream("res/player/run_right1.png"));
             up3 = ImageIO.read(getClass().getResourceAsStream("res/player/run_right2.png"));
@@ -59,7 +59,33 @@ public class Player extends Entity{
 
         }catch(IOException e){
             e.printStackTrace();
+        }*/
+        up1 = setup("run_right0");
+        up2 = setup("run_right1");
+        up3 = setup("run_right2");
+        down1 = setup("run_left0");
+        down2 = setup("run_left1");
+        down3 = setup("run_left2");
+        left1 = setup("run_left0");
+        left2 = setup("run_left1");
+        left3 = setup("run_left2");
+        right1 = setup("run_right0");
+        right2 = setup("run_right1");
+        right3 = setup("run_right2");
+        stop = setup("no_anim_0");
+    }
+
+    public BufferedImage setup(String imageName){
+        UtilityTool uTool = new UtilityTool();
+        BufferedImage image = null;
+
+        try{
+            image = ImageIO.read(getClass().getResourceAsStream("res/player/" + imageName + ".png"));
+            image = uTool.scaleImage(image, gp.tileSize, gp.tileSize);
+        }catch (IOException e){
+            e.printStackTrace();
         }
+        return image;
     }
 
     public void update(){
@@ -218,4 +244,4 @@ public class Player extends Entity{
             	image = stop;
         }
             	
-        g2.drawImage(image, screenX, screenY, gp.tileSize, gp.tileSize, null);}}
+        g2.drawImage(image, screenX, screenY/* gp.tileSize, gp.tileSize*/, null);}}

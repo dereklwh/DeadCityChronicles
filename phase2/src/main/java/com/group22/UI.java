@@ -34,13 +34,13 @@ public class UI {
         arial_40 = new Font("Arial", Font.PLAIN, 40);
         arial_80 = new Font("Arial", Font.BOLD, 80);
 
-        ObjectKey key = new ObjectKey();
+        ObjectKey key = new ObjectKey(gp);
         keyImage = key.image;
 
-        ObjectHeart heart = new ObjectHeart();
+        ObjectHeart heart = new ObjectHeart(gp);
         hImage = heart.image;
 
-        ObjectVaccine vaccine = new ObjectVaccine();
+        ObjectVaccine vaccine = new ObjectVaccine(gp);
         vImage = vaccine.image;
     }
 
