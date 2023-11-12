@@ -135,8 +135,11 @@ public class GamePanel extends JPanel implements Runnable{
 
         if (gameState == playState){
             player.update();
-            zombie[0].update();
-            zombie[1].update();
+            for(int i = 0; i < zombie.length; i++){
+                if(zombie[i] != null && zombie[i].direction != null){
+                    zombie[i].update();
+                }
+            }
         }
         if (gameState == pauseState){
 

@@ -3,6 +3,9 @@ package com.group22;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.Collections;
+
 import javax.imageio.ImageIO;
 
 public class Zombie extends Entity{
@@ -15,6 +18,7 @@ public class Zombie extends Entity{
 
     public final int screenX;
     public final int screenY;
+    public int actionLockCounter = 0;
 
     public Zombie(GamePanel gp) {
         this.gp = gp;
@@ -66,38 +70,52 @@ public class Zombie extends Entity{
     }
 
     public void update() {
-        int xDistance = gp.player.worldX - worldX;
-        int yDistance = gp.player.worldY - worldY;
-        String xDirection = xDistance > 0 ? "right" : "left";
-        String yDirection = yDistance > 0 ? "down" : "up";
+            int xDistance = gp.player.worldX - worldX;
+            int yDistance = gp.player.worldY - worldY;
+            String xDirection = xDistance > 0 ? "right" : "left";
+            String yDirection = yDistance > 0 ? "down" : "up";
 
-        // Simple AI for zombie: move in the direction with the greatest distance from the player
-        if (Math.abs(xDistance) > Math.abs(yDistance)) {
-            direction = xDirection;
-        } else {
-            direction = yDirection;
-        }
-
-        collisionOn = false;
-        // gp.cChecker.checkTile(this);
-        if (collisionOn == false){
-        // Move zombie in the chosen direction
-        switch (direction) {
-            case "up":
-                worldY -= speed;
-                break;
-            case "down":
-                worldY += speed;
-                break;
-            case "left":
-                worldX -= speed;
-                break;
-            case "right":
-                worldX += speed;
-                break;
+        //update the direction every .5 seconds
+        actionLockCounter ++;
+        if (actionLockCounter == 30){
+            // Simple AI for zombie: move in the direction with the greatest distance from the player
+            if (Math.abs(xDistance) > Math.abs(yDistance)) {
+                direction = xDirection;
+            } else {
+                direction = yDirection;
             }
+            actionLockCounter = 0;
         }
 
+        int nextX = worldX;
+        int nextY = worldY;
+
+        switch (direction) {
+            case "up": nextY -= speed; break;
+            case "down": nextY += speed; break;
+            case "left": nextX -= speed; break;
+            case "right": nextX += speed; break;
+        }
+
+        // New collision check
+        collisionOn = gp.cChecker.checkCollision(this, nextX, nextY);
+
+        if (collisionOn) {
+            // Check for viable alternative paths
+            boolean canMoveVertically = !gp.cChecker.checkCollision(this, worldX, worldY + (yDistance > 0 ? speed : -speed));
+            boolean canMoveHorizontally = !gp.cChecker.checkCollision(this, worldX + (xDistance > 0 ? speed : -speed), worldY);
+            
+            if ((direction.equals("left") || direction.equals("right")) && canMoveVertically) {
+                direction = (yDistance > 0) ? "down" : "up";
+            } else if ((direction.equals("up") || direction.equals("down")) && canMoveHorizontally) {
+                direction = (xDistance > 0) ? "right" : "left";
+            } else {
+                //???
+            }
+        } else {
+            worldX = nextX;
+            worldY = nextY;
+        }
 
         spriteCounter++;
         if(spriteCounter > 12){ //zombie image changes every 12 frames
@@ -114,6 +132,7 @@ public class Zombie extends Entity{
             }
             spriteCounter = 0;
         }
+        System.out.printf("the collision is %b\n", collisionOn);
     }
 
     public void draw(Graphics2D g2) {
@@ -178,6 +197,5 @@ public class Zombie extends Entity{
     
         g2.drawImage(image, zombieScreenX, zombieScreenY, gp.tileSize, gp.tileSize, null);
     }
-    
 
 }
