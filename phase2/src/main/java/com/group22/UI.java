@@ -2,16 +2,22 @@ package com.group22;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.io.InputStream;
 import java.text.DecimalFormat;
+
+import javax.imageio.ImageIO;
+
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.FontFormatException;
 
 public class UI {
     
     GamePanel gp;
     Graphics2D g2;
-    Font arial_40, arial_80; //Find new font later
+    Font maruMonica;
     BufferedImage heart_full, heart_half, heart_blank;
     BufferedImage keyImage;
     BufferedImage hImage;
@@ -19,6 +25,13 @@ public class UI {
     BufferedImage dImage;
 
     BufferedImage medImage;
+    
+    private BufferedImage titleImage;  
+    private BufferedImage startButton; 
+    private BufferedImage settingButton;
+    private BufferedImage ruleButton;
+    private BufferedImage exitButton;   
+    private BufferedImage scaledTitle,scaledStart,scaledSetting,scaledRule,scaledExit;
 
     public boolean messageOn = false;
     public String message = "";
@@ -32,8 +45,30 @@ public class UI {
 
     public UI(GamePanel gp) {
         this.gp = gp;
-        arial_40 = new Font("Arial", Font.PLAIN, 40);
-        arial_80 = new Font("Arial", Font.BOLD, 80);
+        
+        
+        try {
+        	InputStream is = getClass().getResourceAsStream("font/x12y16pxMaruMonica.ttf");
+			maruMonica = Font.createFont(Font.TRUETYPE_FONT, is);
+		} catch (FontFormatException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+			//maruMonica = new Font("Arial", Font.PLAIN, 20);
+		}
+        
+        //new add get all the image for title page
+        try {
+            titleImage = ImageIO.read(getClass().getResourceAsStream("res/object/title.png"));
+            startButton = ImageIO.read(getClass().getResourceAsStream("res/object/start.png"));
+            ruleButton = ImageIO.read(getClass().getResourceAsStream("res/object/rule.png"));
+            settingButton = ImageIO.read(getClass().getResourceAsStream("res/object/setting.png"));
+            exitButton = ImageIO.read(getClass().getResourceAsStream("res/object/exit.png"));
+            
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        
 
         //HUD
 
@@ -65,7 +100,7 @@ public class UI {
 
         this.g2 = g2;
 
-        g2.setFont(arial_40);
+        g2.setFont(maruMonica);
         g2.setColor(Color.white); 
 
         if(gp.gameState == gp.playState){
@@ -95,7 +130,7 @@ public class UI {
 
         if (gameFinished == true){
 
-            g2.setFont(arial_40);
+            g2.setFont(maruMonica);
             g2.setColor(Color.white); 
 
             String text;
@@ -117,7 +152,7 @@ public class UI {
             y= gp.screenHeight/2 + (gp.tileSize * 4);
             g2.drawString(text, x, y);
 
-            g2.setFont(arial_80);
+            g2.setFont(maruMonica);
             g2.setColor(Color.yellow);
             text = "Congratulations";
             textLength = (int)g2.getFontMetrics().getStringBounds(text, g2).getWidth();
@@ -130,7 +165,7 @@ public class UI {
         }
 
         else {
-            g2.setFont(arial_40);
+            g2.setFont(maruMonica);
             g2.setColor(Color.white); 
 
             g2.drawImage(keyImage, gp.tileSize/2, gp.tileSize/2, gp.tileSize, gp.tileSize, null);
@@ -156,6 +191,43 @@ public class UI {
             }
         }
         
+    }
+    
+    //method for scale the image
+    private BufferedImage scaleImage(BufferedImage originalImage, int targetWidth, int targetHeight) {
+        BufferedImage scaledImage = new BufferedImage(targetWidth, targetHeight, BufferedImage.TYPE_INT_ARGB);
+        Graphics2D g2d = scaledImage.createGraphics();
+        g2d.drawImage(originalImage, 0, 0, targetWidth, targetHeight, null);
+        g2d.dispose();
+        return scaledImage;
+    }
+
+    
+    //draw title screen
+    public void drawTitleScreen(Graphics2D g2) {
+    	int x = gp.screenWidth/4;
+    	int y = gp.tileSize/2;
+    	
+    	BufferedImage originalImage = titleImage;
+    	BufferedImage scaledTitle = scaleImage(originalImage,480,270); //you can set the pixel size of the image
+    	BufferedImage originalImage1 = startButton;
+    	BufferedImage scaledStart = scaleImage(originalImage1,70,33);
+    	BufferedImage originalImage2 = ruleButton;
+    	BufferedImage scaledRule = scaleImage(originalImage2,70,33);
+    	BufferedImage originalImage3 = settingButton;
+    	BufferedImage scaledSetting = scaleImage(originalImage3,70,33);
+    	BufferedImage originalImage4 = exitButton;
+    	BufferedImage scaledExit = scaleImage(originalImage4,70,33);
+    	// draw the title
+        g2.drawImage(scaledTitle, x, y, null);
+        //draw start button
+        g2.drawImage(scaledStart, x+gp.tileSize*4, y+gp.tileSize*6, null);
+        //draw rule button
+        g2.drawImage(scaledRule, x+gp.tileSize*4, y+gp.tileSize*7, null);
+        //draw setting button
+        g2.drawImage(scaledSetting, x+gp.tileSize*4, y+gp.tileSize*8, null);
+        //draw exit button
+        g2.drawImage(scaledExit, x+gp.tileSize*4, y+gp.tileSize*9, null);
     }
 
     public void drawPlayerLife(){
@@ -198,7 +270,7 @@ public class UI {
 
     public void drawSettingScreen(){
         g2.setColor(Color.white);
-        g2.setFont(arial_40);
+        g2.setFont(maruMonica);
 
         int frameX = gp.tileSize*6;
         int frameY = gp.tileSize;
