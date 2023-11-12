@@ -101,6 +101,7 @@ public class Zombie extends Entity{
         // New collision check
         collisionOn = gp.cChecker.checkCollision(this, nextX, nextY);
         boolean playerCollision = gp.cChecker.checkPlayer(this, nextX, nextY);
+        gp.cChecker.checkEntity(this, gp.zombie);
 
         if (playerCollision){
             collisionOn = true;

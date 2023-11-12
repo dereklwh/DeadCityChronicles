@@ -175,34 +175,22 @@ public class CollisionChecker {
                 switch (entity.direction) {
                     case "up": //print for test remove later
                         entity.solidArea.y -= entity.speed;
-                        if (entity.solidArea.intersects(target[i].solidArea)) {
-                                entity.collisionOn = true;
-                                index = i;
-                            }
                         break;
                     case "down":
                         entity.solidArea.y += entity.speed;
-                        if (entity.solidArea.intersects(target[i].solidArea)) {
-                                entity.collisionOn = true;
-                                index = i;
-                        }
                         break;
                     case "left":
                         entity.solidArea.x -= entity.speed;
-                        if (entity.solidArea.intersects(target[i].solidArea)) {
-                                entity.collisionOn = true;
-                                index = i;
-                        }
-                        //System.out.println("left collision");
                         break;
                     case "right":
                         entity.solidArea.x += entity.speed;
-                        if (entity.solidArea.intersects(target[i].solidArea)) {
-                                entity.collisionOn = true;
-                                index = i;
-                            }
-                            //System.out.println("right collision");
                             break;
+                }
+                if (entity.solidArea.intersects(target[i].solidArea)) {
+                    if(target[i] != entity) {
+                        entity.collisionOn = true;
+                        index = i;
+                    }
                 }
                 entity.solidArea.x = entity.solidAreaDefaultX;
                 entity.solidArea.y = entity.solidAreaDefaultY;
@@ -211,7 +199,6 @@ public class CollisionChecker {
             }
         }
         return index;
-
     }
 
     // public void checkPlayer(Entity entity){
@@ -269,6 +256,48 @@ public class CollisionChecker {
     
         // Check if the entity's next solid area intersects with the player's solid area
         return nextSolidArea.intersects(playerSolidArea);
+    }
+
+    //zombie to zombie
+    public void checkEntity(Zombie zombie, Zombie[] target) {
+    //   int index = 999;
+
+        for (int i = 0; i < target.length; i++) {
+            if (target[i] != null) {
+                //Get entiti's solid area pos
+                zombie.solidArea.x = zombie.worldX + zombie.solidArea.x;
+                zombie.solidArea.y = zombie.worldY + zombie.solidArea.y;
+                //Get obj's solid area pos
+                target[i].solidArea.x = target[i].worldX + target[i].solidArea.x;
+                target[i].solidArea.y = target[i].worldY + target[i].solidArea.y;
+
+                switch (zombie.direction) {
+                    case "up": //print for test remove later
+                        zombie.solidArea.y -= zombie.speed;
+                        break;
+                    case "down":
+                        zombie.solidArea.y += zombie.speed;
+                        break;
+                    case "left":
+                        zombie.solidArea.x -= zombie.speed;
+                        break;
+                    case "right":
+                        zombie.solidArea.x += zombie.speed;
+                            break;
+                }
+                if (zombie.solidArea.intersects(target[i].solidArea)) {
+                    if(target[i] != zombie) {
+                        zombie.collisionOn = true;
+                        //index = i;
+                    }
+                }
+                zombie.solidArea.x = zombie.solidAreaDefaultX;
+                zombie.solidArea.y = zombie.solidAreaDefaultY;
+                target[i].solidArea.x = target[i].solidAreaDefaultX;
+                target[i].solidArea.y = target[i].solidAreaDefaultY;
+            }
+        }
+        // return index;
     }
     
 }
