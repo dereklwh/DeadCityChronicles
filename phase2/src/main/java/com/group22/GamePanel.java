@@ -64,6 +64,7 @@ public class GamePanel extends JPanel implements Runnable{
 
     //Game State
     public int gameState;
+    public final int titleState = 0;
     public final int playState = 1;
     public final int pauseState = 2;
     public final int settingState = 3;
@@ -155,6 +156,8 @@ public class GamePanel extends JPanel implements Runnable{
     public void drawToTempScreen(){
 
         tileM.draw(g2);
+        //Title Screen
+        if(gameState == titleState) {}
         //Object
         for(int i = 0; i < obj.length; i++){
             if(obj[i] != null){
