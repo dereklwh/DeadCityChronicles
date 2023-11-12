@@ -101,6 +101,7 @@ public class UI {
         this.g2 = g2;
 
         g2.setFont(maruMonica);
+        g2.setFont(g2.getFont().deriveFont(48F));
         g2.setColor(Color.white); 
 
         if (gp.gameState == gp.titleState){
@@ -109,9 +110,72 @@ public class UI {
 
         if(gp.gameState == gp.playState){
             playTime += (double)1/60;
-            g2.drawString("Time: " + dFormat.format(playTime), gp.tileSize*15, 60);
 
+
+            if (gameFinished == true){
+
+            g2.setFont(g2.getFont().deriveFont(50F));
+            g2.setColor(Color.white); 
+
+            String text;
+            int textLength;
+            int x;
+            int y; 
+
+            text = "You won";
+            textLength = (int)g2.getFontMetrics().getStringBounds(text, g2).getWidth();
+
+            x = gp.screenWidth/2 - textLength/2;
+            y= gp.screenHeight/2 - (gp.tileSize * 3);
+            g2.drawString(text, x, y);
+
+            text = "Your Time is: " + dFormat.format(playTime) + " s";
+            textLength = (int)g2.getFontMetrics().getStringBounds(text, g2).getWidth();
+
+            x = gp.screenWidth/2 - textLength/2;
+            y= gp.screenHeight/2 + (gp.tileSize * 4);
+            g2.drawString(text, x, y);
+
+            g2.setFont(g2.getFont().deriveFont(100F));
+            g2.setColor(Color.yellow);
+            text = "Congratulations";
+            textLength = (int)g2.getFontMetrics().getStringBounds(text, g2).getWidth();
+
+            x = gp.screenWidth/2 - textLength/2;
+            y= gp.screenHeight/2 + (gp.tileSize * 2);
+            g2.drawString(text, x, y);
+
+            gp.gameThread = null;
+        }
+
+        else {
             drawPlayerLife();
+            g2.drawString("Time: " + dFormat.format(playTime)+" s", gp.tileSize*15, 60);
+
+            g2.setFont(maruMonica);
+            g2.setFont(g2.getFont().deriveFont(48F));
+            g2.setColor(Color.white); 
+
+            g2.drawImage(keyImage, gp.tileSize/2, gp.tileSize/2, gp.tileSize, gp.tileSize, null);
+            g2.drawString("x " + gp.player.hasKey, 74, 60);
+
+            g2.drawImage(vImage, gp.tileSize/2 + 150, gp.tileSize/2, gp.tileSize, gp.tileSize, null);
+            g2.drawString("x " + gp.player.hasVaccine, 235, 60);            
+            
+            if(messageOn == true){
+
+                g2.setFont(g2.getFont().deriveFont(30F));
+                g2.drawString(message, gp.tileSize/2, gp.tileSize*5);
+
+                messageCounter++;
+
+                if(messageCounter > 120){
+                    messageCounter =0;
+                    messageOn = false;
+                }
+            }
+        }
+
         }
         if (gp.gameState == gp.pauseState){
             drawPauseScreen();
@@ -132,68 +196,7 @@ public class UI {
 
         }
 
-        if (gameFinished == true){
-
-            g2.setFont(maruMonica);
-            g2.setColor(Color.white); 
-
-            String text;
-            int textLength;
-            int x;
-            int y; 
-
-            text = "You won";
-            textLength = (int)g2.getFontMetrics().getStringBounds(text, g2).getWidth();
-
-            x = gp.screenWidth/2 - textLength/2;
-            y= gp.screenHeight/2 - (gp.tileSize * 3);
-            g2.drawString(text, x, y);
-
-            text = "Your Time is: " + dFormat.format(playTime);
-            textLength = (int)g2.getFontMetrics().getStringBounds(text, g2).getWidth();
-
-            x = gp.screenWidth/2 - textLength/2;
-            y= gp.screenHeight/2 + (gp.tileSize * 4);
-            g2.drawString(text, x, y);
-
-            g2.setFont(maruMonica);
-            g2.setColor(Color.yellow);
-            text = "Congratulations";
-            textLength = (int)g2.getFontMetrics().getStringBounds(text, g2).getWidth();
-
-            x = gp.screenWidth/2 - textLength/2;
-            y= gp.screenHeight/2 + (gp.tileSize * 2);
-            g2.drawString(text, x, y);
-
-            gp.gameThread = null;
-        }
-
-        else {
-            g2.setFont(maruMonica);
-            g2.setColor(Color.white); 
-
-            g2.drawImage(keyImage, gp.tileSize/2, gp.tileSize/2, gp.tileSize, gp.tileSize, null);
-            g2.drawString("x " + gp.player.hasKey, 74, 60);
-
-            g2.drawImage(vImage, gp.tileSize/2 + 150, gp.tileSize/2, gp.tileSize, gp.tileSize, null);
-            g2.drawString("x " + gp.player.hasVaccine, 235, 60);            
-            
-
-            
-
-            if(messageOn == true){
-
-                g2.setFont(g2.getFont().deriveFont(30F));
-                g2.drawString(message, gp.tileSize/2, gp.tileSize*5);
-
-                messageCounter++;
-
-                if(messageCounter > 120){
-                    messageCounter =0;
-                    messageOn = false;
-                }
-            }
-        }
+        
         
     }
     
@@ -224,6 +227,7 @@ public class UI {
     	BufferedImage scaledExit = scaleImage(originalImage4,70,33);
     	// draw the title
 
+        g2.setFont(maruMonica);
         g2.setFont(g2.getFont().deriveFont(Font.BOLD, 50F));
 
         g2.drawImage(scaledTitle, x, y, null);
@@ -290,6 +294,8 @@ public class UI {
     public void drawSettingScreen(){
         g2.setColor(Color.white);
         g2.setFont(maruMonica);
+        g2.setFont(g2.getFont().deriveFont(40F));
+
 
         int frameX = gp.tileSize*6;
         int frameY = gp.tileSize;
@@ -500,7 +506,7 @@ public class UI {
         int textY = frameY + gp.tileSize;
 
         
-        String text = "Quit the game and \nreturn to the \ntitle screen?";
+        String text = "Quit the game and return \nto the title screen?";
         for(String line: text.split("\n")){
             g2.drawString(line, textX-35, textY);
             textY += 40;
@@ -515,7 +521,7 @@ public class UI {
             g2.drawString(">", textX-25, textY);
             if(gp.keyH.enterPressed==true){
                 subState =0;
-                //change game state
+                gp.gameState = gp.titleState;
             }
         }
 
