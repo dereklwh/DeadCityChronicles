@@ -16,6 +16,7 @@ public class UI {
     BufferedImage keyImage;
     BufferedImage hImage;
     BufferedImage vImage;
+    BufferedImage dImage;
 
     BufferedImage medImage;
 
@@ -50,6 +51,9 @@ public class UI {
         heart_full = heart.image;
         heart_half = heart.image2;
         heart_blank = heart.image3;
+
+        ObjectDoor door = new ObjectDoor(gp);
+        dImage = door.image;
     }
 
     public void showMessage(String text){
@@ -125,8 +129,9 @@ public class UI {
             g2.drawString("x " + gp.player.hasKey, 74, 60);
 
             g2.drawImage(vImage, gp.tileSize/2 + 150, gp.tileSize/2, gp.tileSize, gp.tileSize, null);
-            g2.drawString("x " + gp.player.hasVaccine, 235, 60);
+            g2.drawString("x " + gp.player.hasVaccine, 235, 60);            
             
+
             
 
             if(messageOn == true){

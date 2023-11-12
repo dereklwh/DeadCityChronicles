@@ -60,6 +60,9 @@ public class AssetSetter {
         gp.obj[12].worldX = 28 * gp.tileSize;
         gp.obj[12].worldY = 22 * gp.tileSize;
 
+        gp.obj[13] = new ObjectDoor(gp);
+        gp.obj[13].worldX = 18 * gp.tileSize;
+        gp.obj[13].worldY = 11 * gp.tileSize;
 
     }
 

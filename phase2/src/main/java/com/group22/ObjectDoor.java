@@ -9,7 +9,7 @@ public class ObjectDoor extends SuperObject {
     public ObjectDoor(GamePanel gp){
         name = "Door";
         try{
-            image = ImageIO.read(getClass().getResourceAsStream("res/object/key.png"));
+            image = ImageIO.read(getClass().getResourceAsStream("res/object/door.png"));
             image = uTool.scaleImage(image, gp.tileSize, gp.tileSize);
         }catch(IOException e){
             e.printStackTrace();
