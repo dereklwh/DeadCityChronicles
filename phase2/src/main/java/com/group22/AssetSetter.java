@@ -25,6 +25,7 @@ public class AssetSetter {
         gp.zombie[0] = new Zombie(gp, 1);
         gp.zombie[0].worldX = gp.tileSize * 23;
         gp.zombie[0].worldY = gp.tileSize * 25;
+        gp.zombie[0].speed = 1;
 
         gp.zombie[1] = new Zombie(gp, 2);
         gp.zombie[1].worldX = gp.tileSize * 20;
@@ -44,7 +45,7 @@ public class AssetSetter {
         gp.zombie[4] = new Zombie(gp, 3);
         gp.zombie[4].worldX = gp.tileSize * 20;
         gp.zombie[4].worldY = gp.tileSize * 18;
-        gp.zombie[4].speed = 5;
+        gp.zombie[4].speed = 3;
 
     }
 }
