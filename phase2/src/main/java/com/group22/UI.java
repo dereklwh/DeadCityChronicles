@@ -3,6 +3,7 @@ package com.group22;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.text.DecimalFormat;
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
 
@@ -23,6 +24,7 @@ public class UI {
     public String message = "";
     int messageCounter = 0;
     public boolean gameFinished = false;
+    int subState = 0;
 
     double playTime;
     DecimalFormat dFormat = new DecimalFormat("#0.00");
@@ -150,6 +152,25 @@ public class UI {
         int frameHeight = gp.tileSize*10;
         drawSubWindow(frameX, frameY, frameWidth, frameHeight);
 
+        switch (subState) {
+            case 0:
+                setting_top(frameX, frameY);
+                break;
+        
+            default:
+                break;
+        }
+
+    }
+
+    public void setting_top(int frameX, int frameY){
+        int textX;
+        int textY;
+
+        String text = "Settings";
+        textX = getXforCenteredText(text);
+        textY = frameY + gp.tileSize;
+        g2.drawString(text, textX, textY);
     }
 
     public int getXforCenteredText(String text){
@@ -159,8 +180,14 @@ public class UI {
     }
 
     public void drawSubWindow(int x, int y, int width, int height){
-        Color c = new Color(71, 53, 44);
+        Color c = new Color(71, 53, 44, 200);
         g2.setColor(c);
         g2.fillRoundRect(x, y, width, height, 35, 35);
+
+        c = new Color(255,255,255);
+        g2.setColor(c);
+        g2.setStroke(new BasicStroke(5));
+        g2.drawRoundRect(x+5, y+5, width-10, height-10, 25, 25);
+
     }
 }

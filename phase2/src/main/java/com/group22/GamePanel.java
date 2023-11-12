@@ -86,17 +86,17 @@ public class GamePanel extends JPanel implements Runnable{
         tempScreen = new BufferedImage(screenWidth, screenHeight, BufferedImage.TYPE_INT_ARGB);
         g2 = (Graphics2D)tempScreen.getGraphics();
 
-       // setFullScreen();
+       setFullScreen();
     }
 
-    /*public void setFullScreen(){
+    public void setFullScreen(){
         GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
         GraphicsDevice gd = ge.getDefaultScreenDevice();
         gd.setFullScreenWindow(Main.window);
 
         screenWidth2 = Main.window.getWidth();
         screenHeight2 = Main.window.getHeight();
-    }*/
+    }
 
     public void startGameThread(){
         gameThread = new Thread(this);
@@ -111,9 +111,9 @@ public class GamePanel extends JPanel implements Runnable{
         while(gameThread != null){
             //System.out.println("game running!");
             update();
-            repaint();
-            //drawToTempScreen();
-            //drawToScreen();
+            //repaint();
+            drawToTempScreen();
+            drawToScreen();
             try {
                 double remainingTime = nextDrawTime - System.nanoTime();
                 remainingTime = remainingTime/1000000;
@@ -150,7 +150,7 @@ public class GamePanel extends JPanel implements Runnable{
     }
 
     //For fullscreen
-    /*public void drawToTempScreen(){
+    public void drawToTempScreen(){
         tileM.draw(g2);
         //Object
         for(int i = 0; i < obj.length; i++){
@@ -161,7 +161,11 @@ public class GamePanel extends JPanel implements Runnable{
         //Player
         player.draw(g2);
         //Zombie1
-        zombie.draw(g2);
+        for(int i = 0; i < zombie.length; i++){
+            if(zombie[i] != null){
+                zombie[i].draw(g2);
+            }
+        }
 
         //UI
         ui.draw(g2);
@@ -171,9 +175,9 @@ public class GamePanel extends JPanel implements Runnable{
         Graphics g = getGraphics();
         g.drawImage(tempScreen, 0, 0, screenWidth2, screenHeight2, null);
         g.dispose();
-    }*/
+    }
 
-    public void paintComponent(Graphics g){
+    /*public void paintComponent(Graphics g){
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
         //map
@@ -199,7 +203,7 @@ public class GamePanel extends JPanel implements Runnable{
         //UI
         ui.draw(g2);
         g2.dispose();
-    }
+    }*/
 
     public void playMusic(int i) {
         music.setFile(i);
