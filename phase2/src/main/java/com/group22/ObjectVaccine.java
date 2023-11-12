@@ -9,7 +9,7 @@ public class ObjectVaccine extends SuperObject{
         name = "Vaccine";
         try{
             image = ImageIO.read(getClass().getResourceAsStream("res/object/vaccine.png")); //just a placeholder
-            uTool.scaleImage(image, gp.tileSize, gp.tileSize);
+            image = uTool.scaleImage(image, gp.tileSize, gp.tileSize);
         }catch(IOException e){
             e.printStackTrace();
         }
