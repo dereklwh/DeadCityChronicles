@@ -67,6 +67,7 @@ public class GamePanel extends JPanel implements Runnable{
     public final int playState = 1;
     public final int pauseState = 2;
     public final int settingState = 3;
+    public final int gameOverState = 4;
     public EventHandler eHandler = new EventHandler(this);
 
     public GamePanel() {
@@ -91,6 +92,13 @@ public class GamePanel extends JPanel implements Runnable{
        setFullScreen();
     }
 
+    public void retry(){
+        player.setDefaultValues();
+        player.restorePos();
+        aSetter.setObject();
+        aSetter.setZombie();
+
+    }
     public void setFullScreen(){
         GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
         GraphicsDevice gd = ge.getDefaultScreenDevice();

@@ -36,7 +36,7 @@ public class Player extends Entity{
     }
 
     public void setDefaultValues(){
-        worldX = gp.tileSize * 23;
+        worldX = gp.tileSize * 39;
         worldY = gp.tileSize * 21;
         speed = 5;
         direction = "down";
@@ -45,6 +45,18 @@ public class Player extends Entity{
         maxLife = 6; //2 lives = 1 heart
         life = maxLife;
     }
+
+    public void restorePos(){
+        worldX = gp.tileSize * 39;
+        worldY = gp.tileSize * 21;
+        direction = "down";
+        life = maxLife;
+        invincible = false;
+        hasKey = 0;
+        hasVaccine = 0;
+
+    }
+
 
     public void getPlayerImage(){
         /*try{
@@ -128,7 +140,13 @@ public class Player extends Entity{
                 }
                 spriteCounter = 0;
                 }
+
         }
+
+        if (life <=0){
+                gp.gameState = gp.gameOverState;
+                //play gameover sound effect
+            }
        
         //Check tile collision
         collisionOn = false;
