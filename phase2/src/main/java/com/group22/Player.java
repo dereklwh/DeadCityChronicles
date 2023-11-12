@@ -97,28 +97,39 @@ public class Player extends Entity{
     public void update(){
         int deltaX = 0;
         int deltaY = 0;
-        if(keyH.upPressed){
-            deltaY = -speed;
-            direction = "up";
-        }
-        else if(keyH.downPressed){
-            deltaY = speed;
-            direction = "down";
-        }
-        else if(keyH.leftPressed){
-            deltaX = -speed;
-            direction = "left";
-        }
-        else if(keyH.rightPressed){
-            deltaX = speed;
-            direction = "right";
-        }
-        //else {
-        	//direction = "stop";
+        if (keyH.upPressed == true || keyH.downPressed == true || 
+            keyH.leftPressed == true || keyH.rightPressed == true ){
+                if(keyH.upPressed){
+                    deltaY = -speed;
+                    direction = "up";
+                }
+                else if(keyH.downPressed){
+                    deltaY = speed;
+                    direction = "down";
+                }
+                else if(keyH.leftPressed){
+                    deltaX = -speed;
+                    direction = "left";
+                }
+                else if(keyH.rightPressed){
+                    deltaX = speed;
+                    direction = "right";
+                }
 
-            
-        //}
-
+                spriteCounter++;
+                if(spriteCounter > 12){ //player image changes every 12 frames
+                    if(spriteNum == 1) {
+                    spriteNum = 2;
+                }else if (spriteNum == 2){
+                    spriteNum = 3;
+                }
+                else if (spriteNum == 3){
+                    spriteNum = 1;
+                }
+                spriteCounter = 0;
+                }
+        }
+       
         //Check tile collision
         collisionOn = false;
         gp.cChecker.checkTile(this);
@@ -132,7 +143,6 @@ public class Player extends Entity{
 
         //Check event
         //gp.eHandler.checkEvent();
-
 
         if(collisionOn == false){
             worldX += deltaX;
@@ -151,20 +161,6 @@ public class Player extends Entity{
                     worldX += speed;
                     break;
             }*/
-        }
-
-
-        spriteCounter++;
-        if(spriteCounter > 12){ //player image changes every 12 frames
-            if(spriteNum == 1) {
-                spriteNum = 2;
-            }else if (spriteNum == 2){
-                spriteNum = 3;
-            }
-            else if (spriteNum == 3){
-                spriteNum = 1;
-            }
-            spriteCounter = 0;
         }
 
         if (invincible ==true){
