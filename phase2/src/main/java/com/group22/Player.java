@@ -246,7 +246,8 @@ public class Player extends Entity{
             case "stop":
             	image = stop;
         }
-        g2.drawImage(image, screenX, screenY, gp.tileSize, gp.tileSize, null);
+        //g2.drawImage(image, screenX, screenY, gp.tileSize, gp.tileSize, null);
+        g2.drawImage(image, screenX, screenY, null);
     }
         public void interactNPC(int i){
             if(i != 999) {
