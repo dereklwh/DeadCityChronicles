@@ -128,6 +128,9 @@ public class Player extends Entity{
         int zombieIndex = gp.cChecker.checkEntity(this, gp.zombie);
         interactNPC(zombieIndex);
 
+        //Check event
+        //gp.eHandler.checkEvent();
+
 
         if(collisionOn == false){
             worldX += deltaX;
@@ -196,6 +199,10 @@ public class Player extends Entity{
                         gp.stopMusic();
 
                     }
+                break;
+                case "Trap":
+                 life -=1;
+                 gp.playSE(3);
                 break;
            }
         }
