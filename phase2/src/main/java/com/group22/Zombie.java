@@ -105,6 +105,7 @@ public class Zombie extends Entity{
 
         if (playerCollision){
             collisionOn = true;
+            gp.player.isDamaged = true;
             //handle what happens when collision
             System.out.println("get rekt");
         }

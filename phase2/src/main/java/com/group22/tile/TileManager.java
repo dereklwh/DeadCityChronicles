@@ -6,7 +6,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import javax.imageio.ImageIO;
 import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
 
 import com.group22.GamePanel;
 import com.group22.UtilityTool;

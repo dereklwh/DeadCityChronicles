@@ -7,10 +7,6 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
 
-import com.group22.ObjectKey;
-import com.group22.ObjectHeart;
-import com.group22.ObjectVaccine;
-
 public class UI {
     
     GamePanel gp;
