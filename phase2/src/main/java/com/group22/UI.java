@@ -72,13 +72,13 @@ public class UI {
             playTime += (double)1/60;
             g2.drawString("Time: " + dFormat.format(playTime), gp.tileSize*15, 60);
 
-            //drawPlayerLife();
+            drawPlayerLife();
         }
         if (gp.gameState == gp.pauseState){
             drawPauseScreen();
             g2.drawString("Time: " + dFormat.format(playTime), gp.tileSize*15, 60);
 
-            //drawPlayerLife();
+            drawPlayerLife();
 
         }
         if (gp.gameState == gp.settingState){
@@ -151,28 +151,29 @@ public class UI {
     }
 
     public void drawPlayerLife(){
-        int x = gp.tileSize/2;
+
+        int x = gp.tileSize*7;
         int y = gp.tileSize/2;
         int i = 0;
 
         //draw max
         while(i < gp.player.maxLife/2){
-            //g2.drawImage(heart_blank, x, y, null);
+            g2.drawImage(heart_blank, x, y, null);
             i++;
             x += gp.tileSize;
         }
 
         //reset values
-        x = gp.tileSize/2;
+        x = gp.tileSize*7;
         y = gp.tileSize/2;
         i = 0;
 
         //draw current life
         while(i < gp.player.life){
-            //g2.drawImage(heart_half, x, y, null);
+            g2.drawImage(heart_half, x, y, null);
             i++;
             if(i < gp.player.life){
-                //g2.drawImage(heart_full, x, y, null);
+                g2.drawImage(heart_full, x, y, null);
             }
             i++;
             x += gp.tileSize;
