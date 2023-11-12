@@ -254,7 +254,7 @@ public class CollisionChecker {
     //             gp.player.solidArea.y = gp.player.solidAreaDefaultY;
     // }
 
-    public void checkPlayer(Entity entity, int nextX, int nextY) {
+    public boolean checkPlayer(Entity entity, int nextX, int nextY) {
         // Calculate the entity's next solid area position
         Rectangle nextSolidArea = new Rectangle(nextX + entity.solidArea.x,
                                                 nextY + entity.solidArea.y,
@@ -268,9 +268,7 @@ public class CollisionChecker {
                                                   gp.player.solidArea.height);
     
         // Check if the entity's next solid area intersects with the player's solid area
-        entity.collisionOn = nextSolidArea.intersects(playerSolidArea);
+        return nextSolidArea.intersects(playerSolidArea);
     }
     
 }
-
-

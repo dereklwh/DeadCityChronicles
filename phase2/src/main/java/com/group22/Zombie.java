@@ -3,7 +3,6 @@ package com.group22;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.Collections;
 
 import javax.imageio.ImageIO;
@@ -101,7 +100,13 @@ public class Zombie extends Entity{
 
         // New collision check
         collisionOn = gp.cChecker.checkCollision(this, nextX, nextY);
-        // gp.cChecker.checkPlayer(this, nextX, nextY);
+        boolean playerCollision = gp.cChecker.checkPlayer(this, nextX, nextY);
+
+        if (playerCollision){
+            collisionOn = true;
+            //handle what happens when collision
+            System.out.println("get rekt");
+        }
 
         if (collisionOn) {
             // Check for viable alternative paths
@@ -119,6 +124,8 @@ public class Zombie extends Entity{
             worldX = nextX;
             worldY = nextY;
         }
+
+
 
         spriteCounter++;
         if(spriteCounter > 12){ //zombie image changes every 12 frames
