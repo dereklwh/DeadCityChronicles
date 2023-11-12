@@ -20,4 +20,7 @@ public class Entity {
     public int maxLife;
     public int life;
 
+    public boolean invincible = false;
+    public int invincibleCounter;
+
 }

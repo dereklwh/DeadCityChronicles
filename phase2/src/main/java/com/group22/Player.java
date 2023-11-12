@@ -164,7 +164,16 @@ public class Player extends Entity{
             }
             spriteCounter = 0;
         }
+
+        if (invincible ==true){
+            invincibleCounter++;
+            if(invincibleCounter > 60){
+                invincible = false;
+                invincibleCounter =0;
+            }
+        }
     }
+
 
     public void pickUpObject(int i){
         if(i != 999){
@@ -268,7 +277,11 @@ public class Player extends Entity{
     }
         public void interactNPC(int i){
             if(i != 999) {
-                System.out.println("hitting npc" + i);
+                if(invincible == false){
+                    life -=1;
+                    invincible = true;
+                }
+                //System.out.println("hitting npc" + i);
             }
         }
     
