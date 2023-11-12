@@ -83,10 +83,14 @@ public class UI {
         }
         if (gp.gameState == gp.settingState){
             drawSettingScreen();
+            g2.drawString("Time: " + dFormat.format(playTime), gp.tileSize*15, 60);
+
         }
 
         if (gp.gameState == gp.gameOverState){
             drawGameOverScreen();
+            playTime =0;
+
         }
 
         if (gameFinished == true){
@@ -332,7 +336,6 @@ public class UI {
         if(commandNum ==0){
             g2.drawString(">", x -40, y);
         }
-
 
         //Back to title
         text = "Quit";
