@@ -70,7 +70,7 @@ public class GamePanel extends JPanel implements Runnable{
     public final int settingState = 3;
     public EventHandler eHandler = new EventHandler(this);
 
-    public GamePanel() throws IOException {
+    public GamePanel() {
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
         //this.setBackground(Color.black);
         this.setBackground(new java.awt.Color(71, 53, 44));

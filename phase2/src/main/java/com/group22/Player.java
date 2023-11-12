@@ -117,9 +117,6 @@ public class Player extends Entity{
         collisionOn = false;
         gp.cChecker.checkTile(this);
 
-<<<<<<< HEAD
-        gp.eHandler.checkEvent();
-=======
         // Check object collision
         int objectIndex = gp.cChecker.checkObject(this, true);
         pickUpObject(objectIndex);
@@ -127,7 +124,6 @@ public class Player extends Entity{
         int zombieIndex = gp.cChecker.checkEntity(this, gp.zombie);
         interactNPC(zombieIndex);
 
->>>>>>> 4e789fb5fc253b88d048beaa27f95186d9e501ef
 
         if(collisionOn == false){
             worldX += deltaX;
