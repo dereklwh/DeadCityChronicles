@@ -187,6 +187,13 @@ public class Player extends Entity{
                     }*/
 
                    break;
+                case "Door":
+                    if (hasVaccine == 2){
+                        gp.ui.gameFinished = true;
+                        gp.stopMusic();
+                        
+                    }
+                break;
            }
         }
     }
