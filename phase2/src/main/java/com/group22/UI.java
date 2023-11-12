@@ -5,6 +5,9 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
 import java.text.DecimalFormat;
+
+import javax.imageio.ImageIO;
+
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
@@ -21,6 +24,13 @@ public class UI {
     BufferedImage vImage;
 
     BufferedImage medImage;
+    
+    private BufferedImage titleImage;  
+    private BufferedImage startButton; 
+    private BufferedImage settingButton;
+    private BufferedImage ruleButton;
+    private BufferedImage exitButton;   
+    private BufferedImage scaledTitle,scaledStart,scaledSetting,scaledRule,scaledExit;
 
     public boolean messageOn = false;
     public String message = "";
@@ -37,7 +47,7 @@ public class UI {
         
         
         try {
-        	InputStream is = getClass().getResourceAsStream("/font/x12y16pxMaruMonica.ttf");
+        	InputStream is = getClass().getResourceAsStream("font/x12y16pxMaruMonica.ttf");
 			maruMonica = Font.createFont(Font.TRUETYPE_FONT, is);
 		} catch (FontFormatException e) {
 			e.printStackTrace();
@@ -45,6 +55,19 @@ public class UI {
 			e.printStackTrace();
 			maruMonica = new Font("Arial", Font.PLAIN, 20);
 		}
+        
+        //new add get all the image for title page
+        try {
+            titleImage = ImageIO.read(getClass().getResourceAsStream("res/object/title.png"));
+            startButton = ImageIO.read(getClass().getResourceAsStream("res/object/start.png"));
+            ruleButton = ImageIO.read(getClass().getResourceAsStream("res/object/rule.png"));
+            settingButton = ImageIO.read(getClass().getResourceAsStream("res/object/setting.png"));
+            exitButton = ImageIO.read(getClass().getResourceAsStream("res/object/exit.png"));
+            
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        
 
         //HUD
 
@@ -155,6 +178,43 @@ public class UI {
             }
         }
         
+    }
+    
+    //method for scale the image
+    private BufferedImage scaleImage(BufferedImage originalImage, int targetWidth, int targetHeight) {
+        BufferedImage scaledImage = new BufferedImage(targetWidth, targetHeight, BufferedImage.TYPE_INT_ARGB);
+        Graphics2D g2d = scaledImage.createGraphics();
+        g2d.drawImage(originalImage, 0, 0, targetWidth, targetHeight, null);
+        g2d.dispose();
+        return scaledImage;
+    }
+
+    
+    //draw title screen
+    public void drawTitleScreen(Graphics2D g2) {
+    	int x = gp.screenWidth/4;
+    	int y = gp.tileSize/2;
+    	
+    	BufferedImage originalImage = titleImage;
+    	BufferedImage scaledTitle = scaleImage(originalImage,480,270); //you can set the pixel size of the image
+    	BufferedImage originalImage1 = startButton;
+    	BufferedImage scaledStart = scaleImage(originalImage1,70,33);
+    	BufferedImage originalImage2 = ruleButton;
+    	BufferedImage scaledRule = scaleImage(originalImage2,70,33);
+    	BufferedImage originalImage3 = settingButton;
+    	BufferedImage scaledSetting = scaleImage(originalImage3,70,33);
+    	BufferedImage originalImage4 = exitButton;
+    	BufferedImage scaledExit = scaleImage(originalImage4,70,33);
+    	// draw the title
+        g2.drawImage(scaledTitle, x, y, null);
+        //draw start button
+        g2.drawImage(scaledStart, x+gp.tileSize*4, y+gp.tileSize*6, null);
+        //draw rule button
+        g2.drawImage(scaledRule, x+gp.tileSize*4, y+gp.tileSize*7, null);
+        //draw setting button
+        g2.drawImage(scaledSetting, x+gp.tileSize*4, y+gp.tileSize*8, null);
+        //draw exit button
+        g2.drawImage(scaledExit, x+gp.tileSize*4, y+gp.tileSize*9, null);
     }
 
     public void drawPlayerLife(){
