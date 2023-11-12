@@ -13,6 +13,7 @@ public class Zombie extends Entity{
     int worldX, worldY;
     int speed;
     String direction;
+    private int zombieType;
 
     BufferedImage up1, up2, up3,up4, down1,down2,down3, down4,left1,left2,left3,left4,right1, right2,right3,right4;
 
@@ -20,8 +21,9 @@ public class Zombie extends Entity{
     public final int screenY;
     public int actionLockCounter = 0;
 
-    public Zombie(GamePanel gp) {
+    public Zombie(GamePanel gp, int zombieType) {
         this.gp = gp;
+        this.zombieType = zombieType;
 
 
         screenX = gp.screenWidth/2 - (gp.tileSize);
@@ -45,29 +47,33 @@ public class Zombie extends Entity{
     // Load images for zombie
     public void getZombieImage() {
         try {
-            up1 = ImageIO.read(getClass().getResourceAsStream("res/zombie1/zombie1_run_right0.png"));
-            up2 = ImageIO.read(getClass().getResourceAsStream("res/zombie1/zombie1_run_right1.png"));
-            up3 = ImageIO.read(getClass().getResourceAsStream("res/zombie1/zombie1_run_right2.png"));
-            up4 = ImageIO.read(getClass().getResourceAsStream("res/zombie1/zombie1_run_right3.png"));
-         
-            down1 = ImageIO.read(getClass().getResourceAsStream("res/zombie1/zombie1_run_left0.png"));
-            down2 = ImageIO.read(getClass().getResourceAsStream("res/zombie1/zombie1_run_left1.png"));
-            down3 = ImageIO.read(getClass().getResourceAsStream("res/zombie1/zombie1_run_left2.png"));
-            down4 = ImageIO.read(getClass().getResourceAsStream("res/zombie1/zombie1_run_left3.png"));
-
-            left1 = ImageIO.read(getClass().getResourceAsStream("res/zombie1/zombie1_run_left0.png"));
-            left2 = ImageIO.read(getClass().getResourceAsStream("res/zombie1/zombie1_run_left1.png"));
-            left3 = ImageIO.read(getClass().getResourceAsStream("res/zombie1/zombie1_run_left2.png"));
-            left4 = ImageIO.read(getClass().getResourceAsStream("res/zombie1/zombie1_run_left3.png"));
+            String basePath = "res/zombie" + zombieType + "/zombie" + zombieType + "_";
+            System.out.println(basePath);
+    
+            up1 = ImageIO.read(getClass().getResourceAsStream(basePath + "run_right0.png"));
+            up2 = ImageIO.read(getClass().getResourceAsStream(basePath + "run_right1.png"));
+            up3 = ImageIO.read(getClass().getResourceAsStream(basePath + "run_right2.png"));
+            up4 = ImageIO.read(getClass().getResourceAsStream(basePath + "run_right3.png"));
             
-            right1 = ImageIO.read(getClass().getResourceAsStream("res/zombie1/zombie1_run_right0.png"));
-            right2 = ImageIO.read(getClass().getResourceAsStream("res/zombie1/zombie1_run_right1.png"));
-            right3 = ImageIO.read(getClass().getResourceAsStream("res/zombie1/zombie1_run_right2.png"));
-            right4 = ImageIO.read(getClass().getResourceAsStream("res/zombie1/zombie1_run_right3.png"));
+            down1 = ImageIO.read(getClass().getResourceAsStream(basePath + "run_left0.png"));
+            down2 = ImageIO.read(getClass().getResourceAsStream(basePath + "run_left1.png"));
+            down3 = ImageIO.read(getClass().getResourceAsStream(basePath + "run_left2.png"));
+            down4 = ImageIO.read(getClass().getResourceAsStream(basePath + "run_left3.png"));
+    
+            left1 = ImageIO.read(getClass().getResourceAsStream(basePath + "run_left0.png"));
+            left2 = ImageIO.read(getClass().getResourceAsStream(basePath + "run_left1.png"));
+            left3 = ImageIO.read(getClass().getResourceAsStream(basePath + "run_left2.png"));
+            left4 = ImageIO.read(getClass().getResourceAsStream(basePath + "run_left3.png"));
+            
+            right1 = ImageIO.read(getClass().getResourceAsStream(basePath + "run_right0.png"));
+            right2 = ImageIO.read(getClass().getResourceAsStream(basePath + "run_right1.png"));
+            right3 = ImageIO.read(getClass().getResourceAsStream(basePath + "run_right2.png"));
+            right4 = ImageIO.read(getClass().getResourceAsStream(basePath + "run_right3.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+    
 
     public void update() {
             int xDistance = gp.player.worldX - worldX;
@@ -132,7 +138,7 @@ public class Zombie extends Entity{
             }
             spriteCounter = 0;
         }
-        System.out.printf("the collision is %b\n", collisionOn);
+        // System.out.printf("the collision is %b\n", collisionOn);
     }
 
     public void draw(Graphics2D g2) {
