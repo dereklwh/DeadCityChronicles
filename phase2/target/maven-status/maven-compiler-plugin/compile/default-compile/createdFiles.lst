@@ -5,6 +5,7 @@ com\group22\SuperObject.class
 com\group22\UI.class
 com\group22\ObjectVaccine.class
 com\group22\Player.class
+com\group22\EventRect.class
 com\group22\Zombie.class
 com\group22\GamePanel.class
 com\group22\EventHandler.class

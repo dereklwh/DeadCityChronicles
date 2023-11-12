@@ -43,6 +43,17 @@ public class EventHandler {
         if(canTouchEvent == true){
             //add stuff that hit the player here and also heal player
             //eg: if(hit(27, 16) == true) damage();
+            //above are our trap objects locations
+            if(hit(25, 13) == true) damage();
+            if(hit(60, 11) == true) damage();
+            if(hit(51, 13) == true) damage();
+            if(hit(62, 27) == true) damage();
+            if(hit(40, 34) == true) damage();
+            if(hit(21, 35) == true) damage();
+            if(hit(51, 34) == true) damage();
+            if(hit(41, 14) == true) damage();
+            if(hit(21, 14) == true) damage();
+            if(hit(22, 28) == true) damage();
         }
     }
 
@@ -79,6 +90,7 @@ public class EventHandler {
         gp.player.life += 1;
         gp.ui.showMessage("boosted health");
         gp.playSE(1);
+        canTouchEvent = false;
     }
 
 }

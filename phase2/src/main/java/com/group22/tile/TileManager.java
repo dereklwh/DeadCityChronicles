@@ -534,6 +534,7 @@ public class TileManager{
         br.close();
 
         }catch(Exception e){
+            e.printStackTrace();
         }
     }
 

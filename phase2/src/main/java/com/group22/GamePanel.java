@@ -49,7 +49,7 @@ public class GamePanel extends JPanel implements Runnable{
     //Entity and Object
     public Player player = new Player(this, keyH);
     public Zombie zombie[] = new Zombie[5];
-    public SuperObject obj[] = new SuperObject[10]; //how many objects we can show
+    public SuperObject obj[] = new SuperObject[20]; //how many objects we can show
 
     //Tile
     TileManager tileM = new TileManager(this);
