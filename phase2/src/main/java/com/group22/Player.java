@@ -113,9 +113,11 @@ public class Player extends Entity{
             deltaX = speed;
             direction = "right";
         }
-        else {
-        	direction = "stop";
-        }
+        //else {
+        	//direction = "stop";
+
+            
+        //}
 
         //Check tile collision
         collisionOn = false;
@@ -210,8 +212,11 @@ public class Player extends Entity{
                     }
                 break;
                 case "Trap":
-                 life -=1;
-                 gp.playSE(3);
+                 if(invincible == false){
+                    life -=1;
+                    gp.playSE(3);
+                    invincible = true;
+                }
                 break;
            }
         }
