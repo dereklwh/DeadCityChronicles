@@ -73,7 +73,7 @@ public class TileManager{
 
             /*tile[8] = new Tile();
             tile[8].image = ImageIO.read(getClass().getResourceAsStream("../res/tiles/road/road_ru_corner.png"));**/
-        setup(8, "ru_corner", false);
+        setup(8, "road_ru_corner", false);
 
             /*tile[9] = new Tile();
             tile[9].image = ImageIO.read(getClass().getResourceAsStream("../res/tiles/road/road_T_down.png"));**/
