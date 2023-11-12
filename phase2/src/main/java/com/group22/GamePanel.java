@@ -84,7 +84,8 @@ public class GamePanel extends JPanel implements Runnable{
         aSetter.setZombie();
         playMusic(0);
 
-        gameState = playState;
+        gameState = titleState;
+        //gameState = playState;
 
         tempScreen = new BufferedImage(screenWidth, screenHeight, BufferedImage.TYPE_INT_ARGB);
         g2 = (Graphics2D)tempScreen.getGraphics();
@@ -157,7 +158,11 @@ public class GamePanel extends JPanel implements Runnable{
 
         tileM.draw(g2);
         //Title Screen
-        if(gameState == titleState) {}
+        if(gameState == titleState) {
+        	ui.drawTitleScreen(g2);
+        }
+        
+        else {
         //Object
         for(int i = 0; i < obj.length; i++){
             if(obj[i] != null){
@@ -174,7 +179,7 @@ public class GamePanel extends JPanel implements Runnable{
         }
 
         //UI
-        ui.draw(g2);
+        ui.draw(g2);}
     }
 
     public void drawToScreen(){
