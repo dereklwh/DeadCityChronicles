@@ -61,6 +61,26 @@ public class KeyHandler implements KeyListener {
         if (code == KeyEvent.VK_ENTER){
             enterPressed = true;
         }
+
+        int maxCommandNum =0;
+        switch(gp.ui.subState){
+            case 0: maxCommandNum = 4;
+        }
+
+        if (code == KeyEvent.VK_W){
+            gp.ui.commandNum--;
+            //play sound effect
+            if(gp.ui.commandNum <0){
+                gp.ui.commandNum = maxCommandNum;
+            }
+        }
+        if (code == KeyEvent.VK_S){
+            gp.ui.commandNum++;
+
+            if(gp.ui.commandNum > maxCommandNum){
+                gp.ui.commandNum =0;
+            }
+        }
     }
 
     public void pauseState(int code){

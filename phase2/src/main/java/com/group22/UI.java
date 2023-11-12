@@ -157,10 +157,12 @@ public class UI {
             case 0:
                 setting_top(frameX, frameY);
                 break;
-        
-            default:
+            case 1:
+                fullScreenNoti(frameX, frameY);
                 break;
         }
+
+        gp.keyH.enterPressed = false;
 
     }
 
@@ -179,6 +181,15 @@ public class UI {
         g2.drawString("Fullscreen", textX, textY);
         if(commandNum ==0){
             g2.drawString(">", textX -25, textY);
+            if(gp.keyH.enterPressed == true){
+                if(gp.fullScreenOn ==false){
+                    gp.fullScreenOn = true;
+                }
+                else if  (gp.fullScreenOn ==true){
+                    gp.fullScreenOn = false;
+                }
+                subState = 1;
+            }
         }
 
         //Sound
@@ -209,6 +220,40 @@ public class UI {
             g2.drawString(">", textX -25, textY);
         }
 
+        //Fullscreen checkbox 
+        textX = frameX + (int)gp.tileSize*5;
+        textY = frameY + gp.tileSize*2 + 24;
+        g2.setStroke(new BasicStroke(3));
+        g2.drawRect(textX, textY, 24, 24);
+        if(gp.fullScreenOn == true){
+            g2.fillRect(textX, textY, 24, 24);
+        }
+
+        //Volume
+        textY += gp.tileSize;
+        g2.drawRect(textX, textY, 120, 24);
+
+    }
+
+    public void fullScreenNoti(int frameX, int frameY){
+        int textX = frameX + gp.tileSize;
+        int textY = frameY + gp.tileSize*3;
+
+        String text = "The change will take \neffect after restarting \nthe game.";
+        for(String line: text.split("\n")){
+            g2.drawString(line, textX-35, textY);
+            textY += 40;
+        }
+
+        //back
+        textY = frameY + gp.tileSize*9;
+        g2.drawString("Back", textX, textY);
+        if (commandNum ==0){
+            g2.drawString(">", textX-25, textY);
+            if(gp.keyH.enterPressed==true){
+                subState =0;
+            }
+        }
     }
 
     public int getXforCenteredText(String text){
