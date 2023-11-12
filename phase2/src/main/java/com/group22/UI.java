@@ -64,6 +64,9 @@ public class UI {
             g2.drawString("Time: " + dFormat.format(playTime), gp.tileSize*15, 60);
 
         }
+        if (gp.gameState == gp.settingState){
+            drawSettingScreen();
+        }
 
         if (gameFinished == true){
 
@@ -137,9 +140,27 @@ public class UI {
         g2.drawString(text, x, y);
     }
 
+    public void drawSettingScreen(){
+        g2.setColor(Color.white);
+        g2.setFont(arial_40);
+
+        int frameX = gp.tileSize*6;
+        int frameY = gp.tileSize;
+        int frameWidth = gp.tileSize*8;
+        int frameHeight = gp.tileSize*10;
+        drawSubWindow(frameX, frameY, frameWidth, frameHeight);
+
+    }
+
     public int getXforCenteredText(String text){
         int length = (int)g2.getFontMetrics().getStringBounds(text, g2).getWidth();
         int x = gp.screenWidth/2 - length/2;
         return x;
+    }
+
+    public void drawSubWindow(int x, int y, int width, int height){
+        Color c = new Color(71, 53, 44);
+        g2.setColor(c);
+        g2.fillRoundRect(x, y, width, height, 35, 35);
     }
 }
