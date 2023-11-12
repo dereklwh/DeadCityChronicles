@@ -4,6 +4,8 @@ import java.awt.*;
 
 public class EventHandler {
     GamePanel gp;
+    int previousEventX, previousEventY;
+    boolean canTouchEvent = true;
     EventRect eventRect[][];
     public EventHandler(GamePanel gp){
         this.gp = gp;
@@ -30,8 +32,18 @@ public class EventHandler {
     }
 
     public void checkEvent(){
-        //add stuff that hit the player here and also heal player
-        //eg: if(hit(27, 16) == true) damage();
+        //check if the player character is more than 1 tile away from the last event
+        int xDistance = Math.abs(gp.player.worldX - previousEventX);
+        int yDisance = Math.abs(gp.player.worldY - previousEventY);
+        int distance = Math.max(xDistance, yDisance);
+        if(distance > gp.tileSize){
+            canTouchEvent = true;
+        }
+
+        if(canTouchEvent == true){
+            //add stuff that hit the player here and also heal player
+            //eg: if(hit(27, 16) == true) damage();
+        }
     }
 
     public boolean hit(int col, int row){
@@ -43,6 +55,9 @@ public class EventHandler {
 
         if(gp.player.solidArea.intersects(eventRect[col][row])){
             hit = true;
+
+            previousEventX = gp.player.worldX;
+            previousEventY = gp.player.worldY;
         }
 
         gp.player.solidArea.x = gp.player.solidAreaDefaultX;
@@ -57,6 +72,7 @@ public class EventHandler {
         gp.player.life -= 1;
         gp.ui.showMessage("You're getting hurt");
         gp.playSE(3);
+        canTouchEvent = false;
     }
 
     public void heal(){
