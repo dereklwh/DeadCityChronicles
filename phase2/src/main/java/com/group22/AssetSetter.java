@@ -20,26 +20,26 @@ public class AssetSetter {
     public void setZombie() {
         gp.zombie[0] = new Zombie(gp, 1);
         gp.zombie[0].worldX = gp.tileSize * 23;
-        gp.zombie[0].worldY = gp.tileSize * 21;
+        gp.zombie[0].worldY = gp.tileSize * 25;
 
         gp.zombie[1] = new Zombie(gp, 2);
-        gp.zombie[1].worldX = gp.tileSize * 25;
-        gp.zombie[1].worldY = gp.tileSize * 26;
+        gp.zombie[1].worldX = gp.tileSize * 20;
+        gp.zombie[1].worldY = gp.tileSize * 20;
         gp.zombie[1].speed = 1;
 
         gp.zombie[2] = new Zombie(gp, 3);
-        gp.zombie[2].worldX = gp.tileSize * 23;
-        gp.zombie[2].worldY = gp.tileSize * 22;
+        gp.zombie[2].worldX = gp.tileSize * 20;
+        gp.zombie[2].worldY = gp.tileSize * 21;
         gp.zombie[2].speed = 5;
 
         gp.zombie[3] = new Zombie(gp, 2);
-        gp.zombie[3].worldX = gp.tileSize * 23;
-        gp.zombie[3].worldY = gp.tileSize * 21;
+        gp.zombie[3].worldX = gp.tileSize * 20;
+        gp.zombie[3].worldY = gp.tileSize * 17;
         gp.zombie[3].speed = 1;
 
         gp.zombie[4] = new Zombie(gp, 3);
-        gp.zombie[4].worldX = gp.tileSize * 23;
-        gp.zombie[4].worldY = gp.tileSize * 21;
+        gp.zombie[4].worldX = gp.tileSize * 20;
+        gp.zombie[4].worldY = gp.tileSize * 18;
         gp.zombie[4].speed = 5;
 
     }
