@@ -71,14 +71,14 @@ public class KeyHandler implements KeyListener {
 
         if (code == KeyEvent.VK_W){
             gp.ui.commandNum--;
-            //play sound effect
+            gp.playSE(5);
             if(gp.ui.commandNum <0){
                 gp.ui.commandNum = maxCommandNum;
             }
         }
         if (code == KeyEvent.VK_S){
             gp.ui.commandNum++;
-
+            gp.playSE(5);
             if(gp.ui.commandNum > maxCommandNum){
                 gp.ui.commandNum =0;
             }
@@ -88,7 +88,8 @@ public class KeyHandler implements KeyListener {
                 if(gp.ui.commandNum ==1 && gp.music.volumeScale > 0){
                     gp.music.volumeScale--;
                     gp.music.checkVolume();
-                    //play sound effect
+                    gp.playSE(5);
+
                 }
             }
         }
@@ -97,7 +98,7 @@ public class KeyHandler implements KeyListener {
                 if(gp.ui.commandNum ==1 && gp.music.volumeScale < 5){
                     gp.music.volumeScale++;
                     gp.music.checkVolume();
-                    //play sound effect
+                    gp.playSE(5);
                 }
             }
         }
