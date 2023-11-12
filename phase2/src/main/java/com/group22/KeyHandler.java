@@ -7,7 +7,7 @@ public class KeyHandler implements KeyListener {
 
     GamePanel gp;
 
-    public  boolean upPressed, downPressed, leftPressed, rightPressed;
+    public  boolean upPressed, downPressed, leftPressed, rightPressed, enterPressed;
 
     public KeyHandler(GamePanel gp){
         this.gp = gp;
@@ -19,6 +19,21 @@ public class KeyHandler implements KeyListener {
     @Override
     public void keyPressed(KeyEvent e) {
         int code = e.getKeyCode();
+
+        if (gp.gameState == gp.playState){
+            playState(code);
+        }
+
+        else if (gp.gameState == gp.pauseState){
+            pauseState(code);
+        }
+
+        else if (gp.gameState == gp.settingState){
+            settingState(code);
+        }
+    }
+
+    public void playState(int code){
         if(code == KeyEvent.VK_W || code == KeyEvent.VK_UP){
             upPressed = true;
         }
@@ -32,22 +47,28 @@ public class KeyHandler implements KeyListener {
             downPressed = true;
         }
         if(code == KeyEvent.VK_P){
-            if(gp.gameState == gp.playState){
-                gp.gameState = gp.pauseState;
-            }
-            else if (gp.gameState == gp.pauseState){
-                gp.gameState = gp.playState;
-            }
+            gp.gameState = gp.pauseState;
         }
         if(code == KeyEvent.VK_ESCAPE){
-            if(gp.gameState == gp.playState){
-                gp.gameState = gp.settingState;
-            }
-            else if (gp.gameState == gp.settingState){
-                gp.gameState = gp.playState;
-            }
+            gp.gameState = gp.settingState;
         }
     }
+
+    public void settingState(int code){
+        if(code == KeyEvent.VK_ESCAPE){
+            gp.gameState = gp.playState;
+        }
+        if (code == KeyEvent.VK_ENTER){
+            enterPressed = true;
+        }
+    }
+
+    public void pauseState(int code){
+        if(code == KeyEvent.VK_P){
+            gp.gameState = gp.playState;
+        }
+    }
+
 
     @Override
     public void keyReleased(KeyEvent e) {

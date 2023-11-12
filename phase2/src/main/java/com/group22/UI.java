@@ -24,6 +24,7 @@ public class UI {
     public String message = "";
     int messageCounter = 0;
     public boolean gameFinished = false;
+    public int commandNum =0;
     int subState = 0;
 
     double playTime;
@@ -171,6 +172,43 @@ public class UI {
         textX = getXforCenteredText(text);
         textY = frameY + gp.tileSize;
         g2.drawString(text, textX, textY);
+
+        //Fullscreen on/off
+        textX = frameX +gp.tileSize;
+        textY += gp.tileSize*2;
+        g2.drawString("Fullscreen", textX, textY);
+        if(commandNum ==0){
+            g2.drawString(">", textX -25, textY);
+        }
+
+        //Sound
+        textY += gp.tileSize;
+        g2.drawString("Sound", textX, textY);
+        if(commandNum ==1){
+            g2.drawString(">", textX -25, textY);
+        }
+
+        //Control
+        textY += gp.tileSize;
+        g2.drawString("Control", textX, textY);
+        if(commandNum ==2){
+            g2.drawString(">", textX -25, textY);
+        }       
+
+        //Quit
+        textY += gp.tileSize;
+        g2.drawString("Quit Game", textX, textY);
+        if(commandNum ==3){
+            g2.drawString(">", textX -25, textY);
+        }
+
+        //Resume
+        textY += gp.tileSize*2;
+        g2.drawString("Resume", textX, textY);
+        if(commandNum ==4){
+            g2.drawString(">", textX -25, textY);
+        }
+
     }
 
     public int getXforCenteredText(String text){
