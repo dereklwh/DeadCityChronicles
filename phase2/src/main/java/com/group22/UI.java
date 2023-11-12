@@ -43,7 +43,7 @@ public class UI {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
-			maruMonica = new Font("Arial", Font.PLAIN, 20);
+			//maruMonica = new Font("Arial", Font.PLAIN, 20);
 		}
 
         //HUD
