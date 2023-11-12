@@ -9,7 +9,7 @@ public class ObjectTrap extends SuperObject{
         name = "Trap";
         try{
             image = ImageIO.read(getClass().getResourceAsStream("Address for Trap"));
-            uTool.scaleImage(image, gp.tileSize, gp.tileSize);
+            image = uTool.scaleImage(image, gp.tileSize, gp.tileSize);
         }catch(IOException e){
             e.printStackTrace();
         }

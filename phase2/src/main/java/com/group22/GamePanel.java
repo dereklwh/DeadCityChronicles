@@ -2,6 +2,7 @@ package com.group22;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
 
 import javax.swing.JPanel;
 
@@ -67,8 +68,9 @@ public class GamePanel extends JPanel implements Runnable{
     public final int playState = 1;
     public final int pauseState = 2;
     public final int settingState = 3;
+    public EventHandler eHandler = new EventHandler(this);
 
-    public GamePanel(){
+    public GamePanel() throws IOException {
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
         //this.setBackground(Color.black);
         this.setBackground(new java.awt.Color(71, 53, 44));

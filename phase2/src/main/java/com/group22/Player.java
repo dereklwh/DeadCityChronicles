@@ -12,8 +12,6 @@ public class Player extends Entity{
     
     public int hasKey = 0;
     public int hasVaccine = 0;
-    public int hasHeart = 0;
-
     public  int screenX;
     public  int screenY;
 
@@ -39,6 +37,10 @@ public class Player extends Entity{
         worldY = gp.tileSize * 21;
         speed = 5;
         direction = "down";
+
+        //player status
+        maxLife = 6; //2 lives = 1 heart
+        life = maxLife;
     }
 
     public void getPlayerImage(){
@@ -115,6 +117,9 @@ public class Player extends Entity{
         collisionOn = false;
         gp.cChecker.checkTile(this);
 
+<<<<<<< HEAD
+        gp.eHandler.checkEvent();
+=======
         // Check object collision
         int objectIndex = gp.cChecker.checkObject(this, true);
         pickUpObject(objectIndex);
@@ -122,6 +127,7 @@ public class Player extends Entity{
         int zombieIndex = gp.cChecker.checkEntity(this, gp.zombie);
         interactNPC(zombieIndex);
 
+>>>>>>> 4e789fb5fc253b88d048beaa27f95186d9e501ef
 
         if(collisionOn == false){
             worldX += deltaX;
@@ -179,19 +185,6 @@ public class Player extends Entity{
                     /*if (hasVaccine == 2){
                         gp.ui.gameFinished = true;
                     }*/
-
-                   break;
-               case"Heart":
-                   gp.playSE(1);
-                   hasHeart++;
-                   gp.obj[i] = null;
-                   break;
-               case "Trap":
-                   //implement later
-                   gp.playSE(3);
-                   hasHeart--;
-
-                   gp.ui.showMessage("You fell into a trap");
 
                    break;
            }
