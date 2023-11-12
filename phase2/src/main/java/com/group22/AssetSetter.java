@@ -64,6 +64,19 @@ public class AssetSetter {
         gp.obj[13].worldX = 18 * gp.tileSize;
         gp.obj[13].worldY = 11 * gp.tileSize;
 
+        gp.obj[14] = new ObjectKey(gp);
+        gp.obj[14].worldX = 60 * gp.tileSize;
+        gp.obj[14].worldY = 10 * gp.tileSize;
+
+        gp.obj[15] = new ObjectKey(gp);
+        gp.obj[15].worldX = 49 * gp.tileSize;
+        gp.obj[15].worldY = 30 * gp.tileSize;
+
+        gp.obj[16] = new ObjectKey(gp);
+        gp.obj[16].worldX = 10 * gp.tileSize;
+        gp.obj[16].worldY = 28 * gp.tileSize;
+
+
     }
 
     public void setZombie() {

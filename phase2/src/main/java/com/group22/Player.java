@@ -188,10 +188,13 @@ public class Player extends Entity{
 
                    break;
                 case "Door":
-                    if (hasVaccine == 2){
+                    if (hasKey != 3){
+                        gp.ui.showMessage("You need 3 keys to open the door");
+                    }
+                    else if (hasKey == 3){
                         gp.ui.gameFinished = true;
                         gp.stopMusic();
-                        
+
                     }
                 break;
            }
