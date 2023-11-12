@@ -29,7 +29,7 @@ public class TileManager{
 
         getTileImage();
         
-        loadMap("../res/map/world03.txt");
+        loadMap("../res/map/world02.txt");
     }
 
     // grab image from the pack

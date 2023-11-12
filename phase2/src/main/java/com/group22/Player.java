@@ -113,6 +113,7 @@ public class Player extends Entity{
             }*/
         }
 
+
         spriteCounter++;
         if(spriteCounter > 12){ //player image changes every 12 frames
             if(spriteNum == 1) {
