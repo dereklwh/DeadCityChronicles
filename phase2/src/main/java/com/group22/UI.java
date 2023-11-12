@@ -103,6 +103,10 @@ public class UI {
         g2.setFont(maruMonica);
         g2.setColor(Color.white); 
 
+        if (gp.gameState == gp.titleState){
+            drawTitleScreen();
+        }
+
         if(gp.gameState == gp.playState){
             playTime += (double)1/60;
             g2.drawString("Time: " + dFormat.format(playTime), gp.tileSize*15, 60);
@@ -204,7 +208,7 @@ public class UI {
 
     
     //draw title screen
-    public void drawTitleScreen(Graphics2D g2) {
+    public void drawTitleScreen() {
     	int x = gp.screenWidth/4;
     	int y = gp.tileSize/2;
     	

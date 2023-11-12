@@ -164,13 +164,18 @@ public class GamePanel extends JPanel implements Runnable{
     //For fullscreen
     public void drawToTempScreen(){
 
-        tileM.draw(g2);
-        //Title Screen
-        if(gameState == titleState) {
-        	ui.drawTitleScreen(g2);
+        if (gameState == titleState){
+            ui.draw(g2);
         }
+
+        else{
+            tileM.draw(g2);
+        //Title Screen
+        /*if(gameState == titleState) {
+        	ui.drawTitleScreen(g2);
+        }*/
         
-        else {
+        //else {
         //Object
         for(int i = 0; i < obj.length; i++){
             if(obj[i] != null){
@@ -187,7 +192,9 @@ public class GamePanel extends JPanel implements Runnable{
         }
 
         //UI
-        ui.draw(g2);}
+        ui.draw(g2);
+        //}
+        }
     }
 
     public void drawToScreen(){
