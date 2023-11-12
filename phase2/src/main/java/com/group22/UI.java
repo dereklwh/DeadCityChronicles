@@ -21,6 +21,8 @@ public class UI {
     BufferedImage hImage;
     BufferedImage vImage;
 
+    BufferedImage medImage;
+
     public boolean messageOn = false;
     public String message = "";
     int messageCounter = 0;
@@ -44,6 +46,9 @@ public class UI {
 
         ObjectVaccine vaccine = new ObjectVaccine(gp);
         vImage = vaccine.image;
+
+        ObjectMed med = new ObjectMed(gp);
+        medImage = med.image;
 
         ObjectHeart heart = new ObjectHeart(gp);
         heart_full = heart.image;

@@ -12,8 +12,6 @@ public class Player extends Entity{
     
     public int hasKey = 0;
     public int hasVaccine = 0;
-    public int hasHeart = 0;
-
     public  int screenX;
     public  int screenY;
 
@@ -124,6 +122,8 @@ public class Player extends Entity{
         collisionOn = false;
         gp.cChecker.checkTile(this);
 
+        gp.eHandler.checkEvent();
+
         if(collisionOn == false){
             worldX += deltaX;
             worldY += deltaY;
@@ -180,19 +180,6 @@ public class Player extends Entity{
                     /*if (hasVaccine == 2){
                         gp.ui.gameFinished = true;
                     }*/
-
-                   break;
-               case"Heart":
-                   gp.playSE(1);
-                   hasHeart++;
-                   gp.obj[i] = null;
-                   break;
-               case "Trap":
-                   //implement later
-                   gp.playSE(3);
-                   hasHeart--;
-
-                   gp.ui.showMessage("You fell into a trap");
 
                    break;
            }
