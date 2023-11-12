@@ -20,7 +20,7 @@ public class TileManager{
     //need to create the map package and import data text file into pack.
     public int mapTileNum[][];
 
-    public TileManager(GamePanel gp) throws IOException {
+    public TileManager(GamePanel gp){
 
         this.gp = gp;
         tile = new Tile[200]; //create 10 kinds of tiles, such as water tile,wall tile
@@ -34,7 +34,7 @@ public class TileManager{
     }
 
     // grab image from the pack
-    public void getTileImage() throws IOException {
+    public void getTileImage(){
         //tile[0] = new Tile();
         //tile[0].image = ImageIO.read(getClass().getResourceAsStream("../res/tiles/ground1.png"));
         setup(0, "ground1", false);
@@ -140,7 +140,7 @@ public class TileManager{
             /*tile[22] = new Tile();
             tile[22].image = ImageIO.read(getClass().getResourceAsStream("../res/tiles/haystack/haystack1.png"));
             tile[22].collision = true;*/
-        setup(21, "haystack1", true);
+        setup(22, "haystack1", true);
 
             /*tile[23] = new Tile();
             tile[23].image = ImageIO.read(getClass().getResourceAsStream("../res/tiles/haystack/haystack2.png"));
@@ -501,7 +501,7 @@ public class TileManager{
            tile[index].collision = collision;
         }catch(IOException e){
             e.printStackTrace();
-        }
+         }
     }
 
     //load the map from the text you created
@@ -562,7 +562,9 @@ public class TileManager{
                 worldY + gp.tileSize > gp.player.worldY - gp.player.screenY &&
                 worldY - gp.tileSize < gp.player.worldY + gp.player.screenY){
 
-                g2.drawImage(tile[tileNum].image,screenX,screenY/*gp.tileSize,gp.tileSize*/,null);
+                //g2.drawImage(tile[tileNum].image,screenX,screenY/*gp.tileSize,gp.tileSize*/,null);
+                g2.drawImage(tile[tileNum].image,screenX,screenY ,null);
+
             }
             
             worldCol++;

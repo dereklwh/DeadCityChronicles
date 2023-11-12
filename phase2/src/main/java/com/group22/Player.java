@@ -113,16 +113,21 @@ public class Player extends Entity{
         	direction = "stop";
         }
 
-        // Check object collision
-
-        int objectIndex = gp.cChecker.checkObject(this, true);
-        pickUpObject(objectIndex);
-
         //Check tile collision
         collisionOn = false;
         gp.cChecker.checkTile(this);
 
+<<<<<<< HEAD
         gp.eHandler.checkEvent();
+=======
+        // Check object collision
+        int objectIndex = gp.cChecker.checkObject(this, true);
+        pickUpObject(objectIndex);
+
+        int zombieIndex = gp.cChecker.checkEntity(this, gp.zombie);
+        interactNPC(zombieIndex);
+
+>>>>>>> 4e789fb5fc253b88d048beaa27f95186d9e501ef
 
         if(collisionOn == false){
             worldX += deltaX;
@@ -234,5 +239,13 @@ public class Player extends Entity{
             case "stop":
             	image = stop;
         }
-            	
-        g2.drawImage(image, screenX, screenY/* gp.tileSize, gp.tileSize*/, null);}}
+        //g2.drawImage(image, screenX, screenY, gp.tileSize, gp.tileSize, null);
+        g2.drawImage(image, screenX, screenY, null);
+    }
+        public void interactNPC(int i){
+            if(i != 999) {
+                System.out.println("hitting npc" + i);
+            }
+        }
+    
+    }

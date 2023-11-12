@@ -3,7 +3,6 @@ package com.group22;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.Collections;
 
 import javax.imageio.ImageIO;
@@ -14,6 +13,7 @@ public class Zombie extends Entity{
     int speed;
     String direction;
     private int zombieType;
+    public int solidAreaDefaultX, solidAreaDefaultY;
 
     BufferedImage up1, up2, up3,up4, down1,down2,down3, down4,left1,left2,left3,left4,right1, right2,right3,right4;
 
@@ -36,10 +36,6 @@ public class Zombie extends Entity{
     }
 
     public void setDefaultValues(){
-        // Set the default values for the zombie here
-        // We will just place the zombie at a random position within the world bounds
-        // worldX = gp.tileSize * 10;
-        // worldY = gp.tileSize * 5;
         speed = 3; // Zombies are slower than the player
         direction = "down"; // Initial direction
     }
@@ -48,7 +44,6 @@ public class Zombie extends Entity{
     public void getZombieImage() {
         try {
             String basePath = "res/zombie" + zombieType + "/zombie" + zombieType + "_";
-            System.out.println(basePath);
     
             up1 = ImageIO.read(getClass().getResourceAsStream(basePath + "run_right0.png"));
             up2 = ImageIO.read(getClass().getResourceAsStream(basePath + "run_right1.png"));
@@ -105,6 +100,13 @@ public class Zombie extends Entity{
 
         // New collision check
         collisionOn = gp.cChecker.checkCollision(this, nextX, nextY);
+        boolean playerCollision = gp.cChecker.checkPlayer(this, nextX, nextY);
+
+        if (playerCollision){
+            collisionOn = true;
+            //handle what happens when collision
+            System.out.println("get rekt");
+        }
 
         if (collisionOn) {
             // Check for viable alternative paths
@@ -122,6 +124,8 @@ public class Zombie extends Entity{
             worldX = nextX;
             worldY = nextY;
         }
+
+
 
         spriteCounter++;
         if(spriteCounter > 12){ //zombie image changes every 12 frames

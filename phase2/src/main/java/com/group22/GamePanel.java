@@ -154,6 +154,7 @@ public class GamePanel extends JPanel implements Runnable{
 
     //For fullscreen
     public void drawToTempScreen(){
+
         tileM.draw(g2);
         //Object
         for(int i = 0; i < obj.length; i++){

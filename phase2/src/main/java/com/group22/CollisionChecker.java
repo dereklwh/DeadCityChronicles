@@ -1,5 +1,8 @@
 package com.group22;
 
+
+import java.awt.Rectangle;
+
 public class CollisionChecker {
 
     GamePanel gp;
@@ -155,7 +158,117 @@ public class CollisionChecker {
         int tileNum = gp.tileM.mapTileNum[col][row];
         return gp.tileM.tile[tileNum].collision;
     }
+
+    //Check zombie collission
+    public int checkEntity(Entity entity, Zombie[] target) {
+      int index = 999;
+
+        for (int i = 0; i < target.length; i++) {
+            if (target[i] != null) {
+                //Get entiti's solid area pos
+                entity.solidArea.x = entity.worldX + entity.solidArea.x;
+                entity.solidArea.y = entity.worldY + entity.solidArea.y;
+                //Get obj's solid area pos
+                target[i].solidArea.x = target[i].worldX + target[i].solidArea.x;
+                target[i].solidArea.y = target[i].worldY + target[i].solidArea.y;
+
+                switch (entity.direction) {
+                    case "up": //print for test remove later
+                        entity.solidArea.y -= entity.speed;
+                        if (entity.solidArea.intersects(target[i].solidArea)) {
+                                entity.collisionOn = true;
+                                index = i;
+                            }
+                        break;
+                    case "down":
+                        entity.solidArea.y += entity.speed;
+                        if (entity.solidArea.intersects(target[i].solidArea)) {
+                                entity.collisionOn = true;
+                                index = i;
+                        }
+                        break;
+                    case "left":
+                        entity.solidArea.x -= entity.speed;
+                        if (entity.solidArea.intersects(target[i].solidArea)) {
+                                entity.collisionOn = true;
+                                index = i;
+                        }
+                        //System.out.println("left collision");
+                        break;
+                    case "right":
+                        entity.solidArea.x += entity.speed;
+                        if (entity.solidArea.intersects(target[i].solidArea)) {
+                                entity.collisionOn = true;
+                                index = i;
+                            }
+                            //System.out.println("right collision");
+                            break;
+                }
+                entity.solidArea.x = entity.solidAreaDefaultX;
+                entity.solidArea.y = entity.solidAreaDefaultY;
+                target[i].solidArea.x = target[i].solidAreaDefaultX;
+                target[i].solidArea.y = target[i].solidAreaDefaultY;
+            }
+        }
+        return index;
+
+    }
+
+    // public void checkPlayer(Entity entity){
+    //             entity.solidArea.x = entity.worldX + entity.solidArea.x;
+    //             entity.solidArea.y = entity.worldY + entity.solidArea.y;
+    //             //Get obj's solid area pos
+    //             gp.player.solidArea.x = gp.player.worldX + gp.player.solidArea.x;
+    //             gp.player.solidArea.y = gp.player.worldY + gp.player.solidArea.y;
+
+    //             switch (entity.direction) {
+    //                 case "up": //print for test remove later
+    //                     entity.solidArea.y -= entity.speed;
+    //                     if (entity.solidArea.intersects(gp.player.solidArea)) {
+    //                             entity.collisionOn = true;
+    //                         }
+    //                     break;
+    //                 case "down":
+    //                     entity.solidArea.y += entity.speed;
+    //                     if (entity.solidArea.intersects(gp.player.solidArea)) {
+    //                             entity.collisionOn = true;
+    //                     }
+    //                     break;
+    //                 case "left":
+    //                     entity.solidArea.x -= entity.speed;
+    //                     if (entity.solidArea.intersects(gp.player.solidArea)) {
+    //                             entity.collisionOn = true;
+    //                     }
+    //                     break;
+    //                 case "right":
+    //                     entity.solidArea.x += entity.speed;
+    //                     if (entity.solidArea.intersects(gp.player.solidArea)) {
+    //                             entity.collisionOn = true;
+    //                         }
+    //                         //System.out.println("right collision");
+    //                         break;
+    //             }
+    //             entity.solidArea.x = entity.solidAreaDefaultX;
+    //             entity.solidArea.y = entity.solidAreaDefaultY;
+    //             gp.player.solidArea.x = gp.player.solidAreaDefaultX;
+    //             gp.player.solidArea.y = gp.player.solidAreaDefaultY;
+    // }
+
+    public boolean checkPlayer(Entity entity, int nextX, int nextY) {
+        // Calculate the entity's next solid area position
+        Rectangle nextSolidArea = new Rectangle(nextX + entity.solidArea.x,
+                                                nextY + entity.solidArea.y,
+                                                entity.solidArea.width,
+                                                entity.solidArea.height);
+    
+        // Get the player's solid area position
+        Rectangle playerSolidArea = new Rectangle(gp.player.worldX + gp.player.solidArea.x,
+                                                  gp.player.worldY + gp.player.solidArea.y,
+                                                  gp.player.solidArea.width,
+                                                  gp.player.solidArea.height);
+    
+        // Check if the entity's next solid area intersects with the player's solid area
+        return nextSolidArea.intersects(playerSolidArea);
+    }
     
 }
-
-
