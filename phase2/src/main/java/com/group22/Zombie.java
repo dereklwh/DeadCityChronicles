@@ -132,7 +132,7 @@ public class Zombie extends Entity{
             }
             spriteCounter = 0;
         }
-        System.out.printf("the collision is %b\n", collisionOn);
+        // System.out.printf("the collision is %b\n", collisionOn);
     }
 
     public void draw(Graphics2D g2) {
