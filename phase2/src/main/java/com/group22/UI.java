@@ -195,7 +195,7 @@ public class UI {
             playTime =0;
 
         }
-
+        
         
         
     }
@@ -379,12 +379,19 @@ public class UI {
 
         //Resume
         textY += gp.tileSize*2;
-        g2.drawString("Resume", textX, textY);
+        g2.drawString("Back", textX, textY);
         if(commandNum ==4){
             g2.drawString(">", textX -25, textY);
             if(gp.keyH.enterPressed == true){
-                gp.gameState = gp.playState;
-                commandNum = 0;
+                if (gp.previousState == gp.playState){
+                    gp.gameState = gp.playState;
+                    commandNum = 0;
+                }
+                else if(gp.previousState == gp.titleState){
+                    gp.gameState=gp.titleState;
+                    commandNum = 0;
+                }
+                
             }
         }
 
@@ -522,6 +529,8 @@ public class UI {
             if(gp.keyH.enterPressed==true){
                 subState =0;
                 gp.gameState = gp.titleState;
+                gp.retry();
+                playTime = 0;
             }
         }
 

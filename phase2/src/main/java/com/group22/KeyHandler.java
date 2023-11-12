@@ -57,6 +57,7 @@ public class KeyHandler implements KeyListener {
         }
         if(code == KeyEvent.VK_ESCAPE){
             gp.gameState = gp.settingState;
+            gp.previousState = gp.playState;
         }
     }
 
@@ -168,6 +169,7 @@ public class KeyHandler implements KeyListener {
             }
              else if(gp.ui.commandNum == 2){
                 gp.gameState = gp.settingState;
+                gp.previousState = gp.titleState;
             }
              else if(gp.ui.commandNum == 3){
                 System.exit(0);
