@@ -223,15 +223,30 @@ public class UI {
     	BufferedImage originalImage4 = exitButton;
     	BufferedImage scaledExit = scaleImage(originalImage4,70,33);
     	// draw the title
+
+        g2.setFont(g2.getFont().deriveFont(Font.BOLD, 50F));
+
         g2.drawImage(scaledTitle, x, y, null);
         //draw start button
         g2.drawImage(scaledStart, x+gp.tileSize*4, y+gp.tileSize*6, null);
+        if(commandNum == 0){
+            g2.drawString(">",x+gp.tileSize*3, y+320);
+        }
         //draw rule button
         g2.drawImage(scaledRule, x+gp.tileSize*4, y+gp.tileSize*7, null);
+        if(commandNum == 1){
+            g2.drawString(">",x+gp.tileSize*3, y+370);
+        }
         //draw setting button
         g2.drawImage(scaledSetting, x+gp.tileSize*4, y+gp.tileSize*8, null);
+        if(commandNum == 2){
+            g2.drawString(">",x+gp.tileSize*3, y+420);
+        }
         //draw exit button
         g2.drawImage(scaledExit, x+gp.tileSize*4, y+gp.tileSize*9, null);
+        if(commandNum == 3){
+            g2.drawString(">",x+gp.tileSize*3, y+470);
+        }
     }
 
     public void drawPlayerLife(){

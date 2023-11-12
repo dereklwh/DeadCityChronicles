@@ -165,6 +165,7 @@ public class GamePanel extends JPanel implements Runnable{
     public void drawToTempScreen(){
 
         if (gameState == titleState){
+            //tileM.draw(g2);
             ui.draw(g2);
         }
 
