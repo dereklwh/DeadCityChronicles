@@ -14,6 +14,7 @@ public class Zombie extends Entity{
     String direction;
     private int zombieType;
     public int solidAreaDefaultX, solidAreaDefaultY;
+    private boolean removeThis = false;
 
     BufferedImage up1, up2, up3,up4, down1,down2,down3, down4,left1,left2,left3,left4,right1, right2,right3,right4;
 
@@ -111,6 +112,14 @@ public class Zombie extends Entity{
                 gp.player.life -=1;
                 gp.player.invincible = true;
                 gp.playSE(3);
+            }
+
+            if (gp.player.hasVaccine > 0) {
+                // Player cures the zombie
+                gp.player.hasVaccine--; // Use one vaccine
+                // Now remove the zombie from the map
+                this.setRemoveThis(true); // Mark this zombie for removal
+                gp.ui.showMessage("Zombie cured!");
             }
         }
 
@@ -212,6 +221,14 @@ public class Zombie extends Entity{
         }
     
         g2.drawImage(image, zombieScreenX, zombieScreenY, gp.tileSize, gp.tileSize, null);
+    }
+
+    public void setRemoveThis(boolean status) {
+        removeThis = status;
+    }
+
+    public boolean isRemoveThis() {
+        return removeThis;
     }
 
 }
