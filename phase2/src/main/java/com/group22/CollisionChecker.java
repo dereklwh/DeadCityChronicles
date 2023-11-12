@@ -134,6 +134,28 @@ public class CollisionChecker {
         }
         return index;
     }
+
+    public boolean checkCollision(Entity entity, int nextX, int nextY) {
+        boolean isCollisionDetected = false;
+        int entityLeftCol = (nextX + entity.solidArea.x) / gp.tileSize;
+        int entityRightCol = (nextX + entity.solidArea.x + entity.solidArea.width) / gp.tileSize;
+        int entityTopRow = (nextY + entity.solidArea.y) / gp.tileSize;
+        int entityBottomRow = (nextY + entity.solidArea.y + entity.solidArea.height) / gp.tileSize;
+    
+        if (isSolidTile(entityLeftCol, entityTopRow) || isSolidTile(entityRightCol, entityTopRow) ||
+            isSolidTile(entityLeftCol, entityBottomRow) || isSolidTile(entityRightCol, entityBottomRow)) {
+            isCollisionDetected = true;
+        } else {
+            isCollisionDetected = false;
+        }
+        return isCollisionDetected;
+    }
+    
+    private boolean isSolidTile(int col, int row) {
+        int tileNum = gp.tileM.mapTileNum[col][row];
+        return gp.tileM.tile[tileNum].collision;
+    }
+    
 }
 
 
