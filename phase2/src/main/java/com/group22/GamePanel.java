@@ -70,6 +70,7 @@ public class GamePanel extends JPanel implements Runnable{
     public final int pauseState = 2;
     public final int settingState = 3;
     public final int gameOverState = 4;
+    public final int ruleState = 5;
     public EventHandler eHandler = new EventHandler(this);
 
     public GamePanel() {
@@ -173,7 +174,6 @@ public class GamePanel extends JPanel implements Runnable{
             tileM.draw(g2);
             ui.draw(g2);
         }
-
         else{
             tileM.draw(g2);
         //Title Screen

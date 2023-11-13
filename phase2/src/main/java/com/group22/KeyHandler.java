@@ -37,6 +37,9 @@ public class KeyHandler implements KeyListener {
         else if (gp.gameState == gp.gameOverState){
             gameOverState(code);
         }
+        else if(gp.gameState == gp.ruleState) {
+        	ruleState(code);
+        }
     }
 
     public void playState(int code){
@@ -165,7 +168,7 @@ public class KeyHandler implements KeyListener {
 
             }
             else if(gp.ui.commandNum == 1){
-                
+                gp.gameState = gp.ruleState;
             }
              else if(gp.ui.commandNum == 2){
                 gp.gameState = gp.settingState;
@@ -173,6 +176,28 @@ public class KeyHandler implements KeyListener {
             }
              else if(gp.ui.commandNum == 3){
                 System.exit(0);
+            }
+        }
+    }
+    
+    public void ruleState(int code) {
+    	if (code == KeyEvent.VK_W || code == KeyEvent.VK_UP) {
+            gp.ui.commandNum--;
+            if (gp.ui.commandNum < 0) {
+                gp.ui.commandNum = 1; 
+            }
+            gp.playSE(5);
+        }
+        if (code == KeyEvent.VK_S || code == KeyEvent.VK_DOWN) {
+            gp.ui.commandNum++;
+            if (gp.ui.commandNum > 1) {
+                gp.ui.commandNum = 0;
+            }
+            gp.playSE(5);
+        }
+        if (code == KeyEvent.VK_ENTER) {
+            if (gp.ui.commandNum == 0) {
+                gp.gameState = gp.titleState; 
             }
         }
     }

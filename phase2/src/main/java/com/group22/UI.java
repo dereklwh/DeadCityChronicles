@@ -196,6 +196,10 @@ public class UI {
             gp.playSE(6);
         }
         
+        if (gp.gameState == gp.ruleState) {
+        	drawRulePage();
+        }
+        
         
         
     }
@@ -486,7 +490,7 @@ public class UI {
     public void setting_control(int frameX, int frameY){
         int textX;
         int textY;
-
+        
         String text = "Control";
         textX = getXforCenteredText(text);
         textY = frameY +gp.tileSize;
@@ -559,6 +563,61 @@ public class UI {
             }
         }
     }
+    
+    
+    public void drawRulePage() {
+    	g2.setColor(Color.white);
+        g2.setFont(maruMonica);
+        g2.setFont(g2.getFont().deriveFont(40F));
+
+
+        int frameX = gp.tileSize*6;
+        int frameY = gp.tileSize;
+        int frameWidth = gp.tileSize*8;
+        int frameHeight = gp.tileSize*10;
+        drawSubWindow(frameX, frameY, frameWidth, frameHeight);
+
+        // Initialize variables for text positioning
+        int textX = frameX + gp.tileSize;
+        int textY = frameY + gp.tileSize;
+        
+        
+        String title = "Rules";
+        textX = getXforCenteredText(title);
+        textY = frameY + gp.tileSize;
+        g2.drawString(title, textX, textY);
+        
+        g2.setFont(g2.getFont().deriveFont(25F));
+
+        // Start listing the rules
+        textY += gp.tileSize; // Adjust the Y position for the first rule
+
+        String[] rules = {
+            "Use WASD or arrow keys to move.",
+            "Get Vaccine can kill a zombie.",
+            "Try to collect 3 keys",
+            "then escape the city",
+            "After get keys go to the home",
+            "the north west of the map",
+            "DON'T DIE!"
+            // Add as many rules as needed
+        };
+
+        // Iterate through the rules array and draw each rule
+        for (String rule : rules) {
+            g2.drawString(rule, frameX + gp.tileSize, textY);
+            textY += gp.tileSize; // Increment Y position for each rule
+        }
+        g2.setFont(g2.getFont().deriveFont(40F));
+        g2.drawString("Back", textX, textY);
+        if (commandNum ==0){
+            g2.drawString(">", textX-25, textY);
+            if(gp.keyH.enterPressed==true){
+                gp.gameState = gp.titleState;
+            }
+        }
+    }
+
 
     public int getXforCenteredText(String text){
         int length = (int)g2.getFontMetrics().getStringBounds(text, g2).getWidth();
