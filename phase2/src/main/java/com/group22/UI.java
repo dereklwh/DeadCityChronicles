@@ -48,7 +48,7 @@ public class UI {
         
         
         try {
-        	InputStream is = getClass().getResourceAsStream("font/x12y16pxMaruMonica.ttf");
+        	InputStream is = getClass().getResourceAsStream("/font/x12y16pxMaruMonica.ttf");
 			maruMonica = Font.createFont(Font.TRUETYPE_FONT, is);
 		} catch (FontFormatException e) {
 			e.printStackTrace();
@@ -59,11 +59,11 @@ public class UI {
         
         //new add get all the image for title page
         try {
-            titleImage = ImageIO.read(getClass().getResourceAsStream("res/object/title.png"));
-            startButton = ImageIO.read(getClass().getResourceAsStream("res/object/start.png"));
-            ruleButton = ImageIO.read(getClass().getResourceAsStream("res/object/rule.png"));
-            settingButton = ImageIO.read(getClass().getResourceAsStream("res/object/setting.png"));
-            exitButton = ImageIO.read(getClass().getResourceAsStream("res/object/exit.png"));
+            titleImage = ImageIO.read(getClass().getResourceAsStream("/object/title.png"));
+            startButton = ImageIO.read(getClass().getResourceAsStream("/object/start.png"));
+            ruleButton = ImageIO.read(getClass().getResourceAsStream("/object/rule.png"));
+            settingButton = ImageIO.read(getClass().getResourceAsStream("/object/setting.png"));
+            exitButton = ImageIO.read(getClass().getResourceAsStream("/object/exit.png"));
             
         } catch (IOException e) {
             e.printStackTrace();

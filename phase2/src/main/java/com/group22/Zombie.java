@@ -44,7 +44,7 @@ public class Zombie extends Entity{
     // Load images for zombie
     public void getZombieImage() {
         try {
-            String basePath = "res/zombie" + zombieType + "/zombie" + zombieType + "_";
+            String basePath = "/zombie" + zombieType + "/zombie" + zombieType + "_";
     
             up1 = ImageIO.read(getClass().getResourceAsStream(basePath + "run_right0.png"));
             up2 = ImageIO.read(getClass().getResourceAsStream(basePath + "run_right1.png"));

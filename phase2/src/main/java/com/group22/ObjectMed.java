@@ -15,7 +15,7 @@ public class ObjectMed extends SuperObject {
     public ObjectMed(GamePanel gp){
         name = "Med";
         try{
-            image = ImageIO.read(getClass().getResourceAsStream("res/object/med.png"));
+            image = ImageIO.read(getClass().getResourceAsStream("/object/med.png"));
             image = uTool.scaleImage(image, gp.tileSize, gp.tileSize);
         }catch(IOException e){
             e.printStackTrace();

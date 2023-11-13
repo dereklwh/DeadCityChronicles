@@ -15,7 +15,7 @@ public class ObjectVaccine extends SuperObject{
     public ObjectVaccine(GamePanel gp){
         name = "Vaccine";
         try{
-            image = ImageIO.read(getClass().getResourceAsStream("res/object/vaccine.png")); //just a placeholder
+            image = ImageIO.read(getClass().getResourceAsStream("/object/vaccine.png")); //just a placeholder
             image = uTool.scaleImage(image, gp.tileSize, gp.tileSize);
         }catch(IOException e){
             e.printStackTrace();
