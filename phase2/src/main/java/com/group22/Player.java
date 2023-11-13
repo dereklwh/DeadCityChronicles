@@ -9,7 +9,7 @@ import java.io.IOException;
 public class Player extends Entity{
     GamePanel gp;
     KeyHandler keyH;
-    
+    public String name = "Carl";
     public int hasKey = 0;
     public int hasVaccine = 0;
     public  int screenX;

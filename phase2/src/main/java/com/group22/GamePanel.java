@@ -190,6 +190,7 @@ public class GamePanel extends JPanel implements Runnable{
         }
         //Player
         player.draw(g2);
+        ui.drawPlayerName();
         //Zombie1
         for(int i = 0; i < zombie.length; i++){
             if(zombie[i] != null){

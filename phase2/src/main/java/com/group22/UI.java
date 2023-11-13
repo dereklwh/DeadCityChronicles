@@ -283,6 +283,17 @@ public class UI {
         }
     }
 
+    public void drawPlayerName() {
+        String playerName = gp.player.name;
+        g2.setFont(maruMonica);
+        int textWidth = g2.getFontMetrics().stringWidth(playerName);
+        int textHeight = g2.getFontMetrics().getAscent();
+        int x = gp.player.screenX + (gp.player.solidArea.width / 2) - (textWidth / 2);
+        int y = gp.player.screenY - 20;
+        g2.setColor(Color.WHITE);
+        g2.drawString(playerName, x, y);
+    }
+
     public void drawPauseScreen(){
         String text = "PAUSED";
         int x = getXforCenteredText(text);
