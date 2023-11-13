@@ -196,8 +196,6 @@ public class UI {
             gp.playSE(6);
         }
         
-        
-        
     }
     
     //method for scale the image
@@ -286,10 +284,11 @@ public class UI {
     public void drawPlayerName() {
         String playerName = gp.player.name;
         g2.setFont(maruMonica);
+        g2.setFont(g2.getFont().deriveFont(Font.BOLD, 20F));
         int textWidth = g2.getFontMetrics().stringWidth(playerName);
         int textHeight = g2.getFontMetrics().getAscent();
         int x = gp.player.screenX + (gp.player.solidArea.width / 2) - (textWidth / 2);
-        int y = gp.player.screenY - 20;
+        int y = gp.player.screenY;
         g2.setColor(Color.WHITE);
         g2.drawString(playerName, x, y);
     }

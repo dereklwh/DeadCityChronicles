@@ -15,7 +15,7 @@ public class Player extends Entity{
     public  int screenX;
     public  int screenY;
 
-    BufferedImage damageImage1, damageImage2, damageImage3, deathImage;
+    BufferedImage damageImage1, damageImage2, damageImage3;
     boolean isDamaged = false;
     int damageAnimationDuration = 9; // Duration of damage animation in frames
     int damageAnimationFrame = 0; // Current frame of the damage animation
@@ -82,7 +82,6 @@ public class Player extends Entity{
         damageImage1 = setup("damage");
         damageImage2 = setup("damage2");
         damageImage3 = setup("damage3");
-        deathImage = setup("death");
         up1 = setup("run_right0");
         up2 = setup("run_right1");
         up3 = setup("run_right2");
@@ -256,9 +255,7 @@ public class Player extends Entity{
 
         BufferedImage image = null;
 
-        if(life <= 0){
-            image = deathImage;
-        }else if(isDamaged){
+        if (isDamaged){
             if(damageAnimationFrame <= damageAnimationDuration / 4){//shorter frame
                 image = damageImage1;
             }else if (damageAnimationFrame <= (damageAnimationDuration*2)/3){
@@ -266,7 +263,7 @@ public class Player extends Entity{
             }else{
                 image = damageImage3;
             }
-        }else{
+        } else{
             switch(direction){
                     case "up":
                         if(spriteNum == 1){
