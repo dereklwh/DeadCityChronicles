@@ -295,13 +295,30 @@ public class Player extends Entity{
         g2.drawImage(image, screenX, screenY, null);
         isDamaged = false;
     }
+        // public void interactZombie(int i){
+        //     if(i != 999) {
+        //         if(invincible == false){
+        //             life -=1;
+        //             invincible = true;
+        //         }
+        //         //System.out.println("hitting npc" + i);
+        //     }
+        // }
+
         public void interactZombie(int i){
             if(i != 999) {
-                if(invincible == false){
-                    life -=1;
+                if(hasVaccine > 0) {
+                    // Player has a vaccine, so they do not take damage, and the zombie is cured
+                    hasVaccine--; // Use up a vaccine
+                    gp.zombie[i].setRemoveThis(true); // Mark the zombie for removal
+                    gp.ui.showMessage("Zombie cured!");
+                } else if(!invincible) {
+                    // Player does not have a vaccine and is not invincible, so they take damage
+                    life--;
+                    isDamaged = true;
                     invincible = true;
+                    gp.playSE(3); // Play damage sound effect
                 }
-                //System.out.println("hitting npc" + i);
             }
         }
     
