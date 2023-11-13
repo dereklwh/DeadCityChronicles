@@ -114,30 +114,7 @@ public class UI {
 
             if (gameFinished == true){
 
-<<<<<<< HEAD
-        }
-        if (gp.gameState == gp.settingState){
-            drawSettingScreen();
-        }
-
-        if (gameFinished == true){
-
-           displayVictoryMessage();
-           try {
-            // Sleep for 2000 milliseconds (2 seconds)
-            Thread.sleep(3000);
-            gp.gameState = gp.titleState;
-        } catch (InterruptedException e) {
-            // Handle the exception (e.g., if the thread is interrupted while sleeping)
-            e.printStackTrace();
-        }
-        }
-
-        else {
-            g2.setFont(arial_40);
-=======
             g2.setFont(g2.getFont().deriveFont(50F));
->>>>>>> main
             g2.setColor(Color.white); 
 
             g2.drawImage(keyImage, gp.tileSize/2, gp.tileSize/2, gp.tileSize, gp.tileSize, null);
