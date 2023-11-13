@@ -6,6 +6,10 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 
+/**
+ * The Player class represents the player-controlled character in the game. It extends the Entity class
+ * with player-specific functionality such as handling input, updating player status, and drawing the player sprite.
+ */
 public class Player extends Entity{
     GamePanel gp;
     KeyHandler keyH;
@@ -20,6 +24,11 @@ public class Player extends Entity{
     int damageAnimationDuration = 9; // Duration of damage animation in frames
     int damageAnimationFrame = 0; // Current frame of the damage animation
 
+    /**
+     * Constructor that initializes a new Player object with a reference to the GamePanel and KeyHandler.
+     * @param gp The game panel that the player exists within.
+     * @param keyH The key handler for managing player input.
+     */
     public Player(GamePanel gp, KeyHandler keyH){
         this.gp = gp;
         this.keyH = keyH;
@@ -97,6 +106,11 @@ public class Player extends Entity{
         stop = setup("no_anim_0");
     }
 
+    /**
+     * Helper method to load an image and scale it to the appropriate size.
+     * @param imageName The name of the image file to load.
+     * @return A BufferedImage object representing the loaded and scaled image.
+     */
     public BufferedImage setup(String imageName){
         UtilityTool uTool = new UtilityTool();
         BufferedImage image = null;
@@ -202,7 +216,10 @@ public class Player extends Entity{
         }
     }
 
-
+    /**
+     * Handles interactions when the player picks up an object.
+     * @param i The index of the object that the player interacts with.
+     */
     public void pickUpObject(int i){
         if(i != 999){
            String objectName = gp.obj[i].name;
@@ -249,6 +266,10 @@ public class Player extends Entity{
         }
     }
 
+    /**
+     * Draws the player's current sprite to the screen based on the player's state and direction.
+     * @param g2 The Graphics2D context to draw on.
+     */
     public void draw(Graphics2D g2){
         //g2.setColor(Color.white);
         //g2.fillRect(worldX, worldY, gp.tileSize, gp.tileSize);

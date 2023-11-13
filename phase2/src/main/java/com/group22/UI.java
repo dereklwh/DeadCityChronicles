@@ -13,11 +13,17 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontFormatException;
 
+/**
+ * The UI class is responsible for rendering the game's user interface, including
+ * the HUD (Heads-Up Display), title screen, pause screen, settings screen, and game over screen.
+ * It also manages on-screen messages and the display of the player's status such as health and collected items.
+ */
 public class UI {
     
     GamePanel gp;
     Graphics2D g2;
     Font maruMonica;
+    // HUD elements
     BufferedImage heart_full, heart_half, heart_blank;
     BufferedImage keyImage;
     BufferedImage hImage;
@@ -25,7 +31,8 @@ public class UI {
     BufferedImage dImage;
 
     BufferedImage medImage;
-    
+
+    // Title screen elements
     private BufferedImage titleImage;  
     private BufferedImage startButton; 
     private BufferedImage settingButton;
@@ -43,6 +50,10 @@ public class UI {
     double playTime;
     DecimalFormat dFormat = new DecimalFormat("#0.00");
 
+    /**
+     * Constructor that initializes UI components and loads resources such as images and fonts.
+     * @param gp The GamePanel instance this UI belongs to.
+     */
     public UI(GamePanel gp) {
         this.gp = gp;
         
@@ -91,11 +102,19 @@ public class UI {
         dImage = door.image;
     }
 
+    /**
+     * Displays a message on the screen for a short duration.
+     * @param text The message text to display.
+     */
     public void showMessage(String text){
         message = text;
         messageOn = true;
     }
 
+    /**
+     * Draws various UI components depending on the current game state.
+     * @param g2 The Graphics2D object used for drawing.
+     */
     public void draw(Graphics2D g2) {
 
         this.g2 = g2;
@@ -622,6 +641,13 @@ public class UI {
         return x;
     }
 
+    /**
+     * Draws a sub-window for nested menu items such as settings and rules.
+     * @param x The x-coordinate of the sub-window's top left corner.
+     * @param y The y-coordinate of the sub-window's top left corner.
+     * @param width The width of the sub-window.
+     * @param height The height of the sub-window.
+     */
     public void drawSubWindow(int x, int y, int width, int height){
         Color c = new Color(71, 53, 44, 200);
         g2.setColor(c);

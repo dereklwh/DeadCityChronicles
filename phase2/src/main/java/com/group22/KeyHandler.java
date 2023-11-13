@@ -3,12 +3,20 @@ package com.group22;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
+/**
+ * The KeyHandler class implements the KeyListener interface and handles all keyboard
+ * interactions for controlling the game state and player movement.
+ */
 public class KeyHandler implements KeyListener {
 
     GamePanel gp;
 
     public  boolean upPressed, downPressed, leftPressed, rightPressed, enterPressed;
 
+    /**
+     * Constructor for KeyHandler that initializes with a GamePanel instance.
+     * @param gp The GamePanel instance to which this KeyHandler belongs.
+     */
     public KeyHandler(GamePanel gp){
         this.gp = gp;
     }
@@ -42,6 +50,10 @@ public class KeyHandler implements KeyListener {
         }
     }
 
+    /**
+     * Controls player movement and interactions during the play state.
+     * @param code The KeyCode associated with the key event.
+     */
     public void playState(int code){
         if(code == KeyEvent.VK_W || code == KeyEvent.VK_UP){
             upPressed = true;
@@ -64,6 +76,10 @@ public class KeyHandler implements KeyListener {
         }
     }
 
+    /**
+     * Controls settings and interactions during the setting state.
+     * @param code The KeyCode associated with the key event.
+     */
     public void settingState(int code){
         if(code == KeyEvent.VK_ESCAPE){
             gp.gameState = gp.playState;
@@ -113,6 +129,7 @@ public class KeyHandler implements KeyListener {
             }
         }
     }
+
 
     public void pauseState(int code){
         if(code == KeyEvent.VK_P){

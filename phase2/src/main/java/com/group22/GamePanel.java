@@ -9,10 +9,11 @@ import com.group22.tile.TileManager;
 
 
 /**
- * Main controller for the game, handles all game systems
+ * The GamePanel class is the main controller for the game, handling the game loop,
+ * rendering, and game state management.
  */
 public class GamePanel extends JPanel implements Runnable{
-
+    // Game world and screen settings
     private final int originalTileSize = 16;
     public int scale = 3; //this is to scale 16
     public int tileSize = originalTileSize * scale;
@@ -73,6 +74,9 @@ public class GamePanel extends JPanel implements Runnable{
     public final int ruleState = 5;
     public EventHandler eHandler = new EventHandler(this);
 
+    /**
+     * Constructor for GamePanel which sets up the game environment, including screen size and background color.
+     */
     public GamePanel() {
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
         //this.setBackground(Color.black);
@@ -81,6 +85,7 @@ public class GamePanel extends JPanel implements Runnable{
         this.addKeyListener(keyH);
         this.setFocusable(true);
     }
+
 
     public void setupGame(){
         aSetter.setObject();
@@ -244,10 +249,17 @@ public class GamePanel extends JPanel implements Runnable{
         music.loop();
     }
 
+    /**
+     * Stops the background music.
+     */
     public void stopMusic(){
         music.stop();
     }
 
+    /**
+     * Plays a sound effect once.
+     * @param i The index of the sound effect to play.
+     */
     public void playSE(int i){
         se.setFile(i);
         se.play();
