@@ -15,8 +15,10 @@ public class Player extends Entity{
     public  int screenX;
     public  int screenY;
 
-    BufferedImage damageImage;
+    BufferedImage damageImage1, damageImage2, damageImage3;
     boolean isDamaged = false;
+    int damageAnimationDuration = 9; // Duration of damage animation in frames
+    int damageAnimationFrame = 0; // Current frame of the damage animation
 
     public Player(GamePanel gp, KeyHandler keyH){
         this.gp = gp;
@@ -77,7 +79,9 @@ public class Player extends Entity{
         }catch(IOException e){
             e.printStackTrace();
         }*/
-        damageImage = setup("damage2");
+        damageImage1 = setup("damage");
+        damageImage2 = setup("damage2");
+        damageImage3 = setup("damage3");
         up1 = setup("run_right0");
         up2 = setup("run_right1");
         up3 = setup("run_right2");
@@ -126,6 +130,14 @@ public class Player extends Entity{
                 else if(keyH.rightPressed){
                     deltaX = speed;
                     direction = "right";
+                }
+
+                if (isDamaged) {
+                    damageAnimationFrame++;
+                    if (damageAnimationFrame > damageAnimationDuration) {
+                        isDamaged = false;
+                        damageAnimationFrame = 0;
+                    }
                 }
 
                 spriteCounter++;
@@ -244,7 +256,13 @@ public class Player extends Entity{
         BufferedImage image = null;
 
         if (isDamaged){
-            image = damageImage;
+            if(damageAnimationFrame <= damageAnimationDuration / 4){//shorter frame
+                image = damageImage1;
+            }else if (damageAnimationFrame <= (damageAnimationDuration*2)/3){
+                image = damageImage2;
+            }else{
+                image = damageImage3;
+            }
         } else{
             switch(direction){
                     case "up":
@@ -293,7 +311,6 @@ public class Player extends Entity{
         
         //g2.drawImage(image, screenX, screenY, gp.tileSize, gp.tileSize, null);
         g2.drawImage(image, screenX, screenY, null);
-        isDamaged = false;
     }
 
         public void interactZombie(int i){
