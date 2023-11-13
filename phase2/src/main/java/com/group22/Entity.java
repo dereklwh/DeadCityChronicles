@@ -3,6 +3,11 @@ package com.group22;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
+/**
+ * Entity is an abstract representation of all moving objects within the game world,
+ * including the player, enemies, and NPCs. It contains common attributes like position,
+ * speed, and graphics, as well as collision detection fields.
+ */
 public class Entity {
     public int worldX, worldY;
     public int speed;

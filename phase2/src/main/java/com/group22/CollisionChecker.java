@@ -182,7 +182,12 @@ public class CollisionChecker {
         return gp.tileM.tile[tileNum].collision;
     }
 
-    //Check zombie collission
+    /**
+     * Checks for a collision between a specified entity and any zombie in the provided array.
+     * @param entity The entity to check for collisions with zombies.
+     * @param target The array of zombies to check against the entity.
+     * @return Returns the index of the zombie collided with, or 999 if no collision occurred.
+     */
     public int checkEntity(Entity entity, Zombie[] target) {
       int index = 999;
 
@@ -281,7 +286,11 @@ public class CollisionChecker {
         return nextSolidArea.intersects(playerSolidArea);
     }
 
-    //zombie to zombie
+    /**
+     * Checks for collisions between a specified zombie and other zombies in the provided array.
+     * @param zombie The zombie to check for collisions with other zombies.
+     * @param target The array of zombies to check against the specified zombie.
+     */
     public void checkEntity(Zombie zombie, Zombie[] target) {
     //   int index = 999;
 
