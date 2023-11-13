@@ -6,10 +6,16 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.Random;
 
-
+/**
+ * ObjectTrap representing a trap object to damage players
+ */
 public class ObjectTrap extends SuperObject{
     GamePanel gp;
     Random rand = new Random();
+    /**
+     * @param gp The GamePanel instance containing configuration like tile size
+     *           and reference to the player for positioning the traps relative to the player's viewport.
+     */
     public ObjectTrap(GamePanel gp){
         name = "Trap";
         try{
@@ -25,6 +31,12 @@ public class ObjectTrap extends SuperObject{
         collision = true;
     }
 
+    /**
+     * Draws the trap object on the game panel. This method overrides the SuperObject's draw method
+     * The specific trap image drawn is randomly selected.
+     *
+     * @param g2 The Graphics2D object that provides the drawing methods.
+     */
     @Override
     public void draw(Graphics2D g2, GamePanel gp) {
         int screenX = worldX - gp.player.worldX + gp.player.screenX;

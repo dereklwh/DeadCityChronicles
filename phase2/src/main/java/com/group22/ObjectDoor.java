@@ -4,8 +4,15 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+/**
+ * ObjectDoor representing doors on the map
+ */
 public class ObjectDoor extends SuperObject {
     GamePanel gp;
+    /**
+     * @param gp The GamePanel instance which provides context for the Vaccine object,
+     *           including the size of tiles which is used to scale the vaccine image.
+     */
     public ObjectDoor(GamePanel gp){
         name = "Door";
         try{

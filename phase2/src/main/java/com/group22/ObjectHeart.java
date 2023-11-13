@@ -3,8 +3,15 @@ package com.group22;
 import javax.imageio.ImageIO;
 import java.io.IOException;
 
+/**
+ * ObjectHeart representing hearts for players' health to gather
+ */
 public class ObjectHeart extends SuperObject {
     GamePanel gp;
+    /**
+     * @param gp The GamePanel instance which provides context for the Vaccine object,
+     *           including the size of tiles which is used to scale the vaccine image.
+     */
     public ObjectHeart(GamePanel gp){
         name = "Heart";
         try{
