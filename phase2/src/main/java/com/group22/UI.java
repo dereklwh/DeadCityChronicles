@@ -117,32 +117,6 @@ public class UI {
             g2.setFont(g2.getFont().deriveFont(50F));
             g2.setColor(Color.white); 
 
-            g2.drawImage(keyImage, gp.tileSize/2, gp.tileSize/2, gp.tileSize, gp.tileSize, null);
-            g2.drawString("x " + gp.player.hasKey, 74, 60);
-
-            g2.drawImage(vImage, gp.tileSize/2 + 150, gp.tileSize/2, gp.tileSize, gp.tileSize, null);
-            g2.drawString("x " + gp.player.hasVaccine, 235, 60);            
-            
-            if(messageOn == true){
-
-                g2.setFont(g2.getFont().deriveFont(30F));
-                g2.drawString(message, gp.tileSize/2, gp.tileSize*5);
-
-                messageCounter++;
-
-                if(messageCounter > 120){
-                    messageCounter =0;
-                    messageOn = false;
-                }
-            }
-        }
-        
-    }
-
-    public void displayVictoryMessage(){
-         g2.setFont(arial_40);
-            g2.setColor(Color.white); 
-
             String text;
             int textLength;
             int x;
@@ -170,11 +144,8 @@ public class UI {
             x = gp.screenWidth/2 - textLength/2;
             y= gp.screenHeight/2 + (gp.tileSize * 2);
             g2.drawString(text, x, y);
-            
 
             gp.gameThread = null;
-<<<<<<< HEAD
-=======
         }
 
         else {
@@ -280,10 +251,7 @@ public class UI {
         if(commandNum == 3){
             g2.drawString(">",x+gp.tileSize*3, y+470);
         }
->>>>>>> main
     }
-
-    
 
     public void drawPlayerLife(){
 
