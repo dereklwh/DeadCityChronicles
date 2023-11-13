@@ -295,15 +295,6 @@ public class Player extends Entity{
         g2.drawImage(image, screenX, screenY, null);
         isDamaged = false;
     }
-        // public void interactZombie(int i){
-        //     if(i != 999) {
-        //         if(invincible == false){
-        //             life -=1;
-        //             invincible = true;
-        //         }
-        //         //System.out.println("hitting npc" + i);
-        //     }
-        // }
 
         public void interactZombie(int i){
             if(i != 999) {

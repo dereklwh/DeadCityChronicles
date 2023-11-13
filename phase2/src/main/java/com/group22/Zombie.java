@@ -111,27 +111,13 @@ public class Zombie extends Entity{
                 gp.player.life -=1;
                 gp.player.invincible = true;
                 gp.playSE(3);
+            }else if (gp.player.hasVaccine > 0){
+                gp.player.hasVaccine--; // Use up a vaccine
+                this.setRemoveThis(true); // Mark the zombie for removal
+                gp.ui.showMessage("Zombie cured!");
             }
         }
 
-        // if (playerCollision){
-        //     //handle what happens when collision
-        //     collisionOn = true;
-        //     if(gp.player.invincible == false){
-        //         gp.player.isDamaged = true;
-        //         gp.player.life -=1;
-        //         gp.player.invincible = true;
-        //         gp.playSE(3);
-        //     }
-
-        //     if (gp.player.hasVaccine > 0) {
-        //         // Player cures the zombie
-        //         gp.player.hasVaccine--; // Use one vaccine
-        //         // Now remove the zombie from the map
-        //         this.setRemoveThis(true); // Mark this zombie for removal
-        //         gp.ui.showMessage("Zombie cured!");
-        //     }
-        // }
 
         if (collisionOn) {
             // Check for viable alternative paths
