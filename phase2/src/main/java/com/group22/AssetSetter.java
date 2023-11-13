@@ -125,20 +125,20 @@ public class AssetSetter {
         gp.zombie[7].worldY = gp.tileSize * 24;
         gp.zombie[7].speed = 1;
 
-        gp.zombie[8] = new Zombie(gp, 1);
+        gp.zombie[8] = new Zombie(gp, 3);
         gp.zombie[8].worldX = gp.tileSize * 50;
         gp.zombie[8].worldY = gp.tileSize * 10;
-        gp.zombie[8].speed = 1;
+        gp.zombie[8].speed = 4;
 
-        gp.zombie[9] = new Zombie(gp, 1);
+        gp.zombie[9] = new Zombie(gp, 3);
         gp.zombie[9].worldX = gp.tileSize * 50;
         gp.zombie[9].worldY = gp.tileSize * 12;
-        gp.zombie[9].speed = 1;
+        gp.zombie[9].speed = 4;
 
-        gp.zombie[10] = new Zombie(gp, 1);
+        gp.zombie[10] = new Zombie(gp, 3);
         gp.zombie[10].worldX = gp.tileSize * 60;
         gp.zombie[10].worldY = gp.tileSize * 15;
-        gp.zombie[10].speed = 1;
+        gp.zombie[10].speed = 4;
 
         gp.zombie[11] = new Zombie(gp, 1);
         gp.zombie[11].worldX = gp.tileSize * 12;
