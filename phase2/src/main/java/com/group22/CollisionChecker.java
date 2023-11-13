@@ -3,15 +3,26 @@ package com.group22;
 
 import java.awt.Rectangle;
 
+/**
+ * The CollisionChecker class is responsible for detecting and managing collisions
+ * between entities and tiles or objects within the game world.
+ */
 public class CollisionChecker {
 
     GamePanel gp;
 
+    /**
+     * Constructor for CollisionChecker.
+     * @param gp The GamePanel instance that the collisions are checked within.
+     */
     public CollisionChecker(GamePanel gp){
         this.gp = gp;
     }
 
-
+    /**
+     * Checks collisions with tiles for the given entity based on their solid area and direction of movement.
+     * @param entity The entity whose tile collision is being checked.
+     */
     public void checkTile(Entity entity){
 
         int entityLeftWorldX = entity.worldX + entity.solidArea.x;
@@ -62,6 +73,13 @@ public class CollisionChecker {
         }
     }
 
+
+    /**
+     * Checks for collisions between the specified entity and game objects, determining if the player is affected.
+     * @param entity The entity to check collisions for.
+     * @param player A boolean flag to indicate if the player is the entity being checked.
+     * @return Returns the index of the object collided with, or 999 if no collision occurred.
+     */
     public int checkObject(Entity entity, boolean player) {
         int index = 999;
 
@@ -136,6 +154,13 @@ public class CollisionChecker {
         return index;
     }
 
+    /**
+     * Checks for a collision in a specified next position (nextX, nextY) for the given entity.
+     * @param entity The entity to check future collision for.
+     * @param nextX The next x-coordinate the entity is attempting to move to.
+     * @param nextY The next y-coordinate the entity is attempting to move to.
+     * @return Returns true if a collision is detected in the next position.
+     */
     public boolean checkCollision(Entity entity, int nextX, int nextY) {
         boolean isCollisionDetected = false;
         int entityLeftCol = (nextX + entity.solidArea.x) / gp.tileSize;

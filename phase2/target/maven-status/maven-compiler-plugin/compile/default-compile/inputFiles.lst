@@ -1,22 +1,22 @@
-C:\Users\User\CMPT276F23_group22\phase2\src\main\java\com\group22\UI.java
-C:\Users\User\CMPT276F23_group22\phase2\src\main\java\com\group22\EventHandler.java
-C:\Users\User\CMPT276F23_group22\phase2\src\main\java\com\group22\KeyHandler.java
-C:\Users\User\CMPT276F23_group22\phase2\src\main\java\com\group22\ObjectKey.java
-C:\Users\User\CMPT276F23_group22\phase2\src\main\java\com\group22\EventRect.java
-C:\Users\User\CMPT276F23_group22\phase2\src\main\java\com\group22\ObjectTrap.java
-C:\Users\User\CMPT276F23_group22\phase2\src\main\java\com\group22\ObjectVaccine.java
-C:\Users\User\CMPT276F23_group22\phase2\src\main\java\com\group22\Player.java
-C:\Users\User\CMPT276F23_group22\phase2\src\main\java\com\group22\ObjectMed.java
-C:\Users\User\CMPT276F23_group22\phase2\src\main\java\com\group22\AssetSetter.java
-C:\Users\User\CMPT276F23_group22\phase2\src\main\java\com\group22\Zombie.java
-C:\Users\User\CMPT276F23_group22\phase2\src\main\java\com\group22\Main.java
-C:\Users\User\CMPT276F23_group22\phase2\src\main\java\com\group22\ObjectHeart.java
-C:\Users\User\CMPT276F23_group22\phase2\src\main\java\com\group22\UtilityTool.java
-C:\Users\User\CMPT276F23_group22\phase2\src\main\java\com\group22\CollisionChecker.java
-C:\Users\User\CMPT276F23_group22\phase2\src\main\java\com\group22\tile\Tile.java
-C:\Users\User\CMPT276F23_group22\phase2\src\main\java\com\group22\Sound.java
-C:\Users\User\CMPT276F23_group22\phase2\src\main\java\com\group22\tile\TileManager.java
-C:\Users\User\CMPT276F23_group22\phase2\src\main\java\com\group22\SuperObject.java
-C:\Users\User\CMPT276F23_group22\phase2\src\main\java\com\group22\GamePanel.java
-C:\Users\User\CMPT276F23_group22\phase2\src\main\java\com\group22\Entity.java
-C:\Users\User\CMPT276F23_group22\phase2\src\main\java\com\group22\ObjectDoor.java
+C:\Users\sinoo\OneDrive\Desktop\SFU\CMPT 276\CMPT276F23_group22\phase2\src\main\java\com\group22\EventHandler.java
+C:\Users\sinoo\OneDrive\Desktop\SFU\CMPT 276\CMPT276F23_group22\phase2\src\main\java\com\group22\ObjectVaccine.java
+C:\Users\sinoo\OneDrive\Desktop\SFU\CMPT 276\CMPT276F23_group22\phase2\src\main\java\com\group22\CollisionChecker.java
+C:\Users\sinoo\OneDrive\Desktop\SFU\CMPT 276\CMPT276F23_group22\phase2\src\main\java\com\group22\ObjectMed.java
+C:\Users\sinoo\OneDrive\Desktop\SFU\CMPT 276\CMPT276F23_group22\phase2\src\main\java\com\group22\Sound.java
+C:\Users\sinoo\OneDrive\Desktop\SFU\CMPT 276\CMPT276F23_group22\phase2\src\main\java\com\group22\tile\TileManager.java
+C:\Users\sinoo\OneDrive\Desktop\SFU\CMPT 276\CMPT276F23_group22\phase2\src\main\java\com\group22\Player.java
+C:\Users\sinoo\OneDrive\Desktop\SFU\CMPT 276\CMPT276F23_group22\phase2\src\main\java\com\group22\GamePanel.java
+C:\Users\sinoo\OneDrive\Desktop\SFU\CMPT 276\CMPT276F23_group22\phase2\src\main\java\com\group22\SuperObject.java
+C:\Users\sinoo\OneDrive\Desktop\SFU\CMPT 276\CMPT276F23_group22\phase2\src\main\java\com\group22\UI.java
+C:\Users\sinoo\OneDrive\Desktop\SFU\CMPT 276\CMPT276F23_group22\phase2\src\main\java\com\group22\KeyHandler.java
+C:\Users\sinoo\OneDrive\Desktop\SFU\CMPT 276\CMPT276F23_group22\phase2\src\main\java\com\group22\ObjectTrap.java
+C:\Users\sinoo\OneDrive\Desktop\SFU\CMPT 276\CMPT276F23_group22\phase2\src\main\java\com\group22\Zombie.java
+C:\Users\sinoo\OneDrive\Desktop\SFU\CMPT 276\CMPT276F23_group22\phase2\src\main\java\com\group22\Main.java
+C:\Users\sinoo\OneDrive\Desktop\SFU\CMPT 276\CMPT276F23_group22\phase2\src\main\java\com\group22\AssetSetter.java
+C:\Users\sinoo\OneDrive\Desktop\SFU\CMPT 276\CMPT276F23_group22\phase2\src\main\java\com\group22\ObjectDoor.java
+C:\Users\sinoo\OneDrive\Desktop\SFU\CMPT 276\CMPT276F23_group22\phase2\src\main\java\com\group22\Entity.java
+C:\Users\sinoo\OneDrive\Desktop\SFU\CMPT 276\CMPT276F23_group22\phase2\src\main\java\com\group22\tile\Tile.java
+C:\Users\sinoo\OneDrive\Desktop\SFU\CMPT 276\CMPT276F23_group22\phase2\src\main\java\com\group22\UtilityTool.java
+C:\Users\sinoo\OneDrive\Desktop\SFU\CMPT 276\CMPT276F23_group22\phase2\src\main\java\com\group22\ObjectHeart.java
+C:\Users\sinoo\OneDrive\Desktop\SFU\CMPT 276\CMPT276F23_group22\phase2\src\main\java\com\group22\ObjectKey.java
+C:\Users\sinoo\OneDrive\Desktop\SFU\CMPT 276\CMPT276F23_group22\phase2\src\main\java\com\group22\EventRect.java

@@ -15,7 +15,7 @@ public class ObjectKey extends SuperObject {
     public ObjectKey(GamePanel gp){
         name = "Key";
         try{
-            image = ImageIO.read(getClass().getResourceAsStream("res/object/key.png"));
+            image = ImageIO.read(getClass().getResourceAsStream("/object/key.png"));
             image = uTool.scaleImage(image, gp.tileSize, gp.tileSize);
         }catch(IOException e){
             e.printStackTrace();

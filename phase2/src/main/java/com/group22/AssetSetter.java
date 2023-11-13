@@ -3,6 +3,10 @@ package com.group22;
 public class AssetSetter {
     GamePanel gp;
 
+    /**
+     * AssetSetter is a class responsible for placing and initializing game objects and zombies within the game world.
+     * It sets the initial positions and properties of interactable items and enemy entities.
+     */
     public AssetSetter(GamePanel gp){
         this.gp = gp;
     }
