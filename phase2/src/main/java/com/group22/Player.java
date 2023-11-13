@@ -145,7 +145,7 @@ public class Player extends Entity{
 
         if (life <=0){
                 gp.gameState = gp.gameOverState;
-                //play gameover sound effect
+                //play gameover sound effect: I put the sound effect play in the draw method (Sina) if it didn't work move it here
             }
        
         //Check tile collision

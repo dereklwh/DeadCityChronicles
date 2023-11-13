@@ -193,7 +193,7 @@ public class UI {
         if (gp.gameState == gp.gameOverState){
             drawGameOverScreen();
             playTime =0;
-
+            gp.playSE(6);
         }
         
         
