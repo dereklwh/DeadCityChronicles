@@ -7,6 +7,10 @@ import java.util.Collections;
 
 import javax.imageio.ImageIO;
 
+/**
+ * The Zombie class extends the Entity class with properties and methods specific to zombies in the game.
+ * It manages zombie animations, movement, AI behavior, and interaction with the player and environment.
+ */
 public class Zombie extends Entity{
     GamePanel gp;
     int worldX, worldY;
@@ -22,6 +26,11 @@ public class Zombie extends Entity{
     public final int screenY;
     public int actionLockCounter = 0;
 
+    /**
+     * Constructor for the Zombie class.
+     * @param gp The GamePanel object that the zombie will interact with.
+     * @param zombieType The type identifier for the zombie.
+     */
     public Zombie(GamePanel gp, int zombieType) {
         this.gp = gp;
         this.zombieType = zombieType;
