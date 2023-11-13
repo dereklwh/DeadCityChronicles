@@ -9,14 +9,16 @@ import java.io.IOException;
 public class Player extends Entity{
     GamePanel gp;
     KeyHandler keyH;
-    
+    public String name = "Carl";
     public int hasKey = 0;
     public int hasVaccine = 0;
     public  int screenX;
     public  int screenY;
 
-    BufferedImage damageImage;
+    BufferedImage damageImage1, damageImage2, damageImage3;
     boolean isDamaged = false;
+    int damageAnimationDuration = 9; // Duration of damage animation in frames
+    int damageAnimationFrame = 0; // Current frame of the damage animation
 
     public Player(GamePanel gp, KeyHandler keyH){
         this.gp = gp;
@@ -36,7 +38,7 @@ public class Player extends Entity{
     }
 
     public void setDefaultValues(){
-        worldX = gp.tileSize * 23;
+        worldX = gp.tileSize * 39;
         worldY = gp.tileSize * 21;
         speed = 5;
         direction = "down";
@@ -45,6 +47,18 @@ public class Player extends Entity{
         maxLife = 6; //2 lives = 1 heart
         life = maxLife;
     }
+
+    public void restorePos(){
+        worldX = gp.tileSize * 39;
+        worldY = gp.tileSize * 21;
+        direction = "down";
+        life = maxLife;
+        invincible = false;
+        hasKey = 0;
+        hasVaccine = 0;
+
+    }
+
 
     public void getPlayerImage(){
         /*try{
@@ -65,7 +79,9 @@ public class Player extends Entity{
         }catch(IOException e){
             e.printStackTrace();
         }*/
-        damageImage = setup("damage2");
+        damageImage1 = setup("damage");
+        damageImage2 = setup("damage2");
+        damageImage3 = setup("damage3");
         up1 = setup("run_right0");
         up2 = setup("run_right1");
         up3 = setup("run_right2");
@@ -116,6 +132,14 @@ public class Player extends Entity{
                     direction = "right";
                 }
 
+                if (isDamaged) {
+                    damageAnimationFrame++;
+                    if (damageAnimationFrame > damageAnimationDuration) {
+                        isDamaged = false;
+                        damageAnimationFrame = 0;
+                    }
+                }
+
                 spriteCounter++;
                 if(spriteCounter > 12){ //player image changes every 12 frames
                     if(spriteNum == 1) {
@@ -128,7 +152,13 @@ public class Player extends Entity{
                 }
                 spriteCounter = 0;
                 }
+
         }
+
+        if (life <=0){
+                gp.gameState = gp.gameOverState;
+                //play gameover sound effect: I put the sound effect play in the draw method (Sina) if it didn't work move it here
+            }
        
         //Check tile collision
         collisionOn = false;
@@ -139,7 +169,7 @@ public class Player extends Entity{
         pickUpObject(objectIndex);
 
         int zombieIndex = gp.cChecker.checkEntity(this, gp.zombie);
-        interactNPC(zombieIndex);
+        interactZombie(zombieIndex);
 
         //Check event
         //gp.eHandler.checkEvent();
@@ -211,6 +241,7 @@ public class Player extends Entity{
                  if(invincible == false){
                     life -=1;
                     gp.playSE(3);
+                    isDamaged = true;
                     invincible = true;
                 }
                 break;
@@ -225,7 +256,13 @@ public class Player extends Entity{
         BufferedImage image = null;
 
         if (isDamaged){
-            image = damageImage;
+            if(damageAnimationFrame <= damageAnimationDuration / 4){//shorter frame
+                image = damageImage1;
+            }else if (damageAnimationFrame <= (damageAnimationDuration*2)/3){
+                image = damageImage2;
+            }else{
+                image = damageImage3;
+            }
         } else{
             switch(direction){
                     case "up":
@@ -274,15 +311,22 @@ public class Player extends Entity{
         
         //g2.drawImage(image, screenX, screenY, gp.tileSize, gp.tileSize, null);
         g2.drawImage(image, screenX, screenY, null);
-        isDamaged = false;
     }
-        public void interactNPC(int i){
+
+        public void interactZombie(int i){
             if(i != 999) {
-                if(invincible == false){
-                    life -=1;
+                if(hasVaccine > 0) {
+                    // Player has a vaccine, so they do not take damage, and the zombie is cured
+                    hasVaccine--; // Use up a vaccine
+                    gp.zombie[i].setRemoveThis(true); // Mark the zombie for removal
+                    gp.ui.showMessage("Zombie cured!");
+                } else if(!invincible) {
+                    // Player does not have a vaccine and is not invincible, so they take damage
+                    life--;
+                    isDamaged = true;
                     invincible = true;
+                    gp.playSE(3); // Play damage sound effect
                 }
-                //System.out.println("hitting npc" + i);
             }
         }
     

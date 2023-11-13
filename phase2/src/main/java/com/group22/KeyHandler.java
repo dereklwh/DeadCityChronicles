@@ -20,6 +20,9 @@ public class KeyHandler implements KeyListener {
     public void keyPressed(KeyEvent e) {
         int code = e.getKeyCode();
 
+        if (gp.gameState == gp.titleState){
+            titleState(code);
+        }
         if (gp.gameState == gp.playState){
             playState(code);
         }
@@ -30,6 +33,9 @@ public class KeyHandler implements KeyListener {
 
         else if (gp.gameState == gp.settingState){
             settingState(code);
+        }
+        else if (gp.gameState == gp.gameOverState){
+            gameOverState(code);
         }
     }
 
@@ -51,6 +57,7 @@ public class KeyHandler implements KeyListener {
         }
         if(code == KeyEvent.VK_ESCAPE){
             gp.gameState = gp.settingState;
+            gp.previousState = gp.playState;
         }
     }
 
@@ -107,6 +114,66 @@ public class KeyHandler implements KeyListener {
     public void pauseState(int code){
         if(code == KeyEvent.VK_P){
             gp.gameState = gp.playState;
+        }
+    }
+
+    public void gameOverState(int code){
+        if(code == KeyEvent.VK_W){
+            gp.ui.commandNum--;
+            if(gp.ui.commandNum < 0){
+                gp.ui.commandNum = 1;
+            }
+            gp.playSE(5);
+        }
+        if(code == KeyEvent.VK_S){
+            gp.ui.commandNum++;
+            if(gp.ui.commandNum > 1){
+                gp.ui.commandNum = 0;
+            }
+            gp.playSE(5);
+        }
+        if(code == KeyEvent.VK_ENTER){
+            if(gp.ui.commandNum == 0){
+                gp.gameState = gp.playState;
+                gp.retry();
+            }
+            else if(gp.ui.commandNum == 1){
+                gp.gameState = gp.titleState;
+                gp.retry();
+            }
+        }
+    }
+
+    public void titleState(int code){
+        if(code == KeyEvent.VK_W){
+            gp.ui.commandNum--;
+            if(gp.ui.commandNum < 0){
+                gp.ui.commandNum = 3;
+            }
+            gp.playSE(5);
+        }
+        if(code == KeyEvent.VK_S){
+            gp.ui.commandNum++;
+            if(gp.ui.commandNum > 3){
+                gp.ui.commandNum = 0;
+            }
+            gp.playSE(5);
+        }
+        if(code == KeyEvent.VK_ENTER){
+            if(gp.ui.commandNum == 0){
+                gp.gameState = gp.playState;
+
+            }
+            else if(gp.ui.commandNum == 1){
+                
+            }
+             else if(gp.ui.commandNum == 2){
+                gp.gameState = gp.settingState;
+                gp.previousState = gp.titleState;
+            }
+             else if(gp.ui.commandNum == 3){
+                System.exit(0);
+            }
         }
     }
 

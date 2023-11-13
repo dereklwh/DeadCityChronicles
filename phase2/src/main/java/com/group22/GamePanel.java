@@ -48,7 +48,7 @@ public class GamePanel extends JPanel implements Runnable{
 
     //Entity and Object
     public Player player = new Player(this, keyH);
-    public Zombie zombie[] = new Zombie[5];
+    public Zombie zombie[] = new Zombie[20];
     public SuperObject obj[] = new SuperObject[20]; //how many objects we can show
 
     //Tile
@@ -64,9 +64,12 @@ public class GamePanel extends JPanel implements Runnable{
 
     //Game State
     public int gameState;
+    public int previousState;
+    public final int titleState = 0;
     public final int playState = 1;
     public final int pauseState = 2;
     public final int settingState = 3;
+    public final int gameOverState = 4;
     public EventHandler eHandler = new EventHandler(this);
 
     public GamePanel() {
@@ -83,7 +86,8 @@ public class GamePanel extends JPanel implements Runnable{
         aSetter.setZombie();
         playMusic(0);
 
-        gameState = playState;
+        gameState = titleState;
+        //gameState = playState;
 
         tempScreen = new BufferedImage(screenWidth, screenHeight, BufferedImage.TYPE_INT_ARGB);
         g2 = (Graphics2D)tempScreen.getGraphics();
@@ -91,6 +95,13 @@ public class GamePanel extends JPanel implements Runnable{
        setFullScreen();
     }
 
+    public void retry(){
+        player.setDefaultValues();
+        player.restorePos();
+        aSetter.setObject();
+        aSetter.setZombie();
+
+    }
     public void setFullScreen(){
         GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
         GraphicsDevice gd = ge.getDefaultScreenDevice();
@@ -140,7 +151,11 @@ public class GamePanel extends JPanel implements Runnable{
             player.update();
             for(int i = 0; i < zombie.length; i++){
                 if(zombie[i] != null && zombie[i].direction != null){
-                    zombie[i].update();
+                    if (zombie[i].isRemoveThis()) {
+                        zombie[i] = null;
+                    } else {
+                        zombie[i].update();
+                    }
                 }
             }
         }
@@ -154,7 +169,19 @@ public class GamePanel extends JPanel implements Runnable{
     //For fullscreen
     public void drawToTempScreen(){
 
-        tileM.draw(g2);
+        if (gameState == titleState){
+            tileM.draw(g2);
+            ui.draw(g2);
+        }
+
+        else{
+            tileM.draw(g2);
+        //Title Screen
+        /*if(gameState == titleState) {
+        	ui.drawTitleScreen(g2);
+        }*/
+        
+        //else {
         //Object
         for(int i = 0; i < obj.length; i++){
             if(obj[i] != null){
@@ -163,6 +190,7 @@ public class GamePanel extends JPanel implements Runnable{
         }
         //Player
         player.draw(g2);
+        ui.drawPlayerName();
         //Zombie1
         for(int i = 0; i < zombie.length; i++){
             if(zombie[i] != null){
@@ -172,6 +200,8 @@ public class GamePanel extends JPanel implements Runnable{
 
         //UI
         ui.draw(g2);
+        //}
+        }
     }
 
     public void drawToScreen(){

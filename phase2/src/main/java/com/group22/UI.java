@@ -2,16 +2,22 @@ package com.group22;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.io.InputStream;
 import java.text.DecimalFormat;
+
+import javax.imageio.ImageIO;
+
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.FontFormatException;
 
 public class UI {
     
     GamePanel gp;
     Graphics2D g2;
-    Font arial_40, arial_80; //Find new font later
+    Font maruMonica;
     BufferedImage heart_full, heart_half, heart_blank;
     BufferedImage keyImage;
     BufferedImage hImage;
@@ -19,6 +25,13 @@ public class UI {
     BufferedImage dImage;
 
     BufferedImage medImage;
+    
+    private BufferedImage titleImage;  
+    private BufferedImage startButton; 
+    private BufferedImage settingButton;
+    private BufferedImage ruleButton;
+    private BufferedImage exitButton;   
+    private BufferedImage scaledTitle,scaledStart,scaledSetting,scaledRule,scaledExit;
 
     public boolean messageOn = false;
     public String message = "";
@@ -32,8 +45,30 @@ public class UI {
 
     public UI(GamePanel gp) {
         this.gp = gp;
-        arial_40 = new Font("Arial", Font.PLAIN, 40);
-        arial_80 = new Font("Arial", Font.BOLD, 80);
+        
+        
+        try {
+        	InputStream is = getClass().getResourceAsStream("font/x12y16pxMaruMonica.ttf");
+			maruMonica = Font.createFont(Font.TRUETYPE_FONT, is);
+		} catch (FontFormatException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+			//maruMonica = new Font("Arial", Font.PLAIN, 20);
+		}
+        
+        //new add get all the image for title page
+        try {
+            titleImage = ImageIO.read(getClass().getResourceAsStream("res/object/title.png"));
+            startButton = ImageIO.read(getClass().getResourceAsStream("res/object/start.png"));
+            ruleButton = ImageIO.read(getClass().getResourceAsStream("res/object/rule.png"));
+            settingButton = ImageIO.read(getClass().getResourceAsStream("res/object/setting.png"));
+            exitButton = ImageIO.read(getClass().getResourceAsStream("res/object/exit.png"));
+            
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        
 
         //HUD
 
@@ -65,21 +100,21 @@ public class UI {
 
         this.g2 = g2;
 
-        g2.setFont(arial_40);
+        g2.setFont(maruMonica);
+        g2.setFont(g2.getFont().deriveFont(48F));
         g2.setColor(Color.white); 
+
+        if (gp.gameState == gp.titleState){
+            drawTitleScreen();
+        }
 
         if(gp.gameState == gp.playState){
             playTime += (double)1/60;
-            g2.drawString("Time: " + dFormat.format(playTime), gp.tileSize*15, 60);
 
-            drawPlayerLife();
-        }
-        if (gp.gameState == gp.pauseState){
-            drawPauseScreen();
-            g2.drawString("Time: " + dFormat.format(playTime), gp.tileSize*15, 60);
 
-            drawPlayerLife();
+            if (gameFinished == true){
 
+<<<<<<< HEAD
         }
         if (gp.gameState == gp.settingState){
             drawSettingScreen();
@@ -100,6 +135,9 @@ public class UI {
 
         else {
             g2.setFont(arial_40);
+=======
+            g2.setFont(g2.getFont().deriveFont(50F));
+>>>>>>> main
             g2.setColor(Color.white); 
 
             g2.drawImage(keyImage, gp.tileSize/2, gp.tileSize/2, gp.tileSize, gp.tileSize, null);
@@ -140,14 +178,14 @@ public class UI {
             y= gp.screenHeight/2 - (gp.tileSize * 3);
             g2.drawString(text, x, y);
 
-            text = "Your Time is: " + dFormat.format(playTime);
+            text = "Your Time is: " + dFormat.format(playTime) + " s";
             textLength = (int)g2.getFontMetrics().getStringBounds(text, g2).getWidth();
 
             x = gp.screenWidth/2 - textLength/2;
             y= gp.screenHeight/2 + (gp.tileSize * 4);
             g2.drawString(text, x, y);
 
-            g2.setFont(arial_80);
+            g2.setFont(g2.getFont().deriveFont(100F));
             g2.setColor(Color.yellow);
             text = "Congratulations";
             textLength = (int)g2.getFontMetrics().getStringBounds(text, g2).getWidth();
@@ -158,6 +196,114 @@ public class UI {
             
 
             gp.gameThread = null;
+<<<<<<< HEAD
+=======
+        }
+
+        else {
+            drawPlayerLife();
+            g2.drawString("Time: " + dFormat.format(playTime)+" s", gp.tileSize*15, 60);
+
+            g2.setFont(maruMonica);
+            g2.setFont(g2.getFont().deriveFont(48F));
+            g2.setColor(Color.white); 
+
+            g2.drawImage(keyImage, gp.tileSize/2, gp.tileSize/2, gp.tileSize, gp.tileSize, null);
+            g2.drawString("x " + gp.player.hasKey, 74, 60);
+
+            g2.drawImage(vImage, gp.tileSize/2 + 150, gp.tileSize/2, gp.tileSize, gp.tileSize, null);
+            g2.drawString("x " + gp.player.hasVaccine, 235, 60);            
+            
+            if(messageOn == true){
+
+                g2.setFont(g2.getFont().deriveFont(30F));
+                g2.drawString(message, gp.tileSize/2, gp.tileSize*5);
+
+                messageCounter++;
+
+                if(messageCounter > 120){
+                    messageCounter =0;
+                    messageOn = false;
+                }
+            }
+        }
+
+        }
+        if (gp.gameState == gp.pauseState){
+            drawPauseScreen();
+            g2.drawString("Time: " + dFormat.format(playTime), gp.tileSize*15, 60);
+
+            drawPlayerLife();
+
+        }
+        if (gp.gameState == gp.settingState){
+            drawSettingScreen();
+            g2.drawString("Time: " + dFormat.format(playTime), gp.tileSize*15, 60);
+
+        }
+
+        if (gp.gameState == gp.gameOverState){
+            drawGameOverScreen();
+            playTime =0;
+            gp.playSE(6);
+        }
+        
+        
+        
+    }
+    
+    //method for scale the image
+    private BufferedImage scaleImage(BufferedImage originalImage, int targetWidth, int targetHeight) {
+        BufferedImage scaledImage = new BufferedImage(targetWidth, targetHeight, BufferedImage.TYPE_INT_ARGB);
+        Graphics2D g2d = scaledImage.createGraphics();
+        g2d.drawImage(originalImage, 0, 0, targetWidth, targetHeight, null);
+        g2d.dispose();
+        return scaledImage;
+    }
+
+    
+    //draw title screen
+    public void drawTitleScreen() {
+    	int x = gp.screenWidth/4;
+    	int y = gp.tileSize/2;
+    	
+    	BufferedImage originalImage = titleImage;
+    	BufferedImage scaledTitle = scaleImage(originalImage,480,270); //you can set the pixel size of the image
+    	BufferedImage originalImage1 = startButton;
+    	BufferedImage scaledStart = scaleImage(originalImage1,70,33);
+    	BufferedImage originalImage2 = ruleButton;
+    	BufferedImage scaledRule = scaleImage(originalImage2,70,33);
+    	BufferedImage originalImage3 = settingButton;
+    	BufferedImage scaledSetting = scaleImage(originalImage3,70,33);
+    	BufferedImage originalImage4 = exitButton;
+    	BufferedImage scaledExit = scaleImage(originalImage4,70,33);
+    	// draw the title
+
+        g2.setFont(maruMonica);
+        g2.setFont(g2.getFont().deriveFont(Font.BOLD, 50F));
+
+        g2.drawImage(scaledTitle, x, y, null);
+        //draw start button
+        g2.drawImage(scaledStart, x+gp.tileSize*4, y+gp.tileSize*6, null);
+        if(commandNum == 0){
+            g2.drawString(">",x+gp.tileSize*3, y+320);
+        }
+        //draw rule button
+        g2.drawImage(scaledRule, x+gp.tileSize*4, y+gp.tileSize*7, null);
+        if(commandNum == 1){
+            g2.drawString(">",x+gp.tileSize*3, y+370);
+        }
+        //draw setting button
+        g2.drawImage(scaledSetting, x+gp.tileSize*4, y+gp.tileSize*8, null);
+        if(commandNum == 2){
+            g2.drawString(">",x+gp.tileSize*3, y+420);
+        }
+        //draw exit button
+        g2.drawImage(scaledExit, x+gp.tileSize*4, y+gp.tileSize*9, null);
+        if(commandNum == 3){
+            g2.drawString(">",x+gp.tileSize*3, y+470);
+        }
+>>>>>>> main
     }
 
     
@@ -192,6 +338,17 @@ public class UI {
         }
     }
 
+    public void drawPlayerName() {
+        String playerName = gp.player.name;
+        g2.setFont(maruMonica);
+        int textWidth = g2.getFontMetrics().stringWidth(playerName);
+        int textHeight = g2.getFontMetrics().getAscent();
+        int x = gp.player.screenX + (gp.player.solidArea.width / 2) - (textWidth / 2);
+        int y = gp.player.screenY - 20;
+        g2.setColor(Color.WHITE);
+        g2.drawString(playerName, x, y);
+    }
+
     public void drawPauseScreen(){
         String text = "PAUSED";
         int x = getXforCenteredText(text);
@@ -202,7 +359,9 @@ public class UI {
 
     public void drawSettingScreen(){
         g2.setColor(Color.white);
-        g2.setFont(arial_40);
+        g2.setFont(maruMonica);
+        g2.setFont(g2.getFont().deriveFont(40F));
+
 
         int frameX = gp.tileSize*6;
         int frameY = gp.tileSize;
@@ -286,12 +445,19 @@ public class UI {
 
         //Resume
         textY += gp.tileSize*2;
-        g2.drawString("Resume", textX, textY);
+        g2.drawString("Back", textX, textY);
         if(commandNum ==4){
             g2.drawString(">", textX -25, textY);
             if(gp.keyH.enterPressed == true){
-                gp.gameState = gp.playState;
-                commandNum = 0;
+                if (gp.previousState == gp.playState){
+                    gp.gameState = gp.playState;
+                    commandNum = 0;
+                }
+                else if(gp.previousState == gp.titleState){
+                    gp.gameState=gp.titleState;
+                    commandNum = 0;
+                }
+                
             }
         }
 
@@ -312,6 +478,44 @@ public class UI {
     
     }
     
+    public void drawGameOverScreen(){
+        g2.setColor(new Color(0,0,0,150));
+        g2.fillRect(0, 0, gp.screenWidth, gp.screenHeight);
+
+        int x;
+        int y;
+        String text;
+        //g2.setFont(arial_40);
+        g2.setFont(g2.getFont().deriveFont(Font.BOLD,110f));
+
+        text = "Game Over";
+        g2.setColor(Color.black);
+        x= getXforCenteredText(text);
+        y= gp.tileSize*4;
+        g2.drawString(text, x, y);
+
+        g2.setColor(Color.white);
+        g2.drawString(text, x-4, y-4);
+
+        //Retry
+        g2.setFont(g2.getFont().deriveFont(50f));
+        text = "Retry";
+        x= getXforCenteredText(text);
+        y += gp.tileSize*4;
+        g2.drawString(text, x, y);
+        if(commandNum ==0){
+            g2.drawString(">", x -40, y);
+        }
+
+        //Back to title
+        text = "Quit";
+        x= getXforCenteredText(text);
+        y += 60;
+        g2.drawString(text, x, y);
+        if(commandNum ==1){
+            g2.drawString(">", x-40, y);
+        }
+    }
 
     public void fullScreenNoti(int frameX, int frameY){
         int textX = frameX + gp.tileSize;
@@ -375,7 +579,7 @@ public class UI {
         int textY = frameY + gp.tileSize;
 
         
-        String text = "Quit the game and \nreturn to the \ntitle screen?";
+        String text = "Quit the game and return \nto the title screen?";
         for(String line: text.split("\n")){
             g2.drawString(line, textX-35, textY);
             textY += 40;
@@ -390,7 +594,9 @@ public class UI {
             g2.drawString(">", textX-25, textY);
             if(gp.keyH.enterPressed==true){
                 subState =0;
-                //change game state
+                gp.gameState = gp.titleState;
+                gp.retry();
+                playTime = 0;
             }
         }
 

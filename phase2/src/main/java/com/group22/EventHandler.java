@@ -2,11 +2,20 @@ package com.group22;
 
 import java.awt.*;
 
+/**
+ * The EventHandler class is responsible for managing events that occur within the game.
+ * It uses a grid of event rectangles to determine if an event should be triggered based on the player's position.
+ */
 public class EventHandler {
     GamePanel gp;
     int previousEventX, previousEventY;
     boolean canTouchEvent = true;
     EventRect eventRect[][];
+
+    /**
+     * Constructor for EventHandler which initializes a grid of event rectangles.
+     * @param gp Reference to the GamePanel for access to game settings and utilities.
+     */
     public EventHandler(GamePanel gp){
         this.gp = gp;
         eventRect = new EventRect[gp.maxWorldCol][gp.maxWorldRow];
@@ -31,6 +40,9 @@ public class EventHandler {
 
     }
 
+    /**
+     * Checks for any events that are occurring and performs the necessary actions if an event is triggered.
+     */
     public void checkEvent(){
         //check if the player character is more than 1 tile away from the last event
         int xDistance = Math.abs(gp.player.worldX - previousEventX);
@@ -57,6 +69,12 @@ public class EventHandler {
         }
     }
 
+    /**
+     * Checks if a particular grid square designated by column and row is currently being hit by the player.
+     * @param col Column index for the event rectangle to check.
+     * @param row Row index for the event rectangle to check.
+     * @return Returns true if the player's solid area intersects the event rectangle.
+     */
     public boolean hit(int col, int row){
         boolean hit = false;
         gp.player.solidArea.x = gp.player.worldX + gp.player.solidArea.x;
@@ -79,6 +97,9 @@ public class EventHandler {
         return hit;
     }
 
+    /**
+     * Executes damage logic, reducing player life and showing a message.
+     */
     public void damage(){
         gp.player.life -= 1;
         gp.ui.showMessage("You're getting hurt");
@@ -86,11 +107,13 @@ public class EventHandler {
         canTouchEvent = false;
     }
 
+    /**
+     * Executes healing logic, increasing player life and showing a message.
+     */
     public void heal(){
         gp.player.life += 1;
         gp.ui.showMessage("boosted health");
         gp.playSE(1);
         canTouchEvent = false;
     }
-
 }

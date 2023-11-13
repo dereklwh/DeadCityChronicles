@@ -18,4 +18,5 @@ com\group22\KeyHandler.class
 com\group22\tile\Tile.class
 com\group22\AssetSetter.class
 com\group22\ObjectHeart.class
+com\group22\ObjectDoor.class
 com\group22\CollisionChecker.class
