@@ -171,6 +171,7 @@ public class Player extends Entity{
 
         if (life <=0){
                 gp.gameState = gp.gameOverState;
+                gp.playSE(6);
                 //play gameover sound effect: I put the sound effect play in the draw method (Sina) if it didn't work move it here
             }
        

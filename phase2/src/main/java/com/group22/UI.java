@@ -212,7 +212,7 @@ public class UI {
         if (gp.gameState == gp.gameOverState){
             drawGameOverScreen();
             playTime =0;
-            gp.playSE(6);
+            int count = 0;
         }
         if (gp.gameState == gp.ruleState) {
         	drawRulePage();
