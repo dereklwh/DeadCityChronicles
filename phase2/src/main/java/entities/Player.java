@@ -1,4 +1,8 @@
-package com.group22;
+package entities;
+
+import com.group22.GamePanel;
+import com.group22.KeyHandler;
+import com.group22.UtilityTool;
 
 import javax.imageio.ImageIO;
 import java.awt.*;

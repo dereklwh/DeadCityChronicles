@@ -4,6 +4,7 @@ import com.group22.objects.ObjectDoor;
 import com.group22.objects.ObjectKey;
 import com.group22.objects.ObjectTrap;
 import com.group22.objects.ObjectVaccine;
+import entities.Zombie;
 
 public class AssetSetter {
     GamePanel gp;

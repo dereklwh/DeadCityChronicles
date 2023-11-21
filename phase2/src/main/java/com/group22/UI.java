@@ -1,7 +1,6 @@
 package com.group22;
 
 import com.group22.objects.*;
-import com.group22.tile.objects.*;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;

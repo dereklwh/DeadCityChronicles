@@ -1,6 +1,9 @@
 package com.group22;
 
 
+import entities.Entity;
+import entities.Zombie;
+
 import java.awt.Rectangle;
 
 /**

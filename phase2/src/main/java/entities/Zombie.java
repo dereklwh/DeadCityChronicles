@@ -1,9 +1,10 @@
-package com.group22;
+package entities;
+
+import com.group22.GamePanel;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.util.Collections;
 
 import javax.imageio.ImageIO;
 
@@ -13,9 +14,10 @@ import javax.imageio.ImageIO;
  */
 public class Zombie extends Entity{
     GamePanel gp;
-    int worldX, worldY;
-    int speed;
-    String direction;
+    public int worldX;
+    public int worldY;
+    public int speed;
+    public String direction;
     private int zombieType;
     public int solidAreaDefaultX, solidAreaDefaultY;
     private boolean removeThis = false;
