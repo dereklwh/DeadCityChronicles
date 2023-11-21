@@ -1,4 +1,7 @@
-package com.group22;
+package com.group22.objects;
+
+import com.group22.GamePanel;
+import com.group22.UtilityTool;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;

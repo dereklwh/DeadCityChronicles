@@ -1,4 +1,6 @@
-package com.group22;
+package com.group22.objects;
+
+import com.group22.GamePanel;
 
 import javax.imageio.ImageIO;
 import java.io.IOException;

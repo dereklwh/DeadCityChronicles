@@ -1,5 +1,10 @@
 package com.group22;
 
+import com.group22.objects.ObjectDoor;
+import com.group22.objects.ObjectKey;
+import com.group22.objects.ObjectTrap;
+import com.group22.objects.ObjectVaccine;
+
 public class AssetSetter {
     GamePanel gp;
 
