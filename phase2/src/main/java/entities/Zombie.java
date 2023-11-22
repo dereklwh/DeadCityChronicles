@@ -1,6 +1,7 @@
 package entities;
 
 import com.group22.GamePanel;
+import com.group22.UtilityTool;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -52,103 +53,129 @@ public class Zombie extends Entity{
         direction = "down"; // Initial direction
     }
 
-    // Load images for zombie
-    public void getZombieImage() {
-        try {
+        // Load images for zombie
+        public void getZombieImage() {
             String basePath = "/zombie" + zombieType + "/zombie" + zombieType + "_";
-    
-            up1 = ImageIO.read(getClass().getResourceAsStream(basePath + "run_right0.png"));
-            up2 = ImageIO.read(getClass().getResourceAsStream(basePath + "run_right1.png"));
-            up3 = ImageIO.read(getClass().getResourceAsStream(basePath + "run_right2.png"));
-            up4 = ImageIO.read(getClass().getResourceAsStream(basePath + "run_right3.png"));
+            up1 = setup(basePath + "run_right0");
+            up2 = setup(basePath + "run_right1");
+            up3 = setup(basePath + "run_right2");
+            up4 = setup(basePath + "run_right3");
             
-            down1 = ImageIO.read(getClass().getResourceAsStream(basePath + "run_left0.png"));
-            down2 = ImageIO.read(getClass().getResourceAsStream(basePath + "run_left1.png"));
-            down3 = ImageIO.read(getClass().getResourceAsStream(basePath + "run_left2.png"));
-            down4 = ImageIO.read(getClass().getResourceAsStream(basePath + "run_left3.png"));
+            down1 = setup(basePath + "run_left0");
+            down2 = setup(basePath + "run_left1");
+            down3 = setup(basePath + "run_left2");
+            down4 = setup(basePath + "run_left3");
     
-            left1 = ImageIO.read(getClass().getResourceAsStream(basePath + "run_left0.png"));
-            left2 = ImageIO.read(getClass().getResourceAsStream(basePath + "run_left1.png"));
-            left3 = ImageIO.read(getClass().getResourceAsStream(basePath + "run_left2.png"));
-            left4 = ImageIO.read(getClass().getResourceAsStream(basePath + "run_left3.png"));
+            left1 = setup(basePath + "run_left0");
+            left2 = setup(basePath + "run_left1");
+            left3 = setup(basePath + "run_left2");
+            left4 = setup(basePath + "run_left3");
             
-            right1 = ImageIO.read(getClass().getResourceAsStream(basePath + "run_right0.png"));
-            right2 = ImageIO.read(getClass().getResourceAsStream(basePath + "run_right1.png"));
-            right3 = ImageIO.read(getClass().getResourceAsStream(basePath + "run_right2.png"));
-            right4 = ImageIO.read(getClass().getResourceAsStream(basePath + "run_right3.png"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+            right1 = setup(basePath + "run_right0");
+            right2 = setup(basePath + "run_right1");
+            right3 = setup(basePath + "run_right2");
+            right4 = setup(basePath + "run_right3");
     }
     
-
+    /**
+     * Handles updates to zombie in gamepanel.
+     */
     public void update() {
-            int xDistance = gp.player.worldX - worldX;
-            int yDistance = gp.player.worldY - worldY;
-            String xDirection = xDistance > 0 ? "right" : "left";
-            String yDirection = yDistance > 0 ? "down" : "up";
+        calculateDirection();
+        updatePosition();
+        updateAnimation();
+    }
 
-        //update the direction every .5 seconds
-        actionLockCounter ++;
-        if (actionLockCounter == 30){
-            // Simple AI for zombie: move in the direction with the greatest distance from the player
-            if (Math.abs(xDistance) > Math.abs(yDistance)) {
-                direction = xDirection;
-            } else {
-                direction = yDirection;
-            }
+    private void calculateDirection() {
+        int xDistance = gp.player.worldX - worldX;
+        int yDistance = gp.player.worldY - worldY;
+    
+        actionLockCounter++;
+        if (actionLockCounter == 30) {
+            direction = determineDirection(xDistance, yDistance);
             actionLockCounter = 0;
         }
+    }
 
-        int nextX = worldX;
-        int nextY = worldY;
+    private String determineDirection(int xDistance, int yDistance) {
+        String xDirection = xDistance > 0 ? "right" : "left";
+        String yDirection = yDistance > 0 ? "down" : "up";
+        
+        return Math.abs(xDistance) > Math.abs(yDistance) ? xDirection : yDirection;
+    }
 
-        switch (direction) {
-            case "up": nextY -= speed; break;
-            case "down": nextY += speed; break;
-            case "left": nextX -= speed; break;
-            case "right": nextX += speed; break;
-        }
+    private void updatePosition() {
+        int nextX = worldX, nextY = worldY;
+        nextX = getNextX(nextX);
+        nextY = getNextY(nextY);
 
-        // New collision check
         collisionOn = gp.cChecker.checkCollision(this, nextX, nextY);
-        boolean playerCollision = gp.cChecker.checkPlayer(this, nextX, nextY);
         gp.cChecker.checkEntity(this, gp.zombie);
 
-        if (playerCollision){
-            collisionOn = true;
-            if (gp.player.hasVaccine == 0 && gp.player.invincible == false){
-                gp.player.isDamaged = true;
-                gp.player.life -=1;
-                gp.player.invincible = true;
-                gp.playSE(3);
-            }else if (gp.player.hasVaccine > 0){
-                gp.player.hasVaccine--; // Use up a vaccine
-                this.setRemoveThis(true); // Mark the zombie for removal
-                gp.ui.showMessage("Zombie cured!");
-            }
-        }
-
+        handleCollisions();
 
         if (collisionOn) {
-            // Check for viable alternative paths
-            boolean canMoveVertically = !gp.cChecker.checkCollision(this, worldX, worldY + (yDistance > 0 ? speed : -speed));
-            boolean canMoveHorizontally = !gp.cChecker.checkCollision(this, worldX + (xDistance > 0 ? speed : -speed), worldY);
-            
-            if ((direction.equals("left") || direction.equals("right")) && canMoveVertically) {
-                direction = (yDistance > 0) ? "down" : "up";
-            } else if ((direction.equals("up") || direction.equals("down")) && canMoveHorizontally) {
-                direction = (xDistance > 0) ? "right" : "left";
-            } else {
-                //???
-            }
+            checkAlternativePaths(nextX, nextY);
         } else {
             worldX = nextX;
             worldY = nextY;
         }
+    }
 
+    private int getNextX(int nextX) {
+        if (direction.equals("left")) {
+            nextX -= speed;
+        } else if (direction.equals("right")) {
+            nextX += speed;
+        }
+        return nextX;
+    }
+    
+    private int getNextY(int nextY) {
+        if (direction.equals("up")) {
+            nextY -= speed;
+        } else if (direction.equals("down")) {
+            nextY += speed;
+        }
+        return nextY;
+    }
 
+    private void handleCollisions() {
+        boolean playerCollision = gp.cChecker.checkPlayer(this, worldX, worldY);
+        if (playerCollision) {
+            collisionOn = true;
+            handlePlayerInteraction();
+        }
+    }
+    
+    private void handlePlayerInteraction() {
+        if (gp.player.hasVaccine == 0 && !gp.player.invincible) {
+            gp.player.isDamaged = true;
+            gp.player.life -= 1;
+            gp.player.invincible = true;
+            gp.playSE(3);
+        } else if (gp.player.hasVaccine > 0) {
+            gp.player.hasVaccine--;
+            setRemoveThis(true);
+            gp.ui.showMessage("Zombie cured!");
+        }
+    }
+    
+    private void checkAlternativePaths(int nextX, int nextY) {
+        int xDistance = gp.player.worldX - worldX;
+        int yDistance = gp.player.worldY - worldY;
+    
+        boolean canMoveVertically = !gp.cChecker.checkCollision(this, worldX, worldY + (yDistance > 0 ? speed : -speed));
+        boolean canMoveHorizontally = !gp.cChecker.checkCollision(this, worldX + (xDistance > 0 ? speed : -speed), worldY);
+    
+        if ((direction.equals("left") || direction.equals("right")) && canMoveVertically) {
+            direction = (yDistance > 0) ? "down" : "up";
+        } else if ((direction.equals("up") || direction.equals("down")) && canMoveHorizontally) {
+            direction = (xDistance > 0) ? "right" : "left";
+        }
+    }
 
+    private void updateAnimation() {
         spriteCounter++;
         if(spriteCounter > 12){ //zombie image changes every 12 frames
             if(spriteNum == 1) {
@@ -164,7 +191,6 @@ public class Zombie extends Entity{
             }
             spriteCounter = 0;
         }
-        // System.out.printf("the collision is %b\n", collisionOn);
     }
 
     public void draw(Graphics2D g2) {
@@ -236,6 +262,19 @@ public class Zombie extends Entity{
 
     public boolean isRemoveThis() {
         return removeThis;
+    }
+
+        public BufferedImage setup(String imageName){
+        UtilityTool uTool = new UtilityTool();
+        BufferedImage image = null;
+
+        try{
+            image = ImageIO.read(getClass().getResourceAsStream(imageName + ".png"));
+            image = uTool.scaleImage(image, gp.tileSize, gp.tileSize);
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+        return image;
     }
 
 }
