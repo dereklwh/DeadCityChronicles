@@ -8,6 +8,8 @@ import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 
 /**
@@ -28,6 +30,9 @@ public class Player extends Entity{
     int damageAnimationDuration = 9; // Duration of damage animation in frames
     int damageAnimationFrame = 0; // Current frame of the damage animation
 
+    private Map<String, BufferedImage> spriteMap = new HashMap<>();
+    
+    
     /**
      * Constructor that initializes a new Player object with a reference to the GamePanel and KeyHandler.
      * @param gp The game panel that the player exists within.
@@ -48,6 +53,24 @@ public class Player extends Entity{
         
         setDefaultValues();
         getPlayerImage();
+        
+        initializeSpriteMap();
+    }
+    
+    private void initializeSpriteMap() {
+    	spriteMap.put("up1", up1);
+    	spriteMap.put("up2", up2);
+    	spriteMap.put("up3", up3);
+    	spriteMap.put("down1", down1);
+    	spriteMap.put("down2", down2);
+    	spriteMap.put("down3", down3);
+    	spriteMap.put("left1", left1);
+    	spriteMap.put("left2", left2);
+    	spriteMap.put("left3", left3);
+    	spriteMap.put("right1", right1);
+    	spriteMap.put("right2", right2);
+    	spriteMap.put("right3", right3);
+    
     }
 
     public void setDefaultValues(){
@@ -126,6 +149,16 @@ public class Player extends Entity{
             e.printStackTrace();
         }
         return image;
+    }
+    
+    private BufferedImage getDamageImage() {
+        if (damageAnimationFrame <= damageAnimationDuration / 4) {
+            return damageImage1;
+        } else if (damageAnimationFrame <= (damageAnimationDuration * 2) / 3) {
+            return damageImage2;
+        } else {
+            return damageImage3;
+        }
     }
 
     public void update(){
@@ -282,15 +315,21 @@ public class Player extends Entity{
         BufferedImage image = null;
 
         if (isDamaged){
-            if(damageAnimationFrame <= damageAnimationDuration / 4){//shorter frame
+            /*if(damageAnimationFrame <= damageAnimationDuration / 4){//shorter frame
                 image = damageImage1;
             }else if (damageAnimationFrame <= (damageAnimationDuration*2)/3){
                 image = damageImage2;
             }else{
                 image = damageImage3;
+            }*/
+        	image = getDamageImage();
+        	damageAnimationFrame++;
+            if (damageAnimationFrame > damageAnimationDuration) {
+                isDamaged = false;
+                damageAnimationFrame = 0;
             }
         } else{
-            switch(direction){
+            /*switch(direction){
                     case "up":
                         if(spriteNum == 1){
                             image = up1;
@@ -331,7 +370,9 @@ public class Player extends Entity{
                         break;
                     case "stop":
                         image = stop;
-                }
+                }*/
+        	String key = direction + spriteNum;
+        	image = spriteMap.getOrDefault(key, stop);
         }
 
         
