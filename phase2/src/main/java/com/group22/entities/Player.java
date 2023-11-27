@@ -30,7 +30,7 @@ public class Player extends Entity{
     int damageAnimationDuration = 9; // Duration of damage animation in frames
     int damageAnimationFrame = 0; // Current frame of the damage animation
 
-    private Map<String, BufferedImage> spriteMap = new HashMap<>();
+    public Map<String, BufferedImage> spriteMap = new HashMap<>();
     
     
     /**
@@ -151,7 +151,7 @@ public class Player extends Entity{
         return image;
     }
     
-    private BufferedImage getDamageImage() {
+    public BufferedImage getDamageImage() {
         if (damageAnimationFrame <= damageAnimationDuration / 4) {
             return damageImage1;
         } else if (damageAnimationFrame <= (damageAnimationDuration * 2) / 3) {
