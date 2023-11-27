@@ -2,12 +2,9 @@ package com.group22.entities;
 
 import com.group22.GamePanel;
 import com.group22.KeyHandler;
-import static org.mockito.Mockito.*;
 
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import entities.Player;
-import entities.Zombie;
 import junit.framework.TestCase;
 
 /**

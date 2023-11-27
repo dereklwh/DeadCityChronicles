@@ -1,4 +1,4 @@
-package entities;
+package com.group22.entities;
 
 import com.group22.GamePanel;
 import com.group22.KeyHandler;

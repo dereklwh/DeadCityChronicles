@@ -7,8 +7,8 @@ import javax.swing.JPanel;
 
 import com.group22.tile.TileManager;
 import com.group22.objects.SuperObject;
-import entities.Player;
-import entities.Zombie;
+import com.group22.entities.Player;
+import com.group22.entities.Zombie;
 
 
 /**

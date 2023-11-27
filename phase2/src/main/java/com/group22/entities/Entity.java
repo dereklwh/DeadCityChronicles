@@ -1,4 +1,4 @@
-package entities;
+package com.group22.entities;
 
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
