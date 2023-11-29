@@ -557,7 +557,7 @@ public class UI {
         textX = getXforCenteredText(text2);
         textY += gp.tileSize*3;
         g2.drawString(text2, textX, textY);
-        if (commandNum ==0){
+        if (commandNum == 0){
             g2.drawString(">", textX-25, textY);
             if(gp.keyH.enterPressed==true){
                 subState =0;

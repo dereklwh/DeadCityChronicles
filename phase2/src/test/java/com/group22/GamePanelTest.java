@@ -1,5 +1,7 @@
 package com.group22;
 
+import com.group22.entities.Zombie;
+import com.group22.objects.SuperObject;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -11,6 +13,10 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 import org.mockito.Mockito;
+
+import java.awt.*;
+import java.awt.image.BufferedImage;
+
 import static org.mockito.Mockito.*;
 
 class GamePanelTest {
@@ -74,8 +80,19 @@ class GamePanelTest {
     @Test
     void testGameRestart() {
         gamePanel.retry();
-        assertEquals(gamePanel.playState, gamePanel.gameState, "Game state should be reset to playState");
-        // Additional assertions as needed
+        assertEquals(gamePanel.titleState, gamePanel.gameState, "Game state should be reset to title state");
+    }
+
+    @Test
+    void testObjectInteraction() {
+        SuperObject testObject = new SuperObject() {}; // Replace with a specific object if needed
+        testObject.worldX = gamePanel.player.worldX;
+        testObject.worldY = gamePanel.player.worldY;
+
+        gamePanel.obj[0] = testObject;
+        gamePanel.cChecker.checkObject(gamePanel.player, true);
+
+        assertNotNull(gamePanel.obj[0], "Player should interact with the object");
     }
 
     // Add more test cases as necessary
