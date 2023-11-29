@@ -113,9 +113,6 @@ public class Zombie extends Entity{
         }
     }
 
-    // private void moveZombie(int nextX, int nextY){
-        
-    // }
     private void handleCollision(int xDistance, int yDistance, int nextX, int nextY) {
 
         // New collision check
