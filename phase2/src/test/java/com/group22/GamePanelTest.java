@@ -15,6 +15,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.mockito.Mockito;
 
 import java.awt.*;
+import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 
 import static org.mockito.Mockito.*;
@@ -95,6 +96,14 @@ class GamePanelTest {
         assertNotNull(gamePanel.obj[0], "Player should interact with the object");
     }
 
-    // Add more test cases as necessary
+    @Test
+    void testAssetInitialization() {
+        AssetSetter assetSetter = new AssetSetter(gamePanel);
+        assetSetter.setObject();
+        assertNotNull(gamePanel.obj, "Game objects should be initialized");
+        // Add more specific checks for object types and positions if necessary
+    }
+
+    // Add more test cases
 }
 
