@@ -15,7 +15,7 @@ import com.group22.entities.Zombie;
  * The GamePanel class is the main controller for the game, handling the game loop,
  * rendering, and game state management.
  */
-public class GamePanel extends JPanel implements Runnable{
+public class GamePanel extends JPanel implements Runnable {
     // Game world and screen settings
     private final int originalTileSize = 16;
     public int scale = 3; //this is to scale 16
@@ -44,7 +44,7 @@ public class GamePanel extends JPanel implements Runnable{
     public KeyHandler keyH = new KeyHandler(this);
     Thread gameThread;
     public CollisionChecker cChecker = new CollisionChecker(this);
-    public  AssetSetter aSetter = new AssetSetter(this);
+    public AssetSetter aSetter = new AssetSetter(this);
 
     //Sound
     Sound music = new Sound();
@@ -52,8 +52,8 @@ public class GamePanel extends JPanel implements Runnable{
 
     //Entity and Object
     public Player player = new Player(this, keyH);
-    public Zombie zombie[] = new Zombie[20];
-    public SuperObject obj[] = new SuperObject[20]; //how many objects we can show
+    public Zombie[] zombie = new Zombie[20];
+    public SuperObject[] obj = new SuperObject[20]; //how many objects we can show
 
     //Tile
     TileManager tileM = new TileManager(this);
@@ -90,7 +90,7 @@ public class GamePanel extends JPanel implements Runnable{
     }
 
 
-    public void setupGame(){
+    public void setupGame() {
         aSetter.setObject();
         aSetter.setZombie();
         playMusic(0);
@@ -99,19 +99,19 @@ public class GamePanel extends JPanel implements Runnable{
         //gameState = playState;
 
         tempScreen = new BufferedImage(screenWidth, screenHeight, BufferedImage.TYPE_INT_ARGB);
-        g2 = (Graphics2D)tempScreen.getGraphics();
+        g2 = (Graphics2D) tempScreen.getGraphics();
 
-       setFullScreen();
+        setFullScreen();
     }
 
-    public void retry(){
+    public void retry() {
         player.setDefaultValues();
         player.restorePos();
         aSetter.setObject();
         aSetter.setZombie();
-
     }
-    public void setFullScreen(){
+
+    public void setFullScreen() {
         GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
         GraphicsDevice gd = ge.getDefaultScreenDevice();
         gd.setFullScreenWindow(Main.window);
@@ -120,17 +120,18 @@ public class GamePanel extends JPanel implements Runnable{
         screenHeight2 = Main.window.getHeight();
     }
 
-    public void startGameThread(){
+    public void startGameThread() {
         gameThread = new Thread(this);
         gameThread.start();
     }
-    @Override
-    public void run(){
 
-        double drawInterval = (double) 1000000000 /FPS; //0.016666 s
+    @Override
+    public void run() {
+
+        double drawInterval = (double) 1000000000 / FPS; //0.016666 s
         double nextDrawTime = System.nanoTime() + drawInterval;
 
-        while(gameThread != null){
+        while (gameThread != null) {
             //System.out.println("game running!");
             update();
             //repaint();
@@ -138,9 +139,9 @@ public class GamePanel extends JPanel implements Runnable{
             drawToScreen();
             try {
                 double remainingTime = nextDrawTime - System.nanoTime();
-                remainingTime = remainingTime/1000000;
+                remainingTime = remainingTime / 1000000;
 
-                if(remainingTime < 0){
+                if (remainingTime < 0) {
                     remainingTime = 0;
                 }
 
@@ -154,12 +155,12 @@ public class GamePanel extends JPanel implements Runnable{
         }
     }
 
-    public void update(){
+    public void update() {
 
-        if (gameState == playState){
+        if (gameState == playState) {
             player.update();
-            for(int i = 0; i < zombie.length; i++){
-                if(zombie[i] != null && zombie[i].direction != null){
+            for (int i = 0; i < zombie.length; i++) {
+                if (zombie[i] != null && zombie[i].direction != null) {
                     if (zombie[i].isRemoveThis()) {
                         zombie[i] = null;
                     } else {
@@ -168,7 +169,7 @@ public class GamePanel extends JPanel implements Runnable{
                 }
             }
         }
-        if (gameState == pauseState){
+        if (gameState == pauseState) {
 
         }
         //System.out.println("Player Position: " + player.worldX + ", " + player.worldY);
@@ -176,43 +177,42 @@ public class GamePanel extends JPanel implements Runnable{
     }
 
     //For fullscreen
-    public void drawToTempScreen(){
+    public void drawToTempScreen() {
 
-        if (gameState == titleState){
+        if (gameState == titleState) {
             tileM.draw(g2);
             ui.draw(g2);
-        }
-        else{
+        } else {
             tileM.draw(g2);
-        //Title Screen
+            //Title Screen
         /*if(gameState == titleState) {
         	ui.drawTitleScreen(g2);
         }*/
-        
-        //else {
-        //Object
-        for(int i = 0; i < obj.length; i++){
-            if(obj[i] != null){
-                obj[i].draw(g2, this);
-            }
-        }
-        //Player
-        player.draw(g2);
-        ui.drawPlayerName();
-        //Zombie1
-        for(int i = 0; i < zombie.length; i++){
-            if(zombie[i] != null){
-                zombie[i].draw(g2);
-            }
-        }
 
-        //UI
-        ui.draw(g2);
-        //}
+            //else {
+            //Object
+            for (int i = 0; i < obj.length; i++) {
+                if (obj[i] != null) {
+                    obj[i].draw(g2, this);
+                }
+            }
+            //Player
+            player.draw(g2);
+            ui.drawPlayerName();
+            //Zombie1
+            for (int i = 0; i < zombie.length; i++) {
+                if (zombie[i] != null) {
+                    zombie[i].draw(g2);
+                }
+            }
+
+            //UI
+            ui.draw(g2);
+            //}
         }
     }
 
-    public void drawToScreen(){
+    public void drawToScreen() {
         Graphics g = getGraphics();
         g.drawImage(tempScreen, 0, 0, screenWidth2, screenHeight2, null);
         g.dispose();
@@ -255,15 +255,16 @@ public class GamePanel extends JPanel implements Runnable{
     /**
      * Stops the background music.
      */
-    public void stopMusic(){
+    public void stopMusic() {
         music.stop();
     }
 
     /**
      * Plays a sound effect once.
+     *
      * @param i The index of the sound effect to play.
      */
-    public void playSE(int i){
+    public void playSE(int i) {
         se.setFile(i);
         se.play();
     }
