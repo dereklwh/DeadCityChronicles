@@ -241,4 +241,7 @@ public class GamePanel extends JPanel implements Runnable {
         se.play();
     }
 
+    public Player getPlayer() {
+        return player;
+    }
 }
