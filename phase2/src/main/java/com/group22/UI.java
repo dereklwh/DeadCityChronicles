@@ -1,5 +1,6 @@
 package com.group22;
 
+import com.group22.entities.Player;
 import com.group22.objects.*;
 
 import java.awt.Graphics2D;
@@ -24,6 +25,7 @@ public class UI {
     
     GamePanel gp;
     Graphics2D g2;
+    private Player player;
     Font maruMonica;
     // HUD elements
     BufferedImage heart_full, heart_half, heart_blank;
@@ -58,9 +60,9 @@ public class UI {
      */
     public UI(GamePanel gp) {
         this.gp = gp;
+        this.player = player;
         
-        
-        try {
+       try {
         	InputStream is = getClass().getResourceAsStream("/font/x12y16pxMaruMonica.ttf");
 			maruMonica = Font.createFont(Font.TRUETYPE_FONT, is);
 		} catch (FontFormatException e) {
@@ -113,6 +115,8 @@ public class UI {
         messageOn = true;
     }
 
+ 
+
     /**
      * Draws various UI components depending on the current game state.
      * @param g2 The Graphics2D object used for drawing.
@@ -123,6 +127,9 @@ public class UI {
 
         g2.setFont(maruMonica);
         g2.setFont(g2.getFont().deriveFont(48F));
+        if (g2.getFont() == null) {
+            g2.setFont(new Font("Arial", Font.PLAIN, 12)); 
+        }
         g2.setColor(Color.white); 
 
         if (gp.gameState == gp.titleState){

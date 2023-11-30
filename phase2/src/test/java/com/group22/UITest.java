@@ -3,15 +3,23 @@ package com.group22;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import org.junit.Before;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
+
+import com.group22.entities.Player;
+
+import java.awt.Font;
 
 public class UITest {
 
@@ -41,22 +49,16 @@ public class UITest {
     }
 
     @Test
-    public void testDrawTitleScreen() {
-    
-        uiTest.drawTitleScreen();
-        Mockito.verify(mockGraphics).drawImage(Mockito.any(BufferedImage.class), Mockito.anyInt(), Mockito.anyInt(), Mockito.any());
-
-    }
-
-    /*@Test
-    public void testDrawPlayState() {
-        // Set the game state to playState
-        when(mockGamePanel.getGameState()).thenReturn(GamePanel.playState);
-
-        // Your code to call the draw method and assert the expected behavior for the play state
+    public void testDraw(){
+         Font defaultFont = new Font("Arial", Font.PLAIN, 12);
+        when(mockGraphics.getFont()).thenReturn(defaultFont);
         uiTest.draw(mockGraphics);
-
-        // Add assertions based on the expected behavior for the play state
-    }*/
+        verify(mockGraphics, times(5)).drawImage(
+            any(BufferedImage.class),
+            anyInt(),
+            anyInt(),
+            any()
+         );
+    }
 
 }
