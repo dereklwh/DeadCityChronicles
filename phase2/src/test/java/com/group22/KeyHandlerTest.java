@@ -51,10 +51,31 @@ public class KeyHandlerTest {
     }
 
     @Test
+    void testKeyReleaseDown() {
+        KeyEvent keyEvent = new KeyEvent(mockGamePanel, KeyEvent.KEY_RELEASED, System.currentTimeMillis(), 0, KeyEvent.VK_DOWN, 'D');
+        keyHandler.keyReleased(keyEvent);
+        assertFalse(keyHandler.downPressed, "Down key should be released");
+    }
+
+    @Test
+    void testKeyReleaseRight() {
+        KeyEvent keyEvent = new KeyEvent(mockGamePanel, KeyEvent.KEY_RELEASED, System.currentTimeMillis(), 0, KeyEvent.VK_RIGHT, 'R');
+        keyHandler.keyReleased(keyEvent);
+        assertFalse(keyHandler.rightPressed, "Right key should be released");
+    }
+
+    @Test
     void testKeyReleasedUp() {
         KeyEvent keyEvent = new KeyEvent(mockGamePanel, KeyEvent.KEY_RELEASED, System.currentTimeMillis(), 0, KeyEvent.VK_UP, 'U');
         keyHandler.keyReleased(keyEvent);
         assertFalse(keyHandler.upPressed, "Up key should be released");
+    }
+
+    @Test
+    void testKeyReleasedLeft() {
+        KeyEvent keyEvent = new KeyEvent(mockGamePanel, KeyEvent.KEY_RELEASED, System.currentTimeMillis(), 0, KeyEvent.VK_LEFT, 'L');
+        keyHandler.keyReleased(keyEvent);
+        assertFalse(keyHandler.leftPressed, "Left key should be released");
     }
 
     @Test
@@ -82,12 +103,6 @@ public class KeyHandlerTest {
         assertEquals(realGamePanel.settingState, mockGamePanel.gameState, "Game state should be settingState after pressing Escape in playState");
     }
 
-    @Test
-    void testKeyReleaseDown() {
-        KeyEvent keyEvent = new KeyEvent(mockGamePanel, KeyEvent.KEY_RELEASED, System.currentTimeMillis(), 0, KeyEvent.VK_DOWN, 'D');
-        keyHandler.keyReleased(keyEvent);
-        assertFalse(keyHandler.downPressed, "Down key should be released");
-    }
 
     // Additional test cases can be added for other keys and game states
 }

@@ -1,5 +1,6 @@
 package com.group22;
 
+import com.group22.entities.Player;
 import com.group22.objects.*;
 
 import java.awt.Graphics2D;
@@ -24,6 +25,7 @@ public class UI {
     
     GamePanel gp;
     Graphics2D g2;
+    private Player player;
     Font maruMonica;
     // HUD elements
     BufferedImage heart_full, heart_half, heart_blank;
@@ -58,9 +60,9 @@ public class UI {
      */
     public UI(GamePanel gp) {
         this.gp = gp;
+        this.player = player;
         
-        
-        try {
+       try {
         	InputStream is = getClass().getResourceAsStream("/font/x12y16pxMaruMonica.ttf");
 			maruMonica = Font.createFont(Font.TRUETYPE_FONT, is);
 		} catch (FontFormatException e) {
@@ -112,6 +114,8 @@ public class UI {
         message = text;
         messageOn = true;
     }
+
+ 
 
     /**
      * Draws various UI components depending on the current game state.
@@ -223,6 +227,9 @@ public class UI {
     
     //method for scale the image
     private BufferedImage scaleImage(BufferedImage originalImage, int targetWidth, int targetHeight) {
+        if (targetWidth <= 0 || targetHeight <= 0) {
+            throw new IllegalArgumentException("Target width and height must be > 0");
+        }
         BufferedImage scaledImage = new BufferedImage(targetWidth, targetHeight, BufferedImage.TYPE_INT_ARGB);
         Graphics2D g2d = scaledImage.createGraphics();
         g2d.drawImage(originalImage, 0, 0, targetWidth, targetHeight, null);
@@ -248,6 +255,8 @@ public class UI {
     	BufferedImage scaledExit = scaleImage(originalImage4,70,33);
     	// draw the title
 
+        if (g2 != null) {
+
         g2.setFont(maruMonica);
         g2.setFont(g2.getFont().deriveFont(Font.BOLD, 50F));
 
@@ -272,6 +281,7 @@ public class UI {
         if(commandNum == 3){
             g2.drawString(">",x+gp.tileSize*3, y+470);
         }
+    }
     }
 
     public void drawPlayerLife(){
