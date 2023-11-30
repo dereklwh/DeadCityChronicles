@@ -1,7 +1,8 @@
+com\group22\entities\Zombie.class
 com\group22\objects\SuperObject.class
 com\group22\objects\ObjectHeart.class
 com\group22\UI.class
-entities\Player.class
+com\group22\entities\Entity.class
 com\group22\objects\ObjectVaccine.class
 com\group22\tile\Tile.class
 com\group22\Sound.class
@@ -12,9 +13,8 @@ com\group22\objects\ObjectKey.class
 com\group22\EventHandler.class
 com\group22\CollisionChecker.class
 com\group22\objects\ObjectTrap.class
-entities\Zombie.class
+com\group22\entities\Player.class
 com\group22\tile\TileManager.class
-entities\Entity.class
 com\group22\KeyHandler.class
 com\group22\objects\ObjectDoor.class
 com\group22\AssetSetter.class
