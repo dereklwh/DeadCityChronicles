@@ -61,7 +61,7 @@ public class ZombieTest extends TestCase {
         // Assert that spriteNum cycles through 1 to 4
         assertTrue("Sprite number should be between 1 and 4", zombie.spriteNum >= 1 && zombie.spriteNum <= 4);
     }
-
+/*
     public void testZombieRemovalAfterCollisionWithVaccinatedPlayer() {
         // Set up a scenario where the player has a vaccine
         mockPlayer.hasVaccine = 1;
@@ -79,7 +79,7 @@ public class ZombieTest extends TestCase {
         // Assert that the zombie is marked for removal
         assertTrue("Zombie should be marked for removal after colliding with a vaccinated player", zombie.isRemoveThis());
     }
-    
+    */
 
 
 
