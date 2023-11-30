@@ -127,9 +127,6 @@ public class UI {
 
         g2.setFont(maruMonica);
         g2.setFont(g2.getFont().deriveFont(48F));
-        if (g2.getFont() == null) {
-            g2.setFont(new Font("Arial", Font.PLAIN, 12)); 
-        }
         g2.setColor(Color.white); 
 
         if (gp.gameState == gp.titleState){

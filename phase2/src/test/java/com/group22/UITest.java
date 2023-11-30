@@ -49,7 +49,7 @@ public class UITest {
     }
 
     @Test
-    public void testDraw(){
+    public void testDrawTitleScreen(){
          Font defaultFont = new Font("Arial", Font.PLAIN, 12);
         when(mockGraphics.getFont()).thenReturn(defaultFont);
         uiTest.draw(mockGraphics);
@@ -60,5 +60,7 @@ public class UITest {
             any()
          );
     }
+
+    
 
 }
