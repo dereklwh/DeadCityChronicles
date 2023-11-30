@@ -20,6 +20,7 @@ public class KeyHandlerTest {
         // Set the gameState of the mock GamePanel to the playState value from the real instance.
         mockGamePanel.gameState = realGamePanel.playState;
         keyHandler = new KeyHandler(mockGamePanel);
+        mockGamePanel.ui = Mockito.mock(UI.class);
     }
 
     @Test
@@ -103,6 +104,267 @@ public class KeyHandlerTest {
         assertEquals(realGamePanel.settingState, mockGamePanel.gameState, "Game state should be settingState after pressing Escape in playState");
     }
 
+    @Test
+    public void testSettingStateEscapeKey() {
+        realGamePanel.ui.subState = 0;
+
+        mockGamePanel.gameState = realGamePanel.settingState;
+
+        KeyEvent keyEventEscape = new KeyEvent(mockGamePanel, KeyEvent.KEY_PRESSED, System.currentTimeMillis(), 0, KeyEvent.VK_ESCAPE, KeyEvent.CHAR_UNDEFINED);
+
+        keyHandler.keyPressed(keyEventEscape);
+
+        assertEquals(mockGamePanel.playState, mockGamePanel.gameState);
+    }
+
+    @Test
+    public void testSettingStateEnterKey() {
+        mockGamePanel.gameState = realGamePanel.settingState;
+
+        KeyEvent keyEventEnter = new KeyEvent(mockGamePanel, KeyEvent.KEY_PRESSED, System.currentTimeMillis(), 0, KeyEvent.VK_ENTER, KeyEvent.CHAR_UNDEFINED);
+
+        keyHandler.keyPressed(keyEventEnter);
+
+        assertTrue(keyHandler.enterPressed);
+    }
+
+    @Test
+    public void testSettingStateWKey() {
+        // Assume initial commandNum is 2
+        mockGamePanel.gameState = realGamePanel.settingState;
+
+        mockGamePanel.ui.subState = 0;
+        mockGamePanel.ui.commandNum = 2;
+
+        KeyEvent keyEventW = new KeyEvent(mockGamePanel, KeyEvent.KEY_PRESSED, System.currentTimeMillis(), 0, KeyEvent.VK_W, 'W');
+
+        keyHandler.keyPressed(keyEventW);
+
+        assertEquals(1, mockGamePanel.ui.commandNum);
+        assertFalse(keyHandler.enterPressed); // Ensure enterPressed is not affected
+    }
+
+    @Test
+    public void testSettingStateSKey() {
+        // Assume initial commandNum is 2
+        mockGamePanel.gameState = realGamePanel.settingState;
+
+        mockGamePanel.ui.subState = 0;
+        mockGamePanel.ui.commandNum = 2;
+
+        KeyEvent keyEventS = new KeyEvent(mockGamePanel, KeyEvent.KEY_PRESSED, System.currentTimeMillis(), 0, KeyEvent.VK_S, 'S');
+
+        keyHandler.keyPressed(keyEventS);
+
+        assertEquals(3, mockGamePanel.ui.commandNum);
+        assertFalse(keyHandler.enterPressed); // Ensure enterPressed is not affected
+    }
+
+    public void testSettingStateAKey() {
+        // Assume initial subState is 0 and commandNum is 1
+        mockGamePanel.gameState = realGamePanel.settingState;
+
+        KeyEvent keyEventA = new KeyEvent(mockGamePanel, KeyEvent.KEY_PRESSED, System.currentTimeMillis(), 0, KeyEvent.VK_A, 'A');
+
+        keyHandler.keyPressed(keyEventA);
+
+        mockGamePanel.ui.subState = 0;
+        mockGamePanel.ui.commandNum = 1;
+        mockGamePanel.music.volumeScale = 3;
+
+        
+
+        assertEquals(2, mockGamePanel.music.volumeScale);
+        assertFalse(keyHandler.enterPressed); // Ensure enterPressed is not affected
+    }
+
+    public void testSettingStateDKey() {
+        // Assume initial subState is 0 and commandNum is 1
+        mockGamePanel.gameState = realGamePanel.settingState;
+
+        
+        KeyEvent keyEventD = new KeyEvent(mockGamePanel, KeyEvent.KEY_PRESSED, System.currentTimeMillis(), 0, KeyEvent.VK_D, 'D');
+
+        keyHandler.keyPressed(keyEventD);
+        
+        mockGamePanel.ui.subState = 0;
+        mockGamePanel.ui.commandNum = 1;
+        mockGamePanel.music.volumeScale = 3;
+
+
+        assertEquals(4, mockGamePanel.music.volumeScale);
+        assertFalse(keyHandler.enterPressed); 
+    }
+
+    @Test
+    public void testGameOverStateWKey() {
+        // Assume initial commandNum is 1
+        mockGamePanel.gameState = realGamePanel.gameOverState;
+
+        mockGamePanel.ui.commandNum = 1;
+
+        KeyEvent keyEventW = new KeyEvent(mockGamePanel, KeyEvent.KEY_PRESSED, System.currentTimeMillis(), 0, KeyEvent.VK_W, 'W');
+
+        keyHandler.keyPressed(keyEventW);
+
+        assertEquals(0, mockGamePanel.ui.commandNum);
+
+    }
+
+    @Test
+    public void testGameOverStateSKey() {
+        // Assume initial commandNum is 0
+         mockGamePanel.gameState = realGamePanel.gameOverState;
+
+        mockGamePanel.ui.commandNum = 0;
+
+        KeyEvent keyEventS = new KeyEvent(mockGamePanel, KeyEvent.KEY_PRESSED, System.currentTimeMillis(), 0, KeyEvent.VK_S, 'S');
+
+        keyHandler.keyPressed(keyEventS);
+
+        assertEquals(1, mockGamePanel.ui.commandNum);
+    }
+
+    @Test
+    public void testGameOverStateEnterKey() {
+        // Assume initial commandNum is 0
+        mockGamePanel.gameState = realGamePanel.gameOverState;
+
+        mockGamePanel.ui.commandNum = 0;
+        KeyEvent keyEventEnter = new KeyEvent(mockGamePanel, KeyEvent.KEY_PRESSED, System.currentTimeMillis(), 0, KeyEvent.VK_ENTER, KeyEvent.CHAR_UNDEFINED);
+        keyHandler.keyPressed(keyEventEnter);
+
+        assertTrue(mockGamePanel.gameState == mockGamePanel.playState);
+    }
+
+    @Test
+    public void testGameOverStateEnterKey2() {
+        // Assume initial commandNum is 0
+        mockGamePanel.gameState = realGamePanel.gameOverState;
+
+        mockGamePanel.ui.commandNum = 1;
+        KeyEvent keyEventEnter = new KeyEvent(mockGamePanel, KeyEvent.KEY_PRESSED, System.currentTimeMillis(), 0, KeyEvent.VK_ENTER, KeyEvent.CHAR_UNDEFINED);
+        keyHandler.keyPressed(keyEventEnter);
+
+        assertTrue(mockGamePanel.gameState == mockGamePanel.titleState);
+    }
+
+    @Test
+    public void testTitleStateWKey() {
+        // Assume initial commandNum is 3
+        mockGamePanel.gameState = realGamePanel.titleState;
+
+        mockGamePanel.ui.commandNum = 3;
+
+        KeyEvent keyEventW = new KeyEvent(mockGamePanel, KeyEvent.KEY_PRESSED, System.currentTimeMillis(), 0, KeyEvent.VK_W, 'W');
+
+        keyHandler.keyPressed(keyEventW);
+
+        assertEquals(2, mockGamePanel.ui.commandNum);
+    }
+
+    @Test
+    public void testTitleStateSKey() {
+
+        mockGamePanel.gameState = realGamePanel.titleState;
+
+        // Assume initial commandNum is 0
+        mockGamePanel.ui.commandNum = 0;
+
+        KeyEvent keyEventS = new KeyEvent(mockGamePanel, KeyEvent.KEY_PRESSED, System.currentTimeMillis(), 0, KeyEvent.VK_S, 'S');
+
+        keyHandler.keyPressed(keyEventS);
+
+        assertEquals(1, mockGamePanel.ui.commandNum);
+    }
+
+    @Test
+    public void testTitleStateEnterKey() {
+        // Assume initial commandNum is 0
+        mockGamePanel.gameState = realGamePanel.titleState;
+
+        mockGamePanel.ui.commandNum = 0;
+
+        KeyEvent keyEventEnter = new KeyEvent(mockGamePanel, KeyEvent.KEY_PRESSED, System.currentTimeMillis(), 0, KeyEvent.VK_ENTER, KeyEvent.CHAR_UNDEFINED);
+
+        keyHandler.keyPressed(keyEventEnter);
+
+        assertTrue(mockGamePanel.gameState == mockGamePanel.playState);
+    }
+
+    @Test
+    public void testTitleStateEnterKey2() {
+        // Assume initial commandNum is 0
+        mockGamePanel.gameState = realGamePanel.titleState;
+
+        mockGamePanel.ui.commandNum = 1;
+
+        KeyEvent keyEventEnter = new KeyEvent(mockGamePanel, KeyEvent.KEY_PRESSED, System.currentTimeMillis(), 0, KeyEvent.VK_ENTER, KeyEvent.CHAR_UNDEFINED);
+
+        keyHandler.keyPressed(keyEventEnter);
+
+        assertTrue(mockGamePanel.gameState == mockGamePanel.ruleState);
+    }
+
+     @Test
+    public void testTitleStateEnterKey3() {
+        // Assume initial commandNum is 0
+        mockGamePanel.gameState = realGamePanel.titleState;
+
+        mockGamePanel.ui.commandNum = 2;
+
+        KeyEvent keyEventEnter = new KeyEvent(mockGamePanel, KeyEvent.KEY_PRESSED, System.currentTimeMillis(), 0, KeyEvent.VK_ENTER, KeyEvent.CHAR_UNDEFINED);
+
+        keyHandler.keyPressed(keyEventEnter);
+
+        assertTrue(mockGamePanel.gameState == mockGamePanel.settingState);
+        assertTrue(mockGamePanel.previousState == mockGamePanel.titleState);
+
+    }
+    
+    @Test
+    public void testRuleStateWKey() {
+        mockGamePanel.gameState = realGamePanel.ruleState;
+
+        // Assume initial commandNum is 0
+        mockGamePanel.ui.commandNum = 0;
+
+        KeyEvent keyEventW = new KeyEvent(mockGamePanel, KeyEvent.KEY_PRESSED, System.currentTimeMillis(), 0, KeyEvent.VK_W, 'W');
+
+        keyHandler.keyPressed(keyEventW);
+
+        assertEquals(1, mockGamePanel.ui.commandNum);
+        assertFalse(keyHandler.enterPressed); // Ensure enterPressed is not affected
+    }
+
+    @Test
+    public void testRuleStateSKey() {
+        mockGamePanel.gameState = realGamePanel.ruleState;
+
+        // Assume initial commandNum is 1
+        mockGamePanel.ui.commandNum = 1;
+
+        KeyEvent keyEventS = new KeyEvent(mockGamePanel, KeyEvent.KEY_PRESSED, System.currentTimeMillis(), 0, KeyEvent.VK_S, 'S');
+
+        keyHandler.keyPressed(keyEventS);
+
+        assertEquals(0, mockGamePanel.ui.commandNum);
+        assertFalse(keyHandler.enterPressed); // Ensure enterPressed is not affected
+    }
+
+    @Test
+    public void testRuleStateEnterKey() {
+        mockGamePanel.gameState = realGamePanel.ruleState;
+
+        // Assume initial commandNum is 0
+        mockGamePanel.ui.commandNum = 0;
+
+        KeyEvent keyEventEnter = new KeyEvent(mockGamePanel, KeyEvent.KEY_PRESSED, System.currentTimeMillis(), 0, KeyEvent.VK_ENTER, KeyEvent.CHAR_UNDEFINED);
+
+        keyHandler.keyPressed(keyEventEnter);
+
+        assertEquals(mockGamePanel.titleState, mockGamePanel.gameState);
+    }
 
     // Additional test cases can be added for other keys and game states
 }
