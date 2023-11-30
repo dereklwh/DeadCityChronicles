@@ -1,5 +1,7 @@
 package com.group22;
 
+import com.group22.objects.*;
+
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -13,11 +15,17 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontFormatException;
 
+/**
+ * The UI class is responsible for rendering the game's user interface, including
+ * the HUD (Heads-Up Display), title screen, pause screen, settings screen, and game over screen.
+ * It also manages on-screen messages and the display of the player's status such as health and collected items.
+ */
 public class UI {
     
     GamePanel gp;
     Graphics2D g2;
     Font maruMonica;
+    // HUD elements
     BufferedImage heart_full, heart_half, heart_blank;
     BufferedImage keyImage;
     BufferedImage hImage;
@@ -25,7 +33,8 @@ public class UI {
     BufferedImage dImage;
 
     BufferedImage medImage;
-    
+
+    // Title screen elements
     private BufferedImage titleImage;  
     private BufferedImage startButton; 
     private BufferedImage settingButton;
@@ -43,12 +52,16 @@ public class UI {
     double playTime;
     DecimalFormat dFormat = new DecimalFormat("#0.00");
 
+    /**
+     * Constructor that initializes UI components and loads resources such as images and fonts.
+     * @param gp The GamePanel instance this UI belongs to.
+     */
     public UI(GamePanel gp) {
         this.gp = gp;
         
         
         try {
-        	InputStream is = getClass().getResourceAsStream("font/x12y16pxMaruMonica.ttf");
+        	InputStream is = getClass().getResourceAsStream("/font/x12y16pxMaruMonica.ttf");
 			maruMonica = Font.createFont(Font.TRUETYPE_FONT, is);
 		} catch (FontFormatException e) {
 			e.printStackTrace();
@@ -59,11 +72,11 @@ public class UI {
         
         //new add get all the image for title page
         try {
-            titleImage = ImageIO.read(getClass().getResourceAsStream("res/object/title.png"));
-            startButton = ImageIO.read(getClass().getResourceAsStream("res/object/start.png"));
-            ruleButton = ImageIO.read(getClass().getResourceAsStream("res/object/rule.png"));
-            settingButton = ImageIO.read(getClass().getResourceAsStream("res/object/setting.png"));
-            exitButton = ImageIO.read(getClass().getResourceAsStream("res/object/exit.png"));
+            titleImage = ImageIO.read(getClass().getResourceAsStream("/object/title.png"));
+            startButton = ImageIO.read(getClass().getResourceAsStream("/object/start.png"));
+            ruleButton = ImageIO.read(getClass().getResourceAsStream("/object/rule.png"));
+            settingButton = ImageIO.read(getClass().getResourceAsStream("/object/setting.png"));
+            exitButton = ImageIO.read(getClass().getResourceAsStream("/object/exit.png"));
             
         } catch (IOException e) {
             e.printStackTrace();
@@ -91,11 +104,19 @@ public class UI {
         dImage = door.image;
     }
 
+    /**
+     * Displays a message on the screen for a short duration.
+     * @param text The message text to display.
+     */
     public void showMessage(String text){
         message = text;
         messageOn = true;
     }
 
+    /**
+     * Draws various UI components depending on the current game state.
+     * @param g2 The Graphics2D object used for drawing.
+     */
     public void draw(Graphics2D g2) {
 
         this.g2 = g2;
@@ -193,11 +214,11 @@ public class UI {
         if (gp.gameState == gp.gameOverState){
             drawGameOverScreen();
             playTime =0;
-            gp.playSE(6);
+            int count = 0;
         }
-        
-        
-        
+        if (gp.gameState == gp.ruleState) {
+        	drawRulePage();
+        }
     }
     
     //method for scale the image
@@ -286,10 +307,11 @@ public class UI {
     public void drawPlayerName() {
         String playerName = gp.player.name;
         g2.setFont(maruMonica);
+        g2.setFont(g2.getFont().deriveFont(Font.BOLD, 20F));
         int textWidth = g2.getFontMetrics().stringWidth(playerName);
         int textHeight = g2.getFontMetrics().getAscent();
         int x = gp.player.screenX + (gp.player.solidArea.width / 2) - (textWidth / 2);
-        int y = gp.player.screenY - 20;
+        int y = gp.player.screenY;
         g2.setColor(Color.WHITE);
         g2.drawString(playerName, x, y);
     }
@@ -486,7 +508,7 @@ public class UI {
     public void setting_control(int frameX, int frameY){
         int textX;
         int textY;
-
+        
         String text = "Control";
         textX = getXforCenteredText(text);
         textY = frameY +gp.tileSize;
@@ -535,7 +557,7 @@ public class UI {
         textX = getXforCenteredText(text2);
         textY += gp.tileSize*3;
         g2.drawString(text2, textX, textY);
-        if (commandNum ==0){
+        if (commandNum == 0){
             g2.drawString(">", textX-25, textY);
             if(gp.keyH.enterPressed==true){
                 subState =0;
@@ -559,6 +581,61 @@ public class UI {
             }
         }
     }
+    
+    
+    public void drawRulePage() {
+    	g2.setColor(Color.white);
+        g2.setFont(maruMonica);
+        g2.setFont(g2.getFont().deriveFont(40F));
+
+
+        int frameX = gp.tileSize*6;
+        int frameY = gp.tileSize;
+        int frameWidth = gp.tileSize*8;
+        int frameHeight = gp.tileSize*10;
+        drawSubWindow(frameX, frameY, frameWidth, frameHeight);
+
+        // Initialize variables for text positioning
+        int textX = frameX + gp.tileSize;
+        int textY = frameY + gp.tileSize;
+        
+        
+        String title = "Rules";
+        textX = getXforCenteredText(title);
+        textY = frameY + gp.tileSize;
+        g2.drawString(title, textX, textY);
+        
+        g2.setFont(g2.getFont().deriveFont(25F));
+
+        // Start listing the rules
+        textY += gp.tileSize; // Adjust the Y position for the first rule
+
+        String[] rules = {
+            "Use WASD or arrow keys to move.",
+            "Get Vaccine can kill a zombie.",
+            "Try to collect 3 keys",
+            "then escape the city",
+            "After get keys go to the home",
+            "the north west of the map",
+            "DON'T DIE!"
+            // Add as many rules as needed
+        };
+
+        // Iterate through the rules array and draw each rule
+        for (String rule : rules) {
+            g2.drawString(rule, frameX + gp.tileSize, textY);
+            textY += gp.tileSize; // Increment Y position for each rule
+        }
+        g2.setFont(g2.getFont().deriveFont(40F));
+        g2.drawString("Back", textX, textY);
+        if (commandNum ==0){
+            g2.drawString(">", textX-25, textY);
+            if(gp.keyH.enterPressed==true){
+                gp.gameState = gp.titleState;
+            }
+        }
+    }
+
 
     public int getXforCenteredText(String text){
         int length = (int)g2.getFontMetrics().getStringBounds(text, g2).getWidth();
@@ -566,6 +643,13 @@ public class UI {
         return x;
     }
 
+    /**
+     * Draws a sub-window for nested menu items such as settings and rules.
+     * @param x The x-coordinate of the sub-window's top left corner.
+     * @param y The y-coordinate of the sub-window's top left corner.
+     * @param width The width of the sub-window.
+     * @param height The height of the sub-window.
+     */
     public void drawSubWindow(int x, int y, int width, int height){
         Color c = new Color(71, 53, 44, 200);
         g2.setColor(c);

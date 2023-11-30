@@ -23,13 +23,13 @@ public class Sound {
      * Constructor initializes all sound files by loading them into the soundURL array.
      */
     public Sound(){
-        soundURL[0] = getClass().getResource("sound/Theme.wav");
-        soundURL[1] = getClass().getResource("sound/pickup.wav");
-        soundURL[2] = getClass().getResource("sound/cure.wav");
-        soundURL[3] = getClass().getResource("sound/scream.wav");
-        soundURL[4] = getClass().getResource("sound/zombie.wav");
-        soundURL[5] = getClass().getResource("sound/select.wav");
-        soundURL[6] = getClass().getResource("sound/coral.wav");
+        soundURL[0] = getClass().getResource("/sound/Theme.wav");
+        soundURL[1] = getClass().getResource("/sound/pickup.wav");
+        soundURL[2] = getClass().getResource("/sound/cure.wav");
+        soundURL[3] = getClass().getResource("/sound/scream.wav");
+        soundURL[4] = getClass().getResource("/sound/zombie.wav");
+        soundURL[5] = getClass().getResource("/sound/select.wav");
+        soundURL[6] = getClass().getResource("/sound/coral.wav");
     }
 
     /**

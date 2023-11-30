@@ -29,7 +29,7 @@ public class TileManager{
 
         getTileImage();
         
-        loadMap("../res/map/world02.txt");
+        loadMap("/map/world02.txt");
     }
 
     // grab image from the pack
@@ -484,17 +484,17 @@ public class TileManager{
         try{
            tile[index]  = new Tile();
            if(imageName.contains("house")) {
-               tile[index].image = ImageIO.read(getClass().getResourceAsStream("../res/tiles/house/" + imageName + ".png"));
+               tile[index].image = ImageIO.read(getClass().getResourceAsStream("/tiles/house/" + imageName + ".png"));
            } else if (imageName.contains("car")) {
-               tile[index].image = ImageIO.read(getClass().getResourceAsStream("../res/tiles/car/" + imageName + ".png"));
+               tile[index].image = ImageIO.read(getClass().getResourceAsStream("/tiles/car/" + imageName + ".png"));
            } else if(imageName.contains("haystack")) {
-               tile[index].image = ImageIO.read(getClass().getResourceAsStream("../res/tiles/haystack/" + imageName + ".png"));
+               tile[index].image = ImageIO.read(getClass().getResourceAsStream("/tiles/haystack/" + imageName + ".png"));
            } else if(imageName.contains("road")) {
-               tile[index].image = ImageIO.read(getClass().getResourceAsStream("../res/tiles/road/" + imageName + ".png"));
+               tile[index].image = ImageIO.read(getClass().getResourceAsStream("/tiles/road/" + imageName + ".png"));
            } else if(imageName.contains("fence")){
-               tile[index].image = ImageIO.read(getClass().getResourceAsStream("../res/tiles/fence/" + imageName + ".png"));
+               tile[index].image = ImageIO.read(getClass().getResourceAsStream("/tiles/fence/" + imageName + ".png"));
            } else{
-               tile[index].image = ImageIO.read(getClass().getResourceAsStream("../res/tiles/" + imageName + ".png"));
+               tile[index].image = ImageIO.read(getClass().getResourceAsStream("/tiles/" + imageName + ".png"));
            }
            tile[index].image = uTool.scaleImage(tile[index].image, gp.tileSize, gp.tileSize);
            tile[index].collision = collision;

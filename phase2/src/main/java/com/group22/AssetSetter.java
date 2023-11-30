@@ -1,8 +1,18 @@
 package com.group22;
 
+import com.group22.objects.ObjectDoor;
+import com.group22.objects.ObjectKey;
+import com.group22.objects.ObjectTrap;
+import com.group22.objects.ObjectVaccine;
+import com.group22.entities.Zombie;
+
 public class AssetSetter {
     GamePanel gp;
 
+    /**
+     * AssetSetter is a class responsible for placing and initializing game objects and zombies within the game world.
+     * It sets the initial positions and properties of interactable items and enemy entities.
+     */
     public AssetSetter(GamePanel gp){
         this.gp = gp;
     }
