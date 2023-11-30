@@ -251,6 +251,8 @@ public class UI {
     	BufferedImage scaledExit = scaleImage(originalImage4,70,33);
     	// draw the title
 
+        if (g2 != null) {
+
         g2.setFont(maruMonica);
         g2.setFont(g2.getFont().deriveFont(Font.BOLD, 50F));
 
@@ -275,6 +277,7 @@ public class UI {
         if(commandNum == 3){
             g2.drawString(">",x+gp.tileSize*3, y+470);
         }
+    }
     }
 
     public void drawPlayerLife(){

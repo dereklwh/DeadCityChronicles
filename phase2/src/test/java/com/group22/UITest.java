@@ -3,6 +3,7 @@ package com.group22;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import org.junit.Before;
@@ -22,6 +23,9 @@ public class UITest {
     @BeforeEach
     public void setUp() {
         mockGamePanel = Mockito.mock(GamePanel.class);
+        mockGraphics = Mockito.mock(Graphics2D.class);
+        when(mockGamePanel.getGraphics()).thenReturn(mockGraphics);
+
         mockGamePanel.tileSize = 32;
         uiTest = new UI(mockGamePanel);
     }
@@ -38,7 +42,7 @@ public class UITest {
 
     @Test
     public void testDrawTitleScreen() {
-        mockGraphics = Mockito.mock(Graphics2D.class);
+    
         uiTest.drawTitleScreen();
         Mockito.verify(mockGraphics).drawImage(Mockito.any(BufferedImage.class), Mockito.anyInt(), Mockito.anyInt(), Mockito.any());
 
