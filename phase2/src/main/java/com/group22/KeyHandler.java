@@ -19,6 +19,7 @@ public class KeyHandler implements KeyListener {
      */
     public KeyHandler(GamePanel gp){
         this.gp = gp;
+        
     }
     @Override
     public void keyTyped(KeyEvent e){
