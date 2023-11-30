@@ -5,6 +5,7 @@ import com.group22.KeyHandler;
 
 import static org.mockito.Mockito.when;
 
+import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import junit.framework.TestCase;
@@ -80,7 +81,5 @@ public class ZombieTest extends TestCase {
         assertTrue("Zombie should be marked for removal after colliding with a vaccinated player", zombie.isRemoveThis());
     }
     */
-
-
 
 }

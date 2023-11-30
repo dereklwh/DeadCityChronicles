@@ -16,6 +16,9 @@ public class UtilityTool {
      * @return A new BufferedImage object of the specified width and height with the original image's content scaled accordingly.
      */
     public BufferedImage scaleImage(BufferedImage original, int width, int height){
+        if (width <= 0 || height <= 0) {
+            throw new IllegalArgumentException("Target width and height must be > 0");
+        }
         BufferedImage scaledImage = new BufferedImage(width, height, original.getType());
         Graphics2D g2 = scaledImage.createGraphics();
         g2.drawImage(original, 0, 0, width, height, null);

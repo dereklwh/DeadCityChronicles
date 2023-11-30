@@ -2,6 +2,7 @@ com\group22\GamePanelTest.class
 com\group22\AppTest.class
 com\group22\entities\EntityTest.class
 com\group22\entities\PlayerTest.class
+com\group22\UITest.class
 com\group22\entities\EntityTest$1.class
 com\group22\entities\ZombieTest.class
 com\group22\GamePanelTest$1.class

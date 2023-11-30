@@ -223,6 +223,9 @@ public class UI {
     
     //method for scale the image
     private BufferedImage scaleImage(BufferedImage originalImage, int targetWidth, int targetHeight) {
+        if (targetWidth <= 0 || targetHeight <= 0) {
+            throw new IllegalArgumentException("Target width and height must be > 0");
+        }
         BufferedImage scaledImage = new BufferedImage(targetWidth, targetHeight, BufferedImage.TYPE_INT_ARGB);
         Graphics2D g2d = scaledImage.createGraphics();
         g2d.drawImage(originalImage, 0, 0, targetWidth, targetHeight, null);
