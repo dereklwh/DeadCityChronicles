@@ -50,19 +50,25 @@ public class Sound {
     /**
      * Plays the currently loaded sound file from the beginning.
      */
-    public void play(){
-       clip.start();
+    public void play() {
+        if (clip != null) {
+            clip.start();
+        }
     }
 
     /**
      * Loops the currently loaded sound file continuously.
      */
-    public void loop(){
-        clip.loop(Clip.LOOP_CONTINUOUSLY);
+    public void loop() {
+        if (clip != null) {
+            clip.loop(Clip.LOOP_CONTINUOUSLY);
+        }
     }
 
-    public void stop(){
-        clip.start();
+    public void stop() {
+        if (clip != null) {
+            clip.stop();
+        }
     }
 
     /**

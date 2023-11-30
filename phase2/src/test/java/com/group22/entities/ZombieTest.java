@@ -2,10 +2,13 @@ package com.group22.entities;
 
 import com.group22.GamePanel;
 import com.group22.KeyHandler;
+import java.awt.Graphics2D;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.clearInvocations;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -70,8 +73,8 @@ public class ZombieTest extends TestCase {
     }
 
     public void testSpriteAnimationUpdate() {
-        // Call update method 50 times
-        for (int i = 0; i < 50; i++) {
+        // Call update method 60 times
+        for (int i = 0; i < 60; i++) {
             mockGamePanel.zombie[0].update();
         }
         // Assert that spriteNum cycles through 1 to 4
@@ -133,5 +136,58 @@ public class ZombieTest extends TestCase {
         assertTrue("Zombie should have moved from its original position", 
             mockGamePanel.zombie[0].worldX != 100 || mockGamePanel.zombie[0].worldY != 100);
     }
+
+    public void testZombieMovementOtherDirection() {
+        // Set initial position
+        mockGamePanel.zombie[0].worldX = 50;
+        mockGamePanel.zombie[0].worldY = 60;
+
+        mockPlayer.worldX = 100;
+        mockPlayer.worldY = 100;
+    
+        // Simulate movement
+        for (int i = 0; i < 60; i++) { // simulate 60 frames of movement
+            mockGamePanel.zombie[0].update();
+        }
+    
+        // Assert that the zombie has moved
+        assertTrue("Zombie should have moved from its original position", 
+            mockGamePanel.zombie[0].worldX != 50 || mockGamePanel.zombie[0].worldY != 60);
+    }
+
+    public void testDrawMethod() {
+        Graphics2D mockGraphics = mock(Graphics2D.class);
+        Zombie zombie = new Zombie(mockGamePanel, 1);
+        zombie.worldX = 100;
+        zombie.worldY = 100;
+        zombie.draw(mockGraphics);
+        verify(mockGraphics).drawImage(any(), anyInt(), anyInt(), anyInt(), anyInt(), eq(null));
+    }
+
+    public void testDrawMultipleTimes() {
+        Graphics2D mockGraphics = mock(Graphics2D.class);
+        Zombie zombie = new Zombie(mockGamePanel, 1);
+        zombie.worldX = 100;
+        zombie.worldY = 100;
+        
+        //move zombie southwest
+        mockPlayer.worldX = 0;
+        mockPlayer.worldY = 0;
+        for (int i = 0; i < 30; i++) {
+            zombie.update();
+            zombie.draw(mockGraphics);
+        }
+
+        //move zombie northeast
+        mockPlayer.worldX = 100;
+        mockPlayer.worldY = 100;
+        for (int i = 0; i < 30; i++) {
+            zombie.update();
+            zombie.draw(mockGraphics);
+        }
+
+
+        assertDoesNotThrow(() -> zombie.draw(mockGraphics), "Draw method should execute without errors.");
+    }    
 
 }
