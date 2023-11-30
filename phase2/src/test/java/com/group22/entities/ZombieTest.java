@@ -3,6 +3,11 @@ package com.group22.entities;
 import com.group22.GamePanel;
 import com.group22.KeyHandler;
 
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import org.mockito.Mock;
@@ -14,7 +19,7 @@ import junit.framework.TestCase;
  */
 public class ZombieTest extends TestCase {
     
-    private Zombie zombie;
+    //private Zombie zombie;
     private GamePanel mockGamePanel;
     private Player mockPlayer;
     @Mock
@@ -27,60 +32,106 @@ public class ZombieTest extends TestCase {
         MockitoAnnotations.initMocks(this); // Initialize Mockito mocks
         mockGamePanel = new GamePanel(); 
         mockPlayer = new Player(mockGamePanel, mockKeyHandler);
-        zombie = new Zombie(mockGamePanel, 1);
+        for (int i = 0; i < mockGamePanel.zombie.length; i++) {
+            mockGamePanel.zombie[i] = new Zombie(mockGamePanel, 1);
+        }
     }
 
     public void testZombieConstructor() {
         Zombie zombie = new Zombie(mockGamePanel, 1); // Assuming 1 is a valid zombie type
+        // Initialize zombies
         assertNotNull("Zombie object should not be null", zombie);
     }
 
+    public void testSetDefaultValues() {
+        Zombie zombie = new Zombie(mockGamePanel, 1);
+        zombie.setDefaultValues();
+        assertEquals("Default speed should be set", 3, zombie.speed);
+        assertEquals("Default direction should be down", "down", zombie.direction);
+    }
+    
+
     public void testUpdateCalculatesCorrectDirection() {
         // Manually set the actionLockCounter to 29
-        zombie.actionLockCounter = 29;
+        mockGamePanel.zombie[0].actionLockCounter = 29;
     
         // Set up player and zombie positions
         mockPlayer.worldX = 100;
         mockPlayer.worldY = 50;
-        zombie.worldX = 50;
-        zombie.worldY = 50;
+        mockGamePanel.zombie[0].worldX = 50;
+        mockGamePanel.zombie[0].worldY = 50;
     
         // Call update
-        zombie.update();
+        mockGamePanel.zombie[0].update();
     
         // Check if the direction is calculated correctly
         String expectedDirection = "right";
-        assertEquals(expectedDirection, zombie.direction);
+        assertEquals(expectedDirection, mockGamePanel.zombie[0].direction);
     }
 
     public void testSpriteAnimationUpdate() {
         // Call update method 50 times
         for (int i = 0; i < 50; i++) {
-            zombie.update();
+            mockGamePanel.zombie[0].update();
         }
         // Assert that spriteNum cycles through 1 to 4
-        assertTrue("Sprite number should be between 1 and 4", zombie.spriteNum >= 1 && zombie.spriteNum <= 4);
+        assertTrue("Sprite number should be between 1 and 4", mockGamePanel.zombie[0].spriteNum >= 1 && mockGamePanel.zombie[0].spriteNum <= 4);
     }
-/*
+
+    public void testZombieCollisionWithPlayer() {
+        // Place the zombie close to the player but not yet colliding
+        mockGamePanel.zombie[0].worldX = mockPlayer.worldX - mockGamePanel.zombie[0].speed;
+        mockGamePanel.zombie[0].worldY = mockPlayer.worldY;
+    
+        // Update should move the zombie into the player's position
+        mockGamePanel.zombie[0].update();
+    
+        // Check if collision is detected
+        assertTrue("Zombie should collide with player", mockGamePanel.zombie[0].collisionOn);
+    }
+
     public void testZombieRemovalAfterCollisionWithVaccinatedPlayer() {
-        // Set up a scenario where the player has a vaccine
+        // Place the zombie close to the player but not yet colliding
+        mockGamePanel.zombie[0].worldX = mockPlayer.worldX - mockGamePanel.zombie[0].speed;
+        mockGamePanel.zombie[0].worldY = mockPlayer.worldY;
         mockPlayer.hasVaccine = 1;
+        
     
-        // Position the zombie to collide with the player
-        zombie.worldX = mockPlayer.worldX;
-        zombie.worldY = mockPlayer.worldY;
-    
-        // Mock collision checker for player collision
-        when(mockGamePanel.cChecker.checkPlayer(zombie, zombie.worldX, zombie.worldY)).thenReturn(true);
-    
-        // Call update
-        zombie.update();
+        // Update should move the zombie into the player's position
+        mockGamePanel.zombie[0].update();
+        if (mockGamePanel.zombie[0].collisionOn) {
+            mockPlayer.interactZombie(0);
+        }
     
         // Assert that the zombie is marked for removal
-        assertTrue("Zombie should be marked for removal after colliding with a vaccinated player", zombie.isRemoveThis());
+        assertTrue("Zombie should be marked for removal after colliding with a vaccinated player", mockGamePanel.zombie[0].isRemoveThis());
     }
-    */
 
+    public void testGetZombieImage() {
+        Zombie zombie = new Zombie(mockGamePanel, 1);
+        zombie.getZombieImage();
+        assertNotNull("Zombie image up1 should not be null", zombie.up1);
+        assertNotNull("Zombie image down1 should not be null", zombie.down1);
+        assertNotNull("Zombie image down1 should not be null", zombie.right1);
+        assertNotNull("Zombie image down1 should not be null", zombie.left1);
+    }
 
+    public void testZombieMovement() {
+        // Set initial position
+        mockGamePanel.zombie[0].worldX = 100;
+        mockGamePanel.zombie[0].worldY = 100;
+
+        mockPlayer.worldX = 50;
+        mockPlayer.worldY = 60;
+    
+        // Simulate movement
+        for (int i = 0; i < 60; i++) { // simulate 60 frames of movement
+            mockGamePanel.zombie[0].update();
+        }
+    
+        // Assert that the zombie has moved
+        assertTrue("Zombie should have moved from its original position", 
+            mockGamePanel.zombie[0].worldX != 100 || mockGamePanel.zombie[0].worldY != 100);
+    }
 
 }

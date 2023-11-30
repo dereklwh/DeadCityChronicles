@@ -55,26 +55,26 @@ public class Zombie extends Entity{
 
     // Load images for zombie
     public void getZombieImage() {
-            String basePath = "/zombie" + zombieType + "/zombie" + zombieType + "_";
-            up1 = setup(basePath + "run_right0");
-            up2 = setup(basePath + "run_right1");
-            up3 = setup(basePath + "run_right2");
-            up4 = setup(basePath + "run_right3");
-            
-            down1 = setup(basePath + "run_left0");
-            down2 = setup(basePath + "run_left1");
-            down3 = setup(basePath + "run_left2");
-            down4 = setup(basePath + "run_left3");
-    
-            left1 = setup(basePath + "run_left0");
-            left2 = setup(basePath + "run_left1");
-            left3 = setup(basePath + "run_left2");
-            left4 = setup(basePath + "run_left3");
-            
-            right1 = setup(basePath + "run_right0");
-            right2 = setup(basePath + "run_right1");
-            right3 = setup(basePath + "run_right2");
-            right4 = setup(basePath + "run_right3");
+        String basePath = "/zombie" + zombieType + "/zombie" + zombieType + "_";
+        up1 = setup(basePath + "run_right0");
+        up2 = setup(basePath + "run_right1");
+        up3 = setup(basePath + "run_right2");
+        up4 = setup(basePath + "run_right3");
+        
+        down1 = setup(basePath + "run_left0");
+        down2 = setup(basePath + "run_left1");
+        down3 = setup(basePath + "run_left2");
+        down4 = setup(basePath + "run_left3");
+
+        left1 = setup(basePath + "run_left0");
+        left2 = setup(basePath + "run_left1");
+        left3 = setup(basePath + "run_left2");
+        left4 = setup(basePath + "run_left3");
+        
+        right1 = setup(basePath + "run_right0");
+        right2 = setup(basePath + "run_right1");
+        right3 = setup(basePath + "run_right2");
+        right4 = setup(basePath + "run_right3");
     }
     
     public void update() {
