@@ -131,6 +131,8 @@ public class UI {
 
         if (gp.gameState == gp.titleState){
             drawTitleScreen();
+            playTime = 0;
+
         }
 
         if(gp.gameState == gp.playState){
@@ -138,40 +140,10 @@ public class UI {
 
 
             if (gameFinished == true){
-
-            g2.setFont(g2.getFont().deriveFont(50F));
-            g2.setColor(Color.white); 
-
-            String text;
-            int textLength;
-            int x;
-            int y; 
-
-            text = "You won";
-            textLength = (int)g2.getFontMetrics().getStringBounds(text, g2).getWidth();
-
-            x = gp.screenWidth/2 - textLength/2;
-            y= gp.screenHeight/2 - (gp.tileSize * 3);
-            g2.drawString(text, x, y);
-
-            text = "Your Time is: " + dFormat.format(playTime) + " s";
-            textLength = (int)g2.getFontMetrics().getStringBounds(text, g2).getWidth();
-
-            x = gp.screenWidth/2 - textLength/2;
-            y= gp.screenHeight/2 + (gp.tileSize * 4);
-            g2.drawString(text, x, y);
-
-            g2.setFont(g2.getFont().deriveFont(100F));
-            g2.setColor(Color.yellow);
-            text = "Congratulations";
-            textLength = (int)g2.getFontMetrics().getStringBounds(text, g2).getWidth();
-
-            x = gp.screenWidth/2 - textLength/2;
-            y= gp.screenHeight/2 + (gp.tileSize * 2);
-            g2.drawString(text, x, y);
-
-            gp.gameThread = null;
-        }
+           
+                 gp.gameState= gp.winState;
+            
+            }
 
         else {
             drawPlayerLife();
@@ -223,6 +195,12 @@ public class UI {
         if (gp.gameState == gp.ruleState) {
         	drawRulePage();
         }
+        if (gp.gameState == gp.winState) {
+        	drawWinScreen();
+            //gp.retry(); 
+            gameFinished = false;
+        }
+    
     }
     
     //method for scale the image
@@ -237,6 +215,39 @@ public class UI {
         return scaledImage;
     }
 
+    public void drawWinScreen(){
+         g2.setFont(g2.getFont().deriveFont(50F));
+            g2.setColor(Color.white); 
+
+            String text;
+            int textLength;
+            int x;
+            int y; 
+
+            text = "You won";
+            textLength = (int)g2.getFontMetrics().getStringBounds(text, g2).getWidth();
+
+            x = gp.screenWidth/2 - textLength/2;
+            y= gp.screenHeight/2 - (gp.tileSize * 3);
+            g2.drawString(text, x, y);
+
+            text = "Your Time is: " + dFormat.format(playTime) + " s";
+            textLength = (int)g2.getFontMetrics().getStringBounds(text, g2).getWidth();
+
+            x = gp.screenWidth/2 - textLength/2;
+            y= gp.screenHeight/2 + (gp.tileSize * 4);
+            g2.drawString(text, x, y);
+
+            g2.setFont(g2.getFont().deriveFont(100F));
+            g2.setColor(Color.yellow);
+            text = "Congratulations";
+            textLength = (int)g2.getFontMetrics().getStringBounds(text, g2).getWidth();
+
+            x = gp.screenWidth/2 - textLength/2;
+            y= gp.screenHeight/2 + (gp.tileSize * 2);
+            g2.drawString(text, x, y);
+
+    }
     
     //draw title screen
     public void drawTitleScreen() {

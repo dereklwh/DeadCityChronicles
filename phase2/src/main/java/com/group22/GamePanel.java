@@ -75,6 +75,8 @@ public class GamePanel extends JPanel implements Runnable {
     public final int settingState = 3;
     public final int gameOverState = 4;
     public final int ruleState = 5;
+    public final int winState = 6;
+
     public EventHandler eHandler = new EventHandler(this);
 
     /**

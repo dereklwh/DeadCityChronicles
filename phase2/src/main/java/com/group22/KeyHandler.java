@@ -49,6 +49,9 @@ public class KeyHandler implements KeyListener {
         else if(gp.gameState == gp.ruleState) {
         	ruleState(code);
         }
+        else if(gp.gameState == gp.winState) {
+        	winState(code);
+        }
     }
 
     /**
@@ -74,6 +77,15 @@ public class KeyHandler implements KeyListener {
         if(code == KeyEvent.VK_ESCAPE){
             gp.gameState = gp.settingState;
             gp.previousState = gp.playState;
+        }
+    }
+
+    public void winState(int code){
+        
+        if(code == KeyEvent.VK_ENTER){
+            gp.gameState = gp.titleState;
+            gp.playMusic(0);
+            gp.retry();
         }
     }
 
