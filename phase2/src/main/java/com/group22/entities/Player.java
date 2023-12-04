@@ -245,77 +245,92 @@ public class Player extends Entity{
     /**
      * updates the player's state each frame, handling movement, collision, and interactions.
      */
-    public void update(){
+    
+    public void update() {
+        handleMovement();
+        handleDamageAnimation();
+        checkCollisions();
+        checkGameState();
+        resetInvincibility();
+    }
+
+    private void handleMovement() {
         int deltaX = 0;
         int deltaY = 0;
-        if (keyH.upPressed == true || keyH.downPressed == true || 
-            keyH.leftPressed == true || keyH.rightPressed == true ){
-                if(keyH.upPressed){
-                    deltaY = -speed;
-                    direction = "up";
-                }
-                else if(keyH.downPressed){
-                    deltaY = speed;
-                    direction = "down";
-                }
-                else if(keyH.leftPressed){
-                    deltaX = -speed;
-                    direction = "left";
-                }
-                else if(keyH.rightPressed){
-                    deltaX = speed;
-                    direction = "right";
-                }
-
-                if (isDamaged) {
-                    damageAnimationFrame++;
-                    if (damageAnimationFrame > damageAnimationDuration) {
-                        isDamaged = false;
-                        damageAnimationFrame = 0;
-                    }
-                }
-
-                spriteCounter++;
-                if(spriteCounter > 12){ //player image changes every 12 frames
-                    if(spriteNum == 1) {
-                    spriteNum = 2;
-                }else if (spriteNum == 2){
-                    spriteNum = 3;
-                }
-                else if (spriteNum == 3){
-                    spriteNum = 1;
-                }
-                spriteCounter = 0;
-                }
-
+        if (keyH.upPressed || keyH.downPressed || keyH.leftPressed || keyH.rightPressed) {
+            deltaX = getDeltaX();
+            deltaY = getDeltaY();
+            updateSpriteAnimation();
         }
 
-        if (life <=0){
-                gp.gameState = gp.gameOverState;
-                gp.playSE(6);
-            }
-       
-        //Check tile collision
-        collisionOn = false;
-        gp.cChecker.checkTile(this);
-
-        // Check object collision
-        int objectIndex = gp.cChecker.checkObject(this, true);
-        pickUpObject(objectIndex);
-
-        int zombieIndex = gp.cChecker.checkEntity(this, gp.zombie);
-        interactZombie(zombieIndex);
-
-        if(collisionOn == false){
+        if (!collisionOn) {
             worldX += deltaX;
             worldY += deltaY;
         }
+    }
 
-        if (invincible ==true){
+    private int getDeltaX() {
+        if (keyH.leftPressed) {
+            direction = "left";
+            return -speed;
+        } else if (keyH.rightPressed) {
+            direction = "right";
+            return speed;
+        }
+        return 0;
+    }
+
+    private int getDeltaY() {
+        if (keyH.upPressed) {
+            direction = "up";
+            return -speed;
+        } else if (keyH.downPressed) {
+            direction = "down";
+            return speed;
+        }
+        return 0;
+    }
+
+    private void updateSpriteAnimation() {
+        spriteCounter++;
+        if (spriteCounter > 12) {
+            spriteNum = spriteNum % 3 + 1;
+            spriteCounter = 0;
+        }
+    }
+
+    private void handleDamageAnimation() {
+        if (isDamaged) {
+            damageAnimationFrame++;
+            if (damageAnimationFrame > damageAnimationDuration) {
+                isDamaged = false;
+                damageAnimationFrame = 0;
+            }
+        }
+    }
+
+    private void checkCollisions() {
+        collisionOn = false;
+        gp.cChecker.checkTile(this);
+        int objectIndex = gp.cChecker.checkObject(this, true);
+        pickUpObject(objectIndex);
+        int zombieIndex = gp.cChecker.checkEntity(this, gp.zombie);
+        interactZombie(zombieIndex);
+    }
+
+    private void checkGameState() {
+        if (life <= 0) {
+            gp.gameState = gp.gameOverState;
+            gp.playSE(6);
+        }
+    }
+
+    private void resetInvincibility() {
+        if (invincible) {
             invincibleCounter++;
-            if(invincibleCounter > 60){
+            if (invincibleCounter > 60) {
                 invincible = false;
-                invincibleCounter =0;
+                invincibleCounter = 0;
             }
         }
     }
