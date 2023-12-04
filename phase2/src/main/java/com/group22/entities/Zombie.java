@@ -108,11 +108,20 @@ public class Zombie extends Entity{
         handleCollision(xDistance, yDistance, nextX, nextY);
         updateAnimation();
     }
-
+    
+    /**
+     * Sets the direction for a zombie based on the distances in the x and y directions from the player.
+     * This method implements a simple AI for the zombie, where the zombie moves in the direction
+     * of the greatest distance from the player. This logic is applied every 30 actions.
+     *
+     * @param xDistance the distance between the zombie and the player in the x-axis.
+     * @param yDistance the distance between the zombie and the player in the y-axis.
+     * @param xDirection the direction the zombie should move in the x-axis.
+     * @param yDirection the direction the zombie should move in the y-axis.
+     */
     private void setZombieDirection(int xDistance, int yDistance, String xDirection, String yDirection) {
         actionLockCounter ++;
         if (actionLockCounter == 30){
-            // Simple AI for zombie: move in the direction with the greatest distance from the player
             if (Math.abs(xDistance) > Math.abs(yDistance)) {
                 direction = xDirection;
             } else {
@@ -122,6 +131,19 @@ public class Zombie extends Entity{
         }
     }
 
+    /**
+     * Handles collision detection and response for entities
+     * This method checks for collisions with the player and other entities, and updates the state
+     * accordingly. If a collision with the player occurs, it checks the player's status (like having a vaccine
+     * or being invincible) and updates the player's state (like reducing life or curing the zombie). 
+     * The method also determines the movement of the entity after checking for possible collisions in its
+     * intended direction.
+     *
+     * @param xDistance The horizontal distance between this entity and its target or player.
+     * @param yDistance The vertical distance between this entity and its target or player.
+     * @param nextX The next x-coordinate position for this entity.
+     * @param nextY The next y-coordinate position for this entity.
+     */
     private void handleCollision(int xDistance, int yDistance, int nextX, int nextY) {
         collisionOn = gp.cChecker.checkCollision(this, nextX, nextY);
         boolean playerCollision = gp.cChecker.checkPlayer(this, nextX, nextY);
@@ -142,7 +164,6 @@ public class Zombie extends Entity{
         }
 
         if (collisionOn) {
-            // Check for viable alternative paths
             boolean canMoveVertically = !gp.cChecker.checkCollision(this, worldX, worldY + (yDistance > 0 ? speed : -speed));
             boolean canMoveHorizontally = !gp.cChecker.checkCollision(this, worldX + (xDistance > 0 ? speed : -speed), worldY);
             
@@ -156,7 +177,14 @@ public class Zombie extends Entity{
             worldY = nextY;
         }
     }
-
+    
+    /**
+     * Updates the animation of a sprite by cycling through its different states.
+     * The method tracks the number of frames that have passed and changes the sprite's image
+     * every 12 frames. The sprite's image cycles through four different states.
+     * This method ensures that the animation of the sprite is updated consistently to reflect
+     * these changes in its appearance.
+     */
     private void updateAnimation() {
         spriteCounter++;
         if(spriteCounter > 12){ //zombie image changes every 12 frames
