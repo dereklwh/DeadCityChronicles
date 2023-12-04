@@ -89,12 +89,10 @@ public class AssetSetter {
 
     }
 
+    //3 = fast
+    //2 = medium speed
+    //1 = slow
     public void setZombie() {
-
-        //3 = fast
-        //2 = medium speed
-        //1 = slow
-
         gp.zombie[0] = new Zombie(gp, 1);
         gp.zombie[0].worldX = gp.tileSize * 15;
         gp.zombie[0].worldY = gp.tileSize * 15;
@@ -184,12 +182,5 @@ public class AssetSetter {
         gp.zombie[18] = new Zombie(gp, 2);
         gp.zombie[18].worldX = gp.tileSize * 63;
         gp.zombie[18].worldY = gp.tileSize * 33;
-
-        //OP ZOMBIE
-        // gp.zombie[19] = new Zombie(gp, 2);
-        // gp.zombie[19].worldX = gp.tileSize * 65;
-        // gp.zombie[19].worldY = gp.tileSize * 34;
-        // gp.zombie[19].speed = 6;
-
     }
 }

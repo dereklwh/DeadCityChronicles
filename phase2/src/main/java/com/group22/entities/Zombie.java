@@ -48,12 +48,18 @@ public class Zombie extends Entity{
         getZombieImage();
     }
 
+    /**
+     * Sets the default values for the zombie's speed and initial direction.
+     * Zombie should be slower than the player.
+     */
     public void setDefaultValues(){
-        speed = 3; // Zombies are slower than the player
-        direction = "down"; // Initial direction
+        speed = 3; 
+        direction = "down"; 
     }
 
-    // Load images for zombie
+    /**
+     * Loads and sets up the zombie images for different directions and animations.
+     */
     public void getZombieImage() {
         String basePath = "/zombie" + zombieType + "/zombie" + zombieType + "_";
         up1 = setup(basePath + "run_right0");
@@ -77,6 +83,10 @@ public class Zombie extends Entity{
         right4 = setup(basePath + "run_right3");
     }
     
+    /**
+     * Updates the state and position of the zombie each frame.
+     * Handles collision detection, animation state, and direction logic for the Zombie.
+     */
     public void update() {
         int xDistance = gp.player.worldX - worldX;
         int yDistance = gp.player.worldY - worldY;
@@ -100,7 +110,6 @@ public class Zombie extends Entity{
     }
 
     private void setZombieDirection(int xDistance, int yDistance, String xDirection, String yDirection) {
-        //update the direction every .5 seconds
         actionLockCounter ++;
         if (actionLockCounter == 30){
             // Simple AI for zombie: move in the direction with the greatest distance from the player
@@ -114,8 +123,6 @@ public class Zombie extends Entity{
     }
 
     private void handleCollision(int xDistance, int yDistance, int nextX, int nextY) {
-
-        // New collision check
         collisionOn = gp.cChecker.checkCollision(this, nextX, nextY);
         boolean playerCollision = gp.cChecker.checkPlayer(this, nextX, nextY);
         gp.cChecker.checkEntity(this, gp.zombie);
@@ -128,8 +135,8 @@ public class Zombie extends Entity{
                 gp.player.invincible = true;
                 gp.playSE(3);
             }else if (gp.player.hasVaccine > 0){
-                gp.player.hasVaccine--; // Use up a vaccine
-                this.setRemoveThis(true); // Mark the zombie for removal
+                gp.player.hasVaccine--; 
+                this.setRemoveThis(true); 
                 gp.ui.showMessage("Zombie cured!");
             }
         }
@@ -143,8 +150,6 @@ public class Zombie extends Entity{
                 direction = (yDistance > 0) ? "down" : "up";
             } else if ((direction.equals("up") || direction.equals("down")) && canMoveHorizontally) {
                 direction = (xDistance > 0) ? "right" : "left";
-            } else {
-                //???
             }
         } else {
             worldX = nextX;
@@ -170,8 +175,11 @@ public class Zombie extends Entity{
         }
     }
 
+    /**
+     * Draws the zombie on the screen.
+     * @param g2 Graphics2D object used for drawing.
+     */
     public void draw(Graphics2D g2) {
-        // Get the player's position on the screen
         int playerScreenX = gp.screenWidth / 2 - (gp.tileSize / 2);
         int playerScreenY = gp.screenHeight / 2 - (gp.tileSize / 2);
     
@@ -180,7 +188,6 @@ public class Zombie extends Entity{
         int zombieScreenX = worldX - gp.player.worldX + playerScreenX;
         int zombieScreenY = worldY - gp.player.worldY + playerScreenY;
     
-        //draw the zombie at its screen position
         BufferedImage image = null;
         switch (direction) {
         	case "up":
@@ -233,14 +240,27 @@ public class Zombie extends Entity{
         g2.drawImage(image, zombieScreenX, zombieScreenY, gp.tileSize, gp.tileSize, null);
     }
 
+    /**
+     * Sets the status of whether this zombie should be removed.
+     * @param status The removal status of the zombie.
+     */
     public void setRemoveThis(boolean status) {
         removeThis = status;
     }
 
+    /**
+     * Checks if this zombie is marked for removal.
+     * @return The removal status of the zombie.
+     */
     public boolean isRemoveThis() {
         return removeThis;
     }
 
+    /**
+     * Loads and scales the image for the zombie.
+     * @param imageName Name of the image file.
+     * @return The scaled BufferedImage.
+     */
     public BufferedImage setup(String imageName){
         UtilityTool uTool = new UtilityTool();
         BufferedImage image = null;
@@ -253,5 +273,4 @@ public class Zombie extends Entity{
         }
         return image;
     }
-
 }
