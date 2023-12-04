@@ -14,7 +14,12 @@ class EntityTest {
     @BeforeEach
     void setUp() {
         // Creating an anonymous subclass of Entity for testing purposes
-        entity = new Entity() {};
+        entity = new Entity() {
+            @Override
+            public void draw(Graphics2D g){}
+            @Override
+            public void update(){}
+        };
         // Initialize with some default values
         entity.worldX = 100;
         entity.worldY = 200;

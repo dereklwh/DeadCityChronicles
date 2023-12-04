@@ -19,7 +19,6 @@ public class Main {
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         window.setResizable(false);
         window.setTitle("Dead City: Chronicles");
-        //window.setUndecorated(true);
 
         GamePanel gamePanel = new GamePanel();
         window.add(gamePanel);
