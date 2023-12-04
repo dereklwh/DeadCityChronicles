@@ -31,6 +31,13 @@ public class Player extends Entity{
     int damageAnimationFrame = 0; // Current frame of the damage animation
 
     public Map<String, BufferedImage> spriteMap = new HashMap<>();
+    private Map<String, ObjectAction> objectActions;
+
+    
+    @FunctionalInterface
+    public interface ObjectAction {
+        void execute(int i);
+    }
     
     
     /**
@@ -53,8 +60,95 @@ public class Player extends Entity{
         setDefaultValues();
         getPlayerImage();
         initializeSpriteMap();
+        initializeObjectActions();
     }
     
+    /**
+     * Initializes the object actions map. This map is used to associate string keys
+     * (representing different types of objects in the game, like "Key", "Vaccine", "Door", "Trap")
+     * with their corresponding actions.
+     * 
+     * Each action is represented by a method reference that conforms to the ObjectAction interface.
+     * These actions are executed when the player interacts with different objects in the game.
+     * 
+     */
+    private void initializeObjectActions() {
+        objectActions = new HashMap<>();
+        objectActions.put("Key", this::pickUpKey);
+        objectActions.put("Vaccine", this::pickUpVaccine);
+        objectActions.put("Door", this::interactDoor);
+        objectActions.put("Trap", this::triggerTrap);
+    }
+    
+    /**
+     * Handles the action of picking up a key in the game.
+     * When the player interacts with a key object, this method is invoked.
+     * It increments the number of keys the player has, removes the key object from the game,
+     * plays a sound effect, and shows a message to the player.
+     *
+     * @param i The index of the key object in the game objects array.
+     */
+    private void pickUpKey(int i) {
+        gp.playSE(1);
+        hasKey++;
+        gp.obj[i] = null;
+        gp.ui.showMessage("You got a key");
+    }
+
+    /**
+     * Handles the action of picking up a vaccine in the game.
+     * When the player interacts with a vaccine object, this method is invoked.
+     * It increments the number of vaccines the player has, removes the vaccine object from the game,
+     * plays a sound effect, and shows a message to the player.
+     *
+     * @param i The index of the vaccine object in the game objects array.
+     */
+    private void pickUpVaccine(int i) {
+        gp.playSE(1);
+        hasVaccine++;
+        gp.obj[i] = null;
+        gp.ui.showMessage("You got a vaccine");
+    }
+
+    /**
+     * Handles the interaction with a door in the game.
+     * This method checks if the player has the required number of keys to open the door.
+     * If the player has enough keys, the game state is set to finished, and the game music stops.
+     * Otherwise, a message is displayed indicating more keys are needed.
+     *
+     * @param i The index of the door object in the game objects array.
+     */
+    private void interactDoor(int i) {
+        if (hasKey != 3){
+            gp.ui.showMessage("You need 3 keys to open the door");
+        } else if (hasKey == 3){
+            gp.ui.gameFinished = true;
+            gp.stopMusic();
+        }
+    }
+
+    /**
+     * Activates the trap mechanism when the player interacts with a trap object.
+     * If the player is not currently invincible, this method decreases the player's life,
+     * sets the player as damaged and invincible, and plays a sound effect.
+     *
+     * @param i The index of the trap object in the game objects array.
+     */
+    private void triggerTrap(int i) {
+        if (invincible == false){
+            life -=1;
+            gp.playSE(3);
+            isDamaged = true;
+            invincible = true;
+        }
+    }
+
+    /**
+     * Initializes the sprite map with various player sprites.
+     * The sprite map is a key-value pair storage where each key is a string representing
+     * the player's direction and action, and the value is the corresponding sprite image.
+     */
+
     private void initializeSpriteMap() {
     	spriteMap.put("up1", up1);
     	spriteMap.put("up2", up2);
@@ -231,41 +325,14 @@ public class Player extends Entity{
      * @param i The index of the object that the player interacts with.
      */
     public void pickUpObject(int i){
-        if(i != 999){
-           String objectName = gp.obj[i].name;
-           switch(objectName){
-               case "Key":
-                    gp.playSE(1);
-                    hasKey++;
-                    gp.obj[i] = null;
-                    gp.ui.showMessage("You got a key");
-                    break;
-               case "Vaccine":
-                    gp.playSE(1);
-                    hasVaccine++;
-                    gp.obj[i] = null;
-                    gp.ui.showMessage("You got a vaccine");
-                   break;
-                case "Door":
-                    if (hasKey != 3){
-                        gp.ui.showMessage("You need 3 keys to open the door");
-                    }
-                    else if (hasKey == 3){
-                        gp.ui.gameFinished = true;
-                        gp.stopMusic();
-
-                    }
-                break;
-                case "Trap":
-                 if(invincible == false){
-                    life -=1;
-                    gp.playSE(3);
-                    isDamaged = true;
-                    invincible = true;
-                }
-                break;
-           }
-        }
+    	
+    	 if(i != 999){
+    	        String objectName = gp.obj[i].name;
+    	        ObjectAction action = objectActions.get(objectName);
+    	        if (action != null) {
+    	            action.execute(i);
+    	        }
+    	    }
     }
 
     /**
