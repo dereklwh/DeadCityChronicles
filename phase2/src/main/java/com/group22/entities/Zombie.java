@@ -1,11 +1,14 @@
 package com.group22.entities;
 
 import com.group22.GamePanel;
+
 import com.group22.UtilityTool;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.imageio.ImageIO;
 
@@ -14,11 +17,12 @@ import javax.imageio.ImageIO;
  * It manages zombie animations, movement, AI behavior, and interaction with the player and environment.
  */
 public class Zombie extends Entity{
-    GamePanel gp;
+	GamePanel gp;
     public int worldX;
     public int worldY;
     public int speed;
     public String direction;
+	
     private int zombieType;
     public int solidAreaDefaultX, solidAreaDefaultY;
     private boolean removeThis = false;
@@ -28,6 +32,7 @@ public class Zombie extends Entity{
     public final int screenX;
     public final int screenY;
     public int actionLockCounter = 0;
+    private Map<String, BufferedImage[]> spriteMap;
 
     /**
      * Constructor for the Zombie class.
@@ -46,6 +51,7 @@ public class Zombie extends Entity{
 
         setDefaultValues();
         getZombieImage();
+        initializeSpriteMap();
     }
 
     /**
@@ -220,7 +226,24 @@ public class Zombie extends Entity{
             spriteCounter = 0;
         }
     }
-
+    
+    /**
+     * Initializes the spriteMap with arrays of BufferedImages for each direction.
+     * This method creates a new HashMap for spriteMap and populates it with key-value pairs.
+     * Each key is a string representing a direction ("up", "down", "left", "right"),
+     * and the associated value is an array of BufferedImages for that direction.
+     * 
+     * This method should be called during the construction of the Zombie object to ensure
+     * that the spriteMap is properly initialized before it's used in the draw method.
+     */
+    private void initializeSpriteMap() {
+        spriteMap = new HashMap<>();
+        spriteMap.put("up", new BufferedImage[]{up1, up2, up3, up4});
+        spriteMap.put("down", new BufferedImage[]{down1, down2, down3, down4});
+        spriteMap.put("left", new BufferedImage[]{left1, left2, left3, left4});
+        spriteMap.put("right", new BufferedImage[]{right1, right2, right3, right4});
+    }
+    
     /**
      * Draws the zombie on the screen.
      * @param g2 Graphics2D object used for drawing.
@@ -228,60 +251,20 @@ public class Zombie extends Entity{
     public void draw(Graphics2D g2) {
         int playerScreenX = gp.screenWidth / 2 - (gp.tileSize / 2);
         int playerScreenY = gp.screenHeight / 2 - (gp.tileSize / 2);
-    
+
         int zombieScreenX = worldX - gp.player.worldX + playerScreenX;
         int zombieScreenY = worldY - gp.player.worldY + playerScreenY;
-    
+
+        BufferedImage[] images = spriteMap.get(direction);
         BufferedImage image = null;
-        switch (direction) {
-        	case "up":
-        		if(spriteNum == 1){
-        			image = up1;
-        		}else if(spriteNum == 2){
-        			image = up2;
-        		}
-        		else if(spriteNum == 3) {
-        			image = up3; }
-        		else if(spriteNum == 4) {
-        			image = up4; }
-        		break;
-        	case "down":
-        		if(spriteNum == 1){
-        			image = down1;
-        		}else if(spriteNum == 2){
-        			image = down2;
-        		}else if(spriteNum == 3) {
-        			image = down3;}
-        		else if(spriteNum == 4) {
-        			image = down4; }
-        		
-        		break;
-        	case "left":
-        		if(spriteNum == 1){
-        			image = left1;
-        		}else if(spriteNum == 2){
-        			image = left2;
-        		}
-        		else if(spriteNum == 3) {
-        			image = left3;}
-        		else if(spriteNum == 4) {
-        			image = left4; }
-        		break;
-        	case "right":
-        		if(spriteNum == 1){
-        			image = right1;
-        		}else if(spriteNum == 2){
-        			image = right2;
-        		}
-        		else if(spriteNum == 3) {
-        			image = right3;}
-        		else if(spriteNum == 4) {
-        			image = right4; }
-            
-        		break;
+
+        if (images != null && spriteNum >= 1 && spriteNum <= images.length) {
+            image = images[spriteNum - 1];
         }
-    
-        g2.drawImage(image, zombieScreenX, zombieScreenY, gp.tileSize, gp.tileSize, null);
+
+        if (image != null) {
+            g2.drawImage(image, zombieScreenX, zombieScreenY, gp.tileSize, gp.tileSize, null);
+        }
     }
 
     /**
