@@ -56,6 +56,24 @@ public class Zombie extends Entity{
         speed = 3; 
         direction = "down"; 
     }
+    
+    /**
+     * Loads and scales the image for the zombie.
+     * @param imageName Name of the image file.
+     * @return The scaled BufferedImage.
+     */
+    public BufferedImage setup(String imageName){
+        UtilityTool uTool = new UtilityTool();
+        BufferedImage image = null;
+
+        try{
+            image = ImageIO.read(getClass().getResourceAsStream(imageName + ".png"));
+            image = uTool.scaleImage(image, gp.tileSize, gp.tileSize);
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+        return image;
+    }
 
     /**
      * Loads and sets up the zombie images for different directions and animations.
@@ -187,7 +205,7 @@ public class Zombie extends Entity{
      */
     private void updateAnimation() {
         spriteCounter++;
-        if(spriteCounter > 12){ //zombie image changes every 12 frames
+        if(spriteCounter > 12){
             if(spriteNum == 1) {
                 spriteNum = 2;
             }else if (spriteNum == 2){
@@ -211,8 +229,6 @@ public class Zombie extends Entity{
         int playerScreenX = gp.screenWidth / 2 - (gp.tileSize / 2);
         int playerScreenY = gp.screenHeight / 2 - (gp.tileSize / 2);
     
-        // Calculate the zombie's position on the screen based on the player's position
-        // This assumes the player is always centered on the screen
         int zombieScreenX = worldX - gp.player.worldX + playerScreenX;
         int zombieScreenY = worldY - gp.player.worldY + playerScreenY;
     
@@ -284,21 +300,5 @@ public class Zombie extends Entity{
         return removeThis;
     }
 
-    /**
-     * Loads and scales the image for the zombie.
-     * @param imageName Name of the image file.
-     * @return The scaled BufferedImage.
-     */
-    public BufferedImage setup(String imageName){
-        UtilityTool uTool = new UtilityTool();
-        BufferedImage image = null;
 
-        try{
-            image = ImageIO.read(getClass().getResourceAsStream(imageName + ".png"));
-            image = uTool.scaleImage(image, gp.tileSize, gp.tileSize);
-        }catch (IOException e){
-            e.printStackTrace();
-        }
-        return image;
-    }
 }
