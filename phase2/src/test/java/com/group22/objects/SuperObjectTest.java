@@ -53,6 +53,4 @@ class SuperObjectTest {
         // Verify that the drawImage method is called with expected parameters
         verify(mockGraphics).drawImage(superObject.image, 450, 350, 48, 48, null);
     }
-
-    // Additional tests for cases like object off-screen, different positions, etc.
 }
