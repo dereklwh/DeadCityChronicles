@@ -1,6 +1,5 @@
 package com.group22;
 
-import com.group22.entities.Player;
 import com.group22.objects.*;
 
 import java.awt.Graphics2D;
@@ -15,6 +14,7 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontFormatException;
+import java.util.Objects;
 
 /**
  * The UI class is responsible for rendering the game's user interface, including
@@ -25,12 +25,10 @@ public class UI {
     
     GamePanel gp;
     Graphics2D g2;
-    private Player player;
     Font maruMonica;
     // HUD elements
     BufferedImage heart_full, heart_half, heart_blank;
     BufferedImage keyImage;
-    BufferedImage hImage;
     BufferedImage vImage;
     BufferedImage dImage;
 
@@ -41,9 +39,7 @@ public class UI {
     private BufferedImage startButton; 
     private BufferedImage settingButton;
     private BufferedImage ruleButton;
-    private BufferedImage exitButton;   
-    private BufferedImage scaledTitle,scaledStart,scaledSetting,scaledRule,scaledExit;
-
+    private BufferedImage exitButton;
     public boolean messageOn = false;
     public String message = "";
     int messageCounter = 0;
@@ -60,9 +56,8 @@ public class UI {
      */
     public UI(GamePanel gp) {
         this.gp = gp;
-        this.player = player;
-        
-       try {
+
+        try {
         	InputStream is = getClass().getResourceAsStream("/font/x12y16pxMaruMonica.ttf");
 			maruMonica = Font.createFont(Font.TRUETYPE_FONT, is);
 		} catch (FontFormatException e) {
@@ -74,11 +69,11 @@ public class UI {
         
         //new add get all the image for title page
         try {
-            titleImage = ImageIO.read(getClass().getResourceAsStream("/object/title.png"));
-            startButton = ImageIO.read(getClass().getResourceAsStream("/object/start.png"));
-            ruleButton = ImageIO.read(getClass().getResourceAsStream("/object/rule.png"));
-            settingButton = ImageIO.read(getClass().getResourceAsStream("/object/setting.png"));
-            exitButton = ImageIO.read(getClass().getResourceAsStream("/object/exit.png"));
+            titleImage = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/object/title.png")));
+            startButton = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/object/start.png")));
+            ruleButton = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/object/rule.png")));
+            settingButton = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/object/setting.png")));
+            exitButton = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/object/exit.png")));
             
         } catch (IOException e) {
             e.printStackTrace();
