@@ -98,7 +98,6 @@ public class GamePanel extends JPanel implements Runnable {
         playMusic(0);
 
         gameState = titleState;
-        //gameState = playState;
 
         tempScreen = new BufferedImage(screenWidth, screenHeight, BufferedImage.TYPE_INT_ARGB);
         g2 = (Graphics2D) tempScreen.getGraphics();
@@ -134,9 +133,7 @@ public class GamePanel extends JPanel implements Runnable {
         double nextDrawTime = System.nanoTime() + drawInterval;
 
         while (gameThread != null) {
-            //System.out.println("game running!");
             update();
-            //repaint();
             drawToTempScreen();
             drawToScreen();
             try {
@@ -174,8 +171,7 @@ public class GamePanel extends JPanel implements Runnable {
         if (gameState == pauseState) {
 
         }
-        //System.out.println("Player Position: " + player.worldX + ", " + player.worldY);
-        //System.out.println("Zombie Position: " + zombie.worldX + ", " + zombie.worldY);
+      
     }
     //For fullscreen
     public void drawToTempScreen() {
@@ -185,12 +181,7 @@ public class GamePanel extends JPanel implements Runnable {
             ui.draw(g2);
         } else {
             tileM.draw(g2);
-            //Title Screen
-        /*if(gameState == titleState) {
-        	ui.drawTitleScreen(g2);
-        }*/
-
-            //else {
+         
             //Object
             for (int i = 0; i < obj.length; i++) {
                 if (obj[i] != null) {
@@ -209,7 +200,7 @@ public class GamePanel extends JPanel implements Runnable {
 
             //UI
             ui.draw(g2);
-            //}
+           
         }
     }
 
