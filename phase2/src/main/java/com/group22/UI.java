@@ -154,7 +154,7 @@ public class UI {
             g2.drawImage(vImage, gp.tileSize/2 + 150, gp.tileSize/2, gp.tileSize, gp.tileSize, null);
             g2.drawString("x " + gp.player.hasVaccine, 235, 60);            
             
-            if(messageOn == true){
+            if(messageOn){
 
                 g2.setFont(g2.getFont().deriveFont(30F));
                 g2.drawString(message, gp.tileSize/2, gp.tileSize*5);
@@ -185,7 +185,6 @@ public class UI {
         if (gp.gameState == gp.gameOverState){
             drawGameOverScreen();
             playTime =0;
-            int count = 0;
         }
         if (gp.gameState == gp.ruleState) {
         	drawRulePage();
@@ -386,13 +385,8 @@ public class UI {
         g2.drawString("Fullscreen", textX, textY);
         if(commandNum ==0){
             g2.drawString(">", textX -25, textY);
-            if(gp.keyH.enterPressed == true){
-                if(gp.fullScreenOn ==false){
-                    gp.fullScreenOn = true;
-                }
-                else if  (gp.fullScreenOn ==true){
-                    gp.fullScreenOn = false;
-                }
+            if(gp.keyH.enterPressed){
+                gp.fullScreenOn = !gp.fullScreenOn;
                 subState = 1;
             }
         }
@@ -409,7 +403,7 @@ public class UI {
         g2.drawString("Control", textX, textY);
         if(commandNum ==2){
             g2.drawString(">", textX -25, textY);
-            if(gp.keyH.enterPressed == true){
+            if(gp.keyH.enterPressed){
                 subState = 2;
                 commandNum =0;
             }
@@ -420,7 +414,7 @@ public class UI {
         g2.drawString("Quit Game", textX, textY);
         if(commandNum ==3){
             g2.drawString(">", textX -25, textY);
-            if(gp.keyH.enterPressed == true){
+            if(gp.keyH.enterPressed){
                 subState = 3;
                 commandNum = 0;    
             }
@@ -431,7 +425,7 @@ public class UI {
         g2.drawString("Back", textX, textY);
         if(commandNum ==4){
             g2.drawString(">", textX -25, textY);
-            if(gp.keyH.enterPressed == true){
+            if(gp.keyH.enterPressed){
                 if (gp.previousState == gp.playState){
                     gp.gameState = gp.playState;
                     commandNum = 0;
@@ -449,7 +443,7 @@ public class UI {
         textY = frameY + gp.tileSize*2 + 24;
         g2.setStroke(new BasicStroke(3));
         g2.drawRect(textX, textY, 24, 24);
-        if(gp.fullScreenOn == true){
+        if(gp.fullScreenOn){
             g2.fillRect(textX, textY, 24, 24);
         }
 
@@ -550,7 +544,7 @@ public class UI {
         g2.drawString("Back", textX, textY);
         if (commandNum ==0){
             g2.drawString(">", textX-25, textY);
-            if(gp.keyH.enterPressed==true){
+            if(gp.keyH.enterPressed){
                 subState =0;
             }
         }
@@ -575,7 +569,7 @@ public class UI {
         g2.drawString(text2, textX, textY);
         if (commandNum == 0){
             g2.drawString(">", textX-25, textY);
-            if(gp.keyH.enterPressed==true){
+            if(gp.keyH.enterPressed){
                 subState =0;
                 gp.gameState = gp.titleState;
                 gp.retry();
@@ -591,7 +585,7 @@ public class UI {
         g2.drawString(text3, textX, textY);
         if (commandNum ==1){
             g2.drawString(">", textX-25, textY);
-            if(gp.keyH.enterPressed==true){
+            if(gp.keyH.enterPressed){
                 subState =0;
                 commandNum = 3;
             }
