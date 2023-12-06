@@ -1,6 +1,5 @@
 package com.group22;
 
-import java.awt.*;
 
 /**
  * The EventHandler class is responsible for managing events that occur within the game.
@@ -10,7 +9,7 @@ public class EventHandler {
     GamePanel gp;
     int previousEventX, previousEventY;
     boolean canTouchEvent = true;
-    EventRect eventRect[][];
+    EventRect[][] eventRect;
 
     /**
      * Constructor for EventHandler which initializes a grid of event rectangles.
@@ -52,20 +51,20 @@ public class EventHandler {
             canTouchEvent = true;
         }
 
-        if(canTouchEvent == true){
+        if(canTouchEvent){
             //add stuff that hit the player here and also heal player
             //eg: if(hit(27, 16) == true) damage();
             //above are our trap objects locations
-            if(hit(25, 13) == true) damage();
-            if(hit(60, 11) == true) damage();
-            if(hit(51, 13) == true) damage();
-            if(hit(62, 27) == true) damage();
-            if(hit(40, 34) == true) damage();
-            if(hit(21, 35) == true) damage();
-            if(hit(51, 34) == true) damage();
-            if(hit(41, 14) == true) damage();
-            if(hit(21, 14) == true) damage();
-            if(hit(22, 28) == true) damage();
+            if(hit(25, 13)) damage();
+            if(hit(60, 11)) damage();
+            if(hit(51, 13)) damage();
+            if(hit(62, 27)) damage();
+            if(hit(40, 34)) damage();
+            if(hit(21, 35)) damage();
+            if(hit(51, 34)) damage();
+            if(hit(41, 14)) damage();
+            if(hit(21, 14)) damage();
+            if(hit(22, 28)) damage();
         }
     }
 
