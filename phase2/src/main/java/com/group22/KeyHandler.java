@@ -147,13 +147,24 @@ public class KeyHandler implements KeyListener {
     
     }
 
-
+    /**
+     * Handles key events during the game's pause state, allowing the player to
+     * resume the game.
+     *
+     * @param code The KeyCode associated with the pressed key.
+     */
     public void pauseState(int code){
         if(code == KeyEvent.VK_P){
             gp.gameState = gp.playState;
         }
     }
-
+    
+    /**
+     * Handles key events during the game's game over state, allowing the player to
+     * retry or return to the title screen.
+     *
+     * @param code The KeyCode associated with the pressed key.
+     */
     public void gameOverState(int code){
         if(code == KeyEvent.VK_W){
             gp.ui.commandNum--;
@@ -180,7 +191,13 @@ public class KeyHandler implements KeyListener {
             }
         }
     }
-
+    
+    /**
+     * Handles key events during the game's title state, allowing navigation through
+     * the game's main menu.
+     *
+     * @param code The KeyCode associated with the pressed key.
+     */
     public void titleState(int code){
         if(code == KeyEvent.VK_W){
             gp.ui.commandNum--;
@@ -214,6 +231,12 @@ public class KeyHandler implements KeyListener {
         }
     }
     
+    /**
+     * Handles key events during the game's rule state, providing information on
+     * game rules and controls.
+     *
+     * @param code The KeyCode associated with the pressed key.
+     */
     public void ruleState(int code) {
     	if (code == KeyEvent.VK_W || code == KeyEvent.VK_UP) {
             gp.ui.commandNum--;

@@ -11,9 +11,11 @@ import com.group22.entities.Player;
 import com.group22.entities.Zombie;
 
 
+
 /**
- * The GamePanel class is the main controller for the game, handling the game loop,
- * rendering, and game state management.
+ * The GamePanel class serves as the main controller for the game. It is responsible for handling
+ * the game loop, rendering graphics, and managing the game's state. This class extends JPanel and
+ * implements Runnable for threading capabilities.
  */
 public class GamePanel extends JPanel implements Runnable {
     // Game world and screen settings
@@ -80,7 +82,8 @@ public class GamePanel extends JPanel implements Runnable {
     public EventHandler eHandler = new EventHandler(this);
 
     /**
-     * Constructor for GamePanel which sets up the game environment, including screen size and background color.
+     * Constructs a GamePanel instance. This setup includes initializing the game environment,
+     * such as setting screen size and background color.
      */
     public GamePanel() {
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
@@ -91,7 +94,9 @@ public class GamePanel extends JPanel implements Runnable {
         this.setFocusable(true);
     }
 
-
+    /**
+     * Initializes the game by setting up game objects, zombies, music, and the game's display settings.
+     */
     public void setupGame() {
         aSetter.setObject();
         aSetter.setZombie();
@@ -105,13 +110,19 @@ public class GamePanel extends JPanel implements Runnable {
         setFullScreen();
     }
 
+    /**
+     * Resets the game to its initial state. This is typically used after a game over scenario.
+     */
     public void retry() {
         player.setDefaultValues();
         player.restorePos();
         aSetter.setObject();
         aSetter.setZombie();
     }
-
+    
+    /**
+     * Configures the game display for full-screen mode.
+     */
     public void setFullScreen() {
         GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
         GraphicsDevice gd = ge.getDefaultScreenDevice();
@@ -120,7 +131,10 @@ public class GamePanel extends JPanel implements Runnable {
         screenWidth2 = Main.window.getWidth();
         screenHeight2 = Main.window.getHeight();
     }
-
+    
+    /**
+     * Starts the main game loop in a new thread.
+     */
     public void startGameThread() {
         gameThread = new Thread(this);
         gameThread.start();
@@ -153,7 +167,9 @@ public class GamePanel extends JPanel implements Runnable {
             }
         }
     }
-
+    /**
+     * Updates the game state, including player and zombie movements, and other in-game interactions.
+     */
     public void update() {
 
         if (gameState == playState) {
@@ -173,7 +189,9 @@ public class GamePanel extends JPanel implements Runnable {
         }
       
     }
-    //For fullscreen
+    /**
+     * Draws the current game state to a temporary screen buffer.
+     */
     public void drawToTempScreen() {
 
         if (gameState == titleState) {
@@ -203,14 +221,21 @@ public class GamePanel extends JPanel implements Runnable {
            
         }
     }
-
+    
+    /**
+     * Draws the contents of the temporary screen buffer to the actual screen.
+     */
     public void drawToScreen() {
         Graphics g = getGraphics();
         g.drawImage(tempScreen, 0, 0, screenWidth2, screenHeight2, null);
         g.dispose();
     }
 
-
+    /**
+     * Starts playing the background music.
+     *
+     * @param i The index of the music track to play.
+     */
     public void playMusic(int i) {
         music.setFile(i);
         music.play();
@@ -233,7 +258,12 @@ public class GamePanel extends JPanel implements Runnable {
         se.setFile(i);
         se.play();
     }
-
+    
+    /**
+     * Retrieves the current player instance in the game.
+     *
+     * @return The current Player object.
+     */
     public Player getPlayer() {
         return player;
     }

@@ -1,11 +1,18 @@
 package com.group22;
 
 import com.group22.objects.ObjectDoor;
+
 import com.group22.objects.ObjectKey;
 import com.group22.objects.ObjectTrap;
 import com.group22.objects.ObjectVaccine;
 import com.group22.entities.Zombie;
 
+
+/**
+ * The AssetSetter class is responsible for initializing and placing game objects
+ * and zombies within the game world. It sets the initial positions and properties
+ * of interactable items like vaccines, traps, doors, keys, and enemy entities (zombies).
+ */
 public class AssetSetter {
     GamePanel gp;
 
@@ -16,7 +23,11 @@ public class AssetSetter {
     public AssetSetter(GamePanel gp){
         this.gp = gp;
     }
-
+    
+    /**
+     * Sets up the game objects in the game world. This includes placing vaccines, traps,
+     * doors, and keys at predetermined positions in the game map.
+     */
     public void setObject(){ //here we are making 2 vaccine we should chnage that later and add other objects too
         gp.obj[0] = new ObjectVaccine(gp);
         gp.obj[0].worldX = 23 * gp.tileSize; //change this to anywhere we want to put the object
@@ -88,10 +99,13 @@ public class AssetSetter {
 
 
     }
-
-    //3 = fast
-    //2 = medium speed
-    //1 = slow
+    /**
+     * Initializes and places zombies in the game world. Each zombie is given a specific
+     * position and speed. The method sets up various zombies with different behaviors.
+     * 3 = fast
+     * 2 = medium speed
+     * 1 = slow
+     */
     public void setZombie() {
         gp.zombie[0] = new Zombie(gp, 1);
         gp.zombie[0].worldX = gp.tileSize * 15;
