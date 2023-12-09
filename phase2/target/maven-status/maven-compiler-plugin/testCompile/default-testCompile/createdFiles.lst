@@ -1,0 +1,11 @@
+com\group22\GamePanelTest.class
+com\group22\MainTest.class
+com\group22\entities\EntityTest.class
+com\group22\entities\PlayerTest.class
+com\group22\UITest.class
+com\group22\EventHandlerTest.class
+com\group22\entities\EntityTest$1.class
+com\group22\entities\ZombieTest.class
+com\group22\GamePanelTest$1.class
+com\group22\KeyHandlerTest.class
+com\group22\objects\SuperObjectTest.class

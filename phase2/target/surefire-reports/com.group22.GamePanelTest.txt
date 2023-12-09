@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: com.group22.GamePanelTest
+-------------------------------------------------------------------------------
+Tests run: 9, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 2.180 s -- in com.group22.GamePanelTest

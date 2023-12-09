@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ObjectTrap.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">phase2</a> &gt; <a href="index.source.html" class="el_package">com.group22.objects</a> &gt; <span class="el_source">ObjectTrap.java</span></div><h1>ObjectTrap.java</h1><pre class="source lang-java linenums">package com.group22.objects;
+
+import com.group22.GamePanel;
+
+import javax.imageio.ImageIO;
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.util.Random;
+
+/**
+ * ObjectTrap representing a trap object to damage players
+ */
+public class ObjectTrap extends SuperObject{
+    GamePanel gp;
+<span class="fc" id="L16">    Random rand = new Random();</span>
+    /**
+     * @param gp The GamePanel instance containing configuration like tile size
+     *           and reference to the player for positioning the traps relative to the player's viewport.
+     */
+<span class="fc" id="L21">    public ObjectTrap(GamePanel gp){</span>
+<span class="fc" id="L22">        name = &quot;Trap&quot;;</span>
+        try{
+<span class="fc" id="L24">            image = ImageIO.read(getClass().getResourceAsStream(&quot;/object/trap.png&quot;));</span>
+<span class="fc" id="L25">            image2 = ImageIO.read(getClass().getResourceAsStream(&quot;/object/trap2.png&quot;));</span>
+<span class="fc" id="L26">            image3 = ImageIO.read(getClass().getResourceAsStream(&quot;/object/trap3.png&quot;));</span>
+<span class="fc" id="L27">            image = uTool.scaleImage(image, gp.tileSize, gp.tileSize);</span>
+<span class="fc" id="L28">            image2 = uTool.scaleImage(image2, gp.tileSize, gp.tileSize);</span>
+<span class="fc" id="L29">            image3 = uTool.scaleImage(image3, gp.tileSize, gp.tileSize);</span>
+<span class="nc" id="L30">        }catch(IOException e){</span>
+<span class="nc" id="L31">            e.printStackTrace();</span>
+<span class="fc" id="L32">        }</span>
+<span class="fc" id="L33">        collision = true;</span>
+<span class="fc" id="L34">    }</span>
+
+    /**
+     * Draws the trap object on the game panel. This method overrides the SuperObject's draw method
+     * The specific trap image drawn is randomly selected.
+     *
+     * @param g2 The Graphics2D object that provides the drawing methods.
+     */
+    @Override
+    public void draw(Graphics2D g2, GamePanel gp) {
+<span class="nc" id="L44">        int screenX = worldX - gp.player.worldX + gp.player.screenX;</span>
+<span class="nc" id="L45">        int screenY = worldY - gp.player.worldY + gp.player.screenY;</span>
+
+<span class="nc bnc" id="L47" title="All 8 branches missed.">        if(worldX + gp.tileSize &gt; gp.player.worldX - gp.player.screenX &amp;&amp;</span>
+                worldX - gp.tileSize &lt; gp.player.worldX + gp.player.screenX &amp;&amp;
+                worldY + gp.tileSize &gt; gp.player.worldY - gp.player.screenY &amp;&amp;
+                worldY - gp.tileSize &lt; gp.player.worldY + gp.player.screenY) {
+
+            // Select a random image out of the three available
+<span class="nc" id="L53">            BufferedImage trapImage = null;</span>
+<span class="nc" id="L54">            int randomNum = rand.nextInt(3); // This will be 0, 1, or 2</span>
+<span class="nc bnc" id="L55" title="All 2 branches missed.">            if (randomNum == 0) {</span>
+<span class="nc" id="L56">                trapImage = image;</span>
+<span class="nc bnc" id="L57" title="All 2 branches missed.">            } else if (randomNum == 1) {</span>
+<span class="nc" id="L58">                trapImage = image2;</span>
+<span class="nc bnc" id="L59" title="All 2 branches missed.">            } else if (randomNum == 2) {</span>
+<span class="nc" id="L60">                trapImage = image3;</span>
+            }
+
+            // Draw the selected image
+<span class="nc" id="L64">            g2.drawImage(trapImage, screenX, screenY, gp.tileSize, gp.tileSize, null);</span>
+        }
+<span class="nc" id="L66">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

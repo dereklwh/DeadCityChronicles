@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Sound.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">phase2</a> &gt; <a href="index.source.html" class="el_package">com.group22</a> &gt; <span class="el_source">Sound.java</span></div><h1>Sound.java</h1><pre class="source lang-java linenums">package com.group22;
+
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.FloatControl;
+
+import java.net.URL;
+
+/**
+ * The Sound class is responsible for loading and playing sound files.
+ * It allows the playing, stopping, and looping of sounds as well as volume control.
+ */
+public class Sound {
+    Clip clip; // Clip object that can load a sound file and play it
+<span class="fc" id="L16">    URL soundURL[] = new URL[30]; // Array of URLs to store sound file locations</span>
+    FloatControl fc; // Float control to for volume
+<span class="fc" id="L18">    int volumeScale = 3;</span>
+    float volume;
+
+
+    /**
+     * Constructor initializes all sound files by loading them into the soundURL array.
+     */
+<span class="fc" id="L25">    public Sound(){</span>
+<span class="fc" id="L26">        soundURL[0] = getClass().getResource(&quot;/sound/Theme.wav&quot;);</span>
+<span class="fc" id="L27">        soundURL[1] = getClass().getResource(&quot;/sound/pickup.wav&quot;);</span>
+<span class="fc" id="L28">        soundURL[2] = getClass().getResource(&quot;/sound/cure.wav&quot;);</span>
+<span class="fc" id="L29">        soundURL[3] = getClass().getResource(&quot;/sound/scream.wav&quot;);</span>
+<span class="fc" id="L30">        soundURL[4] = getClass().getResource(&quot;/sound/zombie.wav&quot;);</span>
+<span class="fc" id="L31">        soundURL[5] = getClass().getResource(&quot;/sound/select.wav&quot;);</span>
+<span class="fc" id="L32">        soundURL[6] = getClass().getResource(&quot;/sound/coral.wav&quot;);</span>
+<span class="fc" id="L33">    }</span>
+
+    /**
+     * Sets the current sound file to be used by loading it into the clip.
+     * @param i the index of the sound file in the soundURL array
+     */
+    public void setFile(int i){
+        try{
+<span class="fc" id="L41">            AudioInputStream ais = AudioSystem.getAudioInputStream(soundURL[i]);</span>
+<span class="fc" id="L42">            clip = AudioSystem.getClip();</span>
+<span class="fc" id="L43">            clip.open(ais);</span>
+<span class="fc" id="L44">            fc = (FloatControl)clip.getControl(FloatControl.Type.MASTER_GAIN);</span>
+<span class="fc" id="L45">            checkVolume();</span>
+<span class="nc" id="L46">        }catch(Exception e){</span>
+<span class="fc" id="L47">        }</span>
+<span class="fc" id="L48">    }</span>
+
+    /**
+     * Plays the currently loaded sound file from the beginning.
+     */
+    public void play() {
+<span class="pc bpc" id="L54" title="1 of 2 branches missed.">        if (clip != null) {</span>
+<span class="fc" id="L55">            clip.start();</span>
+        }
+<span class="fc" id="L57">    }</span>
+
+    /**
+     * Loops the currently loaded sound file continuously.
+     */
+    public void loop() {
+<span class="pc bpc" id="L63" title="1 of 2 branches missed.">        if (clip != null) {</span>
+<span class="fc" id="L64">            clip.loop(Clip.LOOP_CONTINUOUSLY);</span>
+        }
+<span class="fc" id="L66">    }</span>
+
+    public void stop() {
+<span class="pc bpc" id="L69" title="1 of 2 branches missed.">        if (clip != null) {</span>
+<span class="nc" id="L70">            clip.stop();</span>
+        }
+<span class="fc" id="L72">    }</span>
+
+    /**
+     * Checks and adjusts the volume based on the current volumeScale setting.
+     */
+    public void checkVolume(){
+<span class="pc bpc" id="L78" title="6 of 7 branches missed.">        switch(volumeScale){</span>
+<span class="nc" id="L79">            case 0: volume = -80f; break;</span>
+<span class="nc" id="L80">            case 1: volume= -20f; break;</span>
+<span class="nc" id="L81">            case 2: volume = -12f; break;</span>
+<span class="fc" id="L82">            case 3: volume = -5f; break;</span>
+<span class="nc" id="L83">            case 4: volume = 1f; break;</span>
+<span class="nc" id="L84">            case 5: volume = 6f; break;</span>
+        }
+<span class="fc" id="L86">        fc.setValue(volume);</span>
+<span class="fc" id="L87">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

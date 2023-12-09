@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TileManager.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">phase2</a> &gt; <a href="index.source.html" class="el_package">com.group22.tile</a> &gt; <span class="el_source">TileManager.java</span></div><h1>TileManager.java</h1><pre class="source lang-java linenums">package com.group22.tile;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import javax.imageio.ImageIO;
+import java.awt.Graphics2D;
+
+import com.group22.GamePanel;
+import com.group22.UtilityTool;
+
+// under package Tile;
+
+public class TileManager{
+
+    GamePanel gp;
+    public Tile[] tile;
+    //need to create the map package and import data text file into pack.
+    public int mapTileNum[][];
+
+<span class="fc" id="L22">    public TileManager(GamePanel gp){</span>
+
+<span class="fc" id="L24">        this.gp = gp;</span>
+<span class="fc" id="L25">        tile = new Tile[200]; //create 10 kinds of tiles, such as water tile,wall tile</span>
+
+<span class="fc" id="L27">        mapTileNum = new int[gp.maxWorldCol][gp.maxWorldRow];</span>
+
+
+<span class="fc" id="L30">        getTileImage();</span>
+        
+<span class="fc" id="L32">        loadMap(&quot;/map/world02.txt&quot;);</span>
+<span class="fc" id="L33">    }</span>
+
+    // grab image from the pack
+    public void getTileImage(){
+<span class="fc" id="L37">        setup(0, &quot;ground1&quot;, false);</span>
+<span class="fc" id="L38">        setup(1, &quot;wall1&quot;, true);</span>
+<span class="fc" id="L39">        setup(2, &quot;bush&quot;, true);</span>
+<span class="fc" id="L40">        setup(3, &quot;road_cross&quot;, false);</span>
+<span class="fc" id="L41">        setup(4, &quot;road_horizontal&quot;, false);</span>
+<span class="fc" id="L42">        setup(5, &quot;road_ld_corner&quot;, false);</span>
+<span class="fc" id="L43">        setup(6, &quot;road_lu_corner&quot;, false);</span>
+<span class="fc" id="L44">        setup(7, &quot;road_rd_corner&quot;, false);</span>
+<span class="fc" id="L45">        setup(8, &quot;road_ru_corner&quot;, false);</span>
+<span class="fc" id="L46">        setup(9, &quot;road_T_down&quot;, false);</span>
+<span class="fc" id="L47">        setup(10, &quot;road_T_left&quot;, false);</span>
+<span class="fc" id="L48">        setup(11, &quot;road_T_right&quot;, false);</span>
+<span class="fc" id="L49">        setup(12, &quot;road_T_up&quot;, false);</span>
+<span class="fc" id="L50">        setup(13, &quot;road_vertical&quot;, false);</span>
+<span class="fc" id="L51">        setup(14, &quot;fence_down&quot;, true);</span>
+<span class="fc" id="L52">        setup(15, &quot;fence_ld_corner&quot;, true);</span>
+<span class="fc" id="L53">        setup(16, &quot;fence_left&quot;, true);</span>
+<span class="fc" id="L54">        setup(17, &quot;fence_lu_corner&quot;, true);</span>
+<span class="fc" id="L55">        setup(18, &quot;fence_rd_corner&quot;, true);</span>
+<span class="fc" id="L56">        setup(19, &quot;fence_right&quot;, true);</span>
+<span class="fc" id="L57">        setup(20, &quot;fence_ru_corner&quot;, true);</span>
+<span class="fc" id="L58">        setup(21, &quot;fence_up&quot;, true);</span>
+<span class="fc" id="L59">        setup(22, &quot;haystack1&quot;, true);</span>
+<span class="fc" id="L60">        setup(23, &quot;haystack2&quot;, true);</span>
+<span class="fc" id="L61">        setup(24, &quot;haystack3&quot;, true);</span>
+<span class="fc" id="L62">        setup(25, &quot;haystack4&quot;, true);</span>
+<span class="fc" id="L63">        setup(26, &quot;haystack5&quot;, true);</span>
+<span class="fc" id="L64">        setup(27, &quot;haystack6&quot;, true);</span>
+<span class="fc" id="L65">        setup(28, &quot;house_1&quot;, true);</span>
+<span class="fc" id="L66">        setup(29, &quot;house_2&quot;, true);</span>
+<span class="fc" id="L67">        setup(30, &quot;house_3&quot;, true);</span>
+<span class="fc" id="L68">        setup(31, &quot;house_4&quot;, true);</span>
+<span class="fc" id="L69">        setup(32, &quot;house_5&quot;, true);</span>
+<span class="fc" id="L70">        setup(33, &quot;house_6&quot;, true);</span>
+<span class="fc" id="L71">        setup(34, &quot;house_7&quot;, true);</span>
+<span class="fc" id="L72">        setup(35, &quot;house_8&quot;, true);</span>
+<span class="fc" id="L73">        setup(36, &quot;house_9&quot;, true);</span>
+<span class="fc" id="L74">        setup(37, &quot;house_10&quot;, true);</span>
+<span class="fc" id="L75">        setup(38, &quot;house_11&quot;, true);</span>
+<span class="fc" id="L76">        setup(39, &quot;house_12&quot;, true);</span>
+<span class="fc" id="L77">        setup(40, &quot;house_13&quot;, true);</span>
+<span class="fc" id="L78">        setup(41, &quot;house_14&quot;, true);</span>
+<span class="fc" id="L79">        setup(42, &quot;house_15&quot;, true);</span>
+<span class="fc" id="L80">        setup(43, &quot;house_16&quot;, true);</span>
+<span class="fc" id="L81">        setup(44, &quot;house_17&quot;, true);</span>
+<span class="fc" id="L82">        setup(45, &quot;house_18&quot;, true);</span>
+<span class="fc" id="L83">        setup(46, &quot;house_19&quot;, true);</span>
+<span class="fc" id="L84">        setup(47, &quot;house_20&quot;, true);</span>
+<span class="fc" id="L85">        setup(48, &quot;house_21&quot;, true);</span>
+<span class="fc" id="L86">        setup(49, &quot;house_22&quot;, true);</span>
+<span class="fc" id="L87">        setup(50, &quot;house_23&quot;, true);</span>
+<span class="fc" id="L88">        setup(51, &quot;house_24&quot;, true);</span>
+<span class="fc" id="L89">        setup(52, &quot;house_25&quot;, true);</span>
+<span class="fc" id="L90">        setup(53, &quot;house_26&quot;, true);</span>
+<span class="fc" id="L91">        setup(54, &quot;house_27&quot;, true);</span>
+<span class="fc" id="L92">        setup(55, &quot;house_28&quot;, true);</span>
+<span class="fc" id="L93">        setup(56, &quot;house_29&quot;, true);</span>
+<span class="fc" id="L94">        setup(57, &quot;house2_1&quot;, true);</span>
+<span class="fc" id="L95">        setup(58, &quot;house2_2&quot;, true);</span>
+<span class="fc" id="L96">        setup(59, &quot;house2_3&quot;, true);</span>
+<span class="fc" id="L97">        setup(60, &quot;house2_4&quot;, true);</span>
+<span class="fc" id="L98">        setup(61, &quot;house2_5&quot;, true);</span>
+<span class="fc" id="L99">        setup(62, &quot;house2_6&quot;, true);</span>
+<span class="fc" id="L100">        setup(63, &quot;house2_7&quot;, true);</span>
+<span class="fc" id="L101">        setup(64, &quot;house2_8&quot;, true);</span>
+<span class="fc" id="L102">        setup(65, &quot;house2_9&quot;, true);</span>
+<span class="fc" id="L103">        setup(66, &quot;house2_10&quot;, true);</span>
+<span class="fc" id="L104">        setup(67, &quot;house2_11&quot;, true);</span>
+<span class="fc" id="L105">        setup(68, &quot;house2_12&quot;, true);</span>
+<span class="fc" id="L106">        setup(69, &quot;house2_13&quot;, true);</span>
+<span class="fc" id="L107">        setup(70, &quot;house2_14&quot;, true);</span>
+<span class="fc" id="L108">        setup(71, &quot;house2_15&quot;, true);</span>
+<span class="fc" id="L109">        setup(72, &quot;house2_16&quot;, true);</span>
+<span class="fc" id="L110">        setup(73, &quot;house2_17&quot;, true);</span>
+<span class="fc" id="L111">        setup(74, &quot;house2_18&quot;, true);</span>
+<span class="fc" id="L112">        setup(75, &quot;house2_19&quot;, true);</span>
+<span class="fc" id="L113">        setup(76, &quot;house2_20&quot;, true);</span>
+<span class="fc" id="L114">        setup(77, &quot;house2_21&quot;, true);</span>
+<span class="fc" id="L115">        setup(78, &quot;house2_22&quot;, true);</span>
+<span class="fc" id="L116">        setup(79, &quot;house2_23&quot;, true);</span>
+<span class="fc" id="L117">        setup(80, &quot;house2_24&quot;, true);</span>
+<span class="fc" id="L118">        setup(81, &quot;house2_25&quot;, true);</span>
+<span class="fc" id="L119">        setup(82, &quot;house2_26&quot;, true);</span>
+<span class="fc" id="L120">        setup(83, &quot;house2_27&quot;, true);</span>
+<span class="fc" id="L121">        setup(84, &quot;house2_28&quot;, true);</span>
+<span class="fc" id="L122">        setup(85, &quot;house2_29&quot;, true);</span>
+<span class="fc" id="L123">        setup(86, &quot;car_1&quot;, true);</span>
+<span class="fc" id="L124">        setup(87, &quot;car_2&quot;, true);</span>
+<span class="fc" id="L125">        setup(88, &quot;car2_1&quot;, true);</span>
+<span class="fc" id="L126">        setup(89, &quot;car2_2&quot;, true);</span>
+<span class="fc" id="L127">    }</span>
+
+    public void setup(int index, String imageName, boolean collision){
+<span class="fc" id="L130">        UtilityTool uTool = new UtilityTool();</span>
+
+        try{
+<span class="fc" id="L133">           tile[index]  = new Tile();</span>
+<span class="fc bfc" id="L134" title="All 2 branches covered.">           if(imageName.contains(&quot;house&quot;)) {</span>
+<span class="fc" id="L135">               tile[index].image = ImageIO.read(getClass().getResourceAsStream(&quot;/tiles/house/&quot; + imageName + &quot;.png&quot;));</span>
+<span class="fc bfc" id="L136" title="All 2 branches covered.">           } else if (imageName.contains(&quot;car&quot;)) {</span>
+<span class="fc" id="L137">               tile[index].image = ImageIO.read(getClass().getResourceAsStream(&quot;/tiles/car/&quot; + imageName + &quot;.png&quot;));</span>
+<span class="fc bfc" id="L138" title="All 2 branches covered.">           } else if(imageName.contains(&quot;haystack&quot;)) {</span>
+<span class="fc" id="L139">               tile[index].image = ImageIO.read(getClass().getResourceAsStream(&quot;/tiles/haystack/&quot; + imageName + &quot;.png&quot;));</span>
+<span class="fc bfc" id="L140" title="All 2 branches covered.">           } else if(imageName.contains(&quot;road&quot;)) {</span>
+<span class="fc" id="L141">               tile[index].image = ImageIO.read(getClass().getResourceAsStream(&quot;/tiles/road/&quot; + imageName + &quot;.png&quot;));</span>
+<span class="fc bfc" id="L142" title="All 2 branches covered.">           } else if(imageName.contains(&quot;fence&quot;)){</span>
+<span class="fc" id="L143">               tile[index].image = ImageIO.read(getClass().getResourceAsStream(&quot;/tiles/fence/&quot; + imageName + &quot;.png&quot;));</span>
+           } else{
+<span class="fc" id="L145">               tile[index].image = ImageIO.read(getClass().getResourceAsStream(&quot;/tiles/&quot; + imageName + &quot;.png&quot;));</span>
+           }
+<span class="fc" id="L147">           tile[index].image = uTool.scaleImage(tile[index].image, gp.tileSize, gp.tileSize);</span>
+<span class="fc" id="L148">           tile[index].collision = collision;</span>
+<span class="nc" id="L149">        }catch(IOException e){</span>
+<span class="nc" id="L150">            e.printStackTrace();</span>
+<span class="fc" id="L151">         }</span>
+<span class="fc" id="L152">    }</span>
+
+    //load the map from the text you created
+    public void loadMap(String filePath){
+        try{
+<span class="fc" id="L157">            InputStream is = getClass().getResourceAsStream(filePath);</span>
+<span class="fc" id="L158">            BufferedReader br = new BufferedReader(new InputStreamReader(is));</span>
+
+<span class="fc" id="L160">        int col = 0;</span>
+<span class="fc" id="L161">        int row = 0;</span>
+
+<span class="pc bpc" id="L163" title="1 of 4 branches missed.">        while(col &lt; gp.maxWorldCol &amp;&amp; row &lt; gp.maxWorldRow){</span>
+
+<span class="fc" id="L165">            String line = br.readLine();</span>
+
+<span class="fc bfc" id="L167" title="All 2 branches covered.">            while(col &lt; gp.maxWorldCol){</span>
+<span class="fc" id="L168">                String numbers[] = line.split(&quot; &quot;);</span>
+
+<span class="fc" id="L170">                int num = Integer.parseInt(numbers[col]);</span>
+
+<span class="fc" id="L172">                mapTileNum[col][row] = num;</span>
+<span class="fc" id="L173">                col++;</span>
+<span class="fc" id="L174">            }</span>
+
+<span class="pc bpc" id="L176" title="1 of 2 branches missed.">            if(col == gp.maxWorldCol){</span>
+<span class="fc" id="L177">                col = 0;</span>
+<span class="fc" id="L178">                row++;</span>
+            }
+<span class="fc" id="L180">        }</span>
+<span class="fc" id="L181">        br.close();</span>
+
+<span class="nc" id="L183">        }catch(Exception e){</span>
+<span class="nc" id="L184">            e.printStackTrace();</span>
+<span class="fc" id="L185">        }</span>
+<span class="fc" id="L186">    }</span>
+
+
+    
+    public void draw(Graphics2D g2){
+        //g2.drawImage(tile[0].image,0,0, gp.tileSize,gp.tileSze,null); // 0,0 is the coordinate, means x,y
+        //g2.drawImage(tile[1].image,0,0, gp.tileSize,gp.tileSze,null);
+        //g2.drawImage(tile[2].image,0,0, gp.tileSize,gp.tileSze,null);
+
+<span class="fc" id="L195">        int worldCol = 0;</span>
+<span class="fc" id="L196">        int worldRow = 0;</span>
+       
+
+<span class="pc bpc" id="L199" title="1 of 4 branches missed.">        while(worldCol &lt; gp.maxWorldCol &amp;&amp; worldRow &lt; gp.maxWorldRow){</span>
+
+<span class="fc" id="L201">            int tileNum = mapTileNum[worldCol][worldRow];</span>
+
+<span class="fc" id="L203">            int worldX = worldCol * gp.tileSize;</span>
+<span class="fc" id="L204">            int worldY = worldRow * gp.tileSize;</span>
+<span class="fc" id="L205">            int screenX = worldX - gp.player.worldX + gp.player.screenX;</span>
+<span class="fc" id="L206">            int screenY = worldY - gp.player.worldY + gp.player.screenY;</span>
+
+<span class="fc bfc" id="L208" title="All 8 branches covered.">            if (worldX + gp.tileSize &gt; gp.player.worldX - gp.player.screenX &amp;&amp;</span>
+                worldX - gp.tileSize &lt; gp.player.worldX + gp.player.screenX &amp;&amp;
+                worldY + gp.tileSize &gt; gp.player.worldY - gp.player.screenY &amp;&amp;
+                worldY - gp.tileSize &lt; gp.player.worldY + gp.player.screenY){
+
+                //g2.drawImage(tile[tileNum].image,screenX,screenY/*gp.tileSize,gp.tileSize*/,null);
+<span class="fc" id="L214">                g2.drawImage(tile[tileNum].image,screenX,screenY ,null);</span>
+
+            }
+            
+<span class="fc" id="L218">            worldCol++;</span>
+           
+<span class="fc bfc" id="L220" title="All 2 branches covered.">            if(worldCol == gp.maxWorldCol){</span>
+<span class="fc" id="L221">                worldCol = 0;</span>
+<span class="fc" id="L222">                worldRow++;</span>
+                
+            }
+<span class="fc" id="L225">        }</span>
+            
+        //saving the map data to a text file
+
+<span class="fc" id="L229">    }</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

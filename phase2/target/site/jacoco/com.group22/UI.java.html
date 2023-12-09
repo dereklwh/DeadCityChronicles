@@ -1,0 +1,675 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>UI.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">phase2</a> &gt; <a href="index.source.html" class="el_package">com.group22</a> &gt; <span class="el_source">UI.java</span></div><h1>UI.java</h1><pre class="source lang-java linenums">package com.group22;
+
+import com.group22.objects.*;
+
+import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.io.InputStream;
+import java.text.DecimalFormat;
+
+import javax.imageio.ImageIO;
+
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.FontFormatException;
+import java.util.Objects;
+
+/**
+ * The UI class is responsible for rendering the game's user interface, including
+ * the HUD (Heads-Up Display), title screen, pause screen, settings screen, and game over screen.
+ * It also manages on-screen messages and the display of the player's status such as health and collected items.
+ */
+public class UI {
+    
+    GamePanel gp;
+    Graphics2D g2;
+    Font maruMonica;
+    // HUD elements
+    BufferedImage heart_full, heart_half, heart_blank;
+    BufferedImage keyImage;
+    BufferedImage vImage;
+    BufferedImage dImage;
+
+    BufferedImage medImage;
+
+    // Title screen elements
+    private BufferedImage titleImage;  
+    private BufferedImage startButton; 
+    private BufferedImage settingButton;
+    private BufferedImage ruleButton;
+    private BufferedImage exitButton;
+<span class="fc" id="L43">    public boolean messageOn = false;</span>
+<span class="fc" id="L44">    public String message = &quot;&quot;;</span>
+<span class="fc" id="L45">    int messageCounter = 0;</span>
+<span class="fc" id="L46">    public boolean gameFinished = false;</span>
+<span class="fc" id="L47">    public int commandNum =0;</span>
+<span class="fc" id="L48">    int subState = 0;</span>
+
+    double playTime;
+<span class="fc" id="L51">    DecimalFormat dFormat = new DecimalFormat(&quot;#0.00&quot;);</span>
+
+    /**
+     * Constructor that initializes UI components and loads resources such as images and fonts.
+     * @param gp The GamePanel instance this UI belongs to.
+     */
+<span class="fc" id="L57">    public UI(GamePanel gp) {</span>
+<span class="fc" id="L58">        this.gp = gp;</span>
+
+        try {
+<span class="fc" id="L61">        	InputStream is = getClass().getResourceAsStream(&quot;/font/x12y16pxMaruMonica.ttf&quot;);</span>
+<span class="fc" id="L62">			maruMonica = Font.createFont(Font.TRUETYPE_FONT, is);</span>
+<span class="nc" id="L63">		} catch (FontFormatException e) {</span>
+<span class="nc" id="L64">			e.printStackTrace();</span>
+<span class="nc" id="L65">		} catch (IOException e) {</span>
+<span class="nc" id="L66">			e.printStackTrace();</span>
+			//maruMonica = new Font(&quot;Arial&quot;, Font.PLAIN, 20);
+<span class="pc" id="L68">		}</span>
+        
+        //new add get all the image for title page
+        try {
+<span class="fc" id="L72">            titleImage = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(&quot;/object/title.png&quot;)));</span>
+<span class="fc" id="L73">            startButton = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(&quot;/object/start.png&quot;)));</span>
+<span class="fc" id="L74">            ruleButton = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(&quot;/object/rule.png&quot;)));</span>
+<span class="fc" id="L75">            settingButton = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(&quot;/object/setting.png&quot;)));</span>
+<span class="fc" id="L76">            exitButton = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(&quot;/object/exit.png&quot;)));</span>
+            
+<span class="nc" id="L78">        } catch (IOException e) {</span>
+<span class="nc" id="L79">            e.printStackTrace();</span>
+<span class="fc" id="L80">        }</span>
+        
+
+        //HUD
+
+<span class="fc" id="L85">        ObjectKey key = new ObjectKey(gp);</span>
+<span class="fc" id="L86">        keyImage = key.image;</span>
+
+
+<span class="fc" id="L89">        ObjectVaccine vaccine = new ObjectVaccine(gp);</span>
+<span class="fc" id="L90">        vImage = vaccine.image;</span>
+
+<span class="fc" id="L92">        ObjectMed med = new ObjectMed(gp);</span>
+<span class="fc" id="L93">        medImage = med.image;</span>
+
+<span class="fc" id="L95">        ObjectHeart heart = new ObjectHeart(gp);</span>
+<span class="fc" id="L96">        heart_full = heart.image;</span>
+<span class="fc" id="L97">        heart_half = heart.image2;</span>
+<span class="fc" id="L98">        heart_blank = heart.image3;</span>
+
+<span class="fc" id="L100">        ObjectDoor door = new ObjectDoor(gp);</span>
+<span class="fc" id="L101">        dImage = door.image;</span>
+<span class="fc" id="L102">    }</span>
+
+    /**
+     * Displays a message on the screen for a short duration.
+     * @param text The message text to display.
+     */
+    public void showMessage(String text){
+<span class="fc" id="L109">        message = text;</span>
+<span class="fc" id="L110">        messageOn = true;</span>
+<span class="fc" id="L111">    }</span>
+
+ 
+
+    /**
+     * Draws various UI components depending on the current game state.
+     * @param g2 The Graphics2D object used for drawing.
+     */
+    public void draw(Graphics2D g2) {
+
+<span class="fc" id="L121">        this.g2 = g2;</span>
+
+<span class="fc" id="L123">        g2.setFont(maruMonica);</span>
+<span class="fc" id="L124">        g2.setFont(g2.getFont().deriveFont(48F));</span>
+<span class="fc" id="L125">        g2.setColor(Color.white); </span>
+
+<span class="pc bpc" id="L127" title="1 of 2 branches missed.">        if (gp.gameState == gp.titleState){</span>
+<span class="fc" id="L128">            drawTitleScreen();</span>
+<span class="fc" id="L129">            playTime = 0;</span>
+
+        }
+
+<span class="pc bpc" id="L133" title="1 of 2 branches missed.">        if(gp.gameState == gp.playState){</span>
+<span class="nc" id="L134">            playTime += (double)1/60;</span>
+
+
+<span class="nc bnc" id="L137" title="All 2 branches missed.">            if (gameFinished == true){</span>
+           
+<span class="nc" id="L139">                 gp.gameState= gp.winState;</span>
+            
+            }
+
+        else {
+<span class="nc" id="L144">            drawPlayerLife();</span>
+<span class="nc" id="L145">            g2.drawString(&quot;Time: &quot; + dFormat.format(playTime)+&quot; s&quot;, gp.tileSize*15, 60);</span>
+
+<span class="nc" id="L147">            g2.setFont(maruMonica);</span>
+<span class="nc" id="L148">            g2.setFont(g2.getFont().deriveFont(48F));</span>
+<span class="nc" id="L149">            g2.setColor(Color.white); </span>
+
+<span class="nc" id="L151">            g2.drawImage(keyImage, gp.tileSize/2, gp.tileSize/2, gp.tileSize, gp.tileSize, null);</span>
+<span class="nc" id="L152">            g2.drawString(&quot;x &quot; + gp.player.hasKey, 74, 60);</span>
+
+<span class="nc" id="L154">            g2.drawImage(vImage, gp.tileSize/2 + 150, gp.tileSize/2, gp.tileSize, gp.tileSize, null);</span>
+<span class="nc" id="L155">            g2.drawString(&quot;x &quot; + gp.player.hasVaccine, 235, 60);            </span>
+            
+<span class="nc bnc" id="L157" title="All 2 branches missed.">            if(messageOn){</span>
+
+<span class="nc" id="L159">                g2.setFont(g2.getFont().deriveFont(30F));</span>
+<span class="nc" id="L160">                g2.drawString(message, gp.tileSize/2, gp.tileSize*5);</span>
+
+<span class="nc" id="L162">                messageCounter++;</span>
+
+<span class="nc bnc" id="L164" title="All 2 branches missed.">                if(messageCounter &gt; 120){</span>
+<span class="nc" id="L165">                    messageCounter =0;</span>
+<span class="nc" id="L166">                    messageOn = false;</span>
+                }
+            }
+        }
+
+        }
+<span class="pc bpc" id="L172" title="1 of 2 branches missed.">        if (gp.gameState == gp.pauseState){</span>
+<span class="nc" id="L173">            drawPauseScreen();</span>
+<span class="nc" id="L174">            g2.drawString(&quot;Time: &quot; + dFormat.format(playTime), gp.tileSize*15, 60);</span>
+
+<span class="nc" id="L176">            drawPlayerLife();</span>
+
+        }
+<span class="pc bpc" id="L179" title="1 of 2 branches missed.">        if (gp.gameState == gp.settingState){</span>
+<span class="nc" id="L180">            drawSettingScreen();</span>
+<span class="nc" id="L181">            g2.drawString(&quot;Time: &quot; + dFormat.format(playTime), gp.tileSize*15, 60);</span>
+
+        }
+
+<span class="pc bpc" id="L185" title="1 of 2 branches missed.">        if (gp.gameState == gp.gameOverState){</span>
+<span class="nc" id="L186">            drawGameOverScreen();</span>
+<span class="nc" id="L187">            playTime =0;</span>
+        }
+<span class="pc bpc" id="L189" title="1 of 2 branches missed.">        if (gp.gameState == gp.ruleState) {</span>
+<span class="nc" id="L190">        	drawRulePage();</span>
+        }
+<span class="pc bpc" id="L192" title="1 of 2 branches missed.">        if (gp.gameState == gp.winState) {</span>
+<span class="nc" id="L193">        	drawWinScreen();</span>
+            //gp.retry(); 
+<span class="nc" id="L195">            gameFinished = false;</span>
+        }
+    
+<span class="fc" id="L198">    }</span>
+    
+    //method for scale the image
+    private BufferedImage scaleImage(BufferedImage originalImage, int targetWidth, int targetHeight) {
+<span class="pc bpc" id="L202" title="2 of 4 branches missed.">        if (targetWidth &lt;= 0 || targetHeight &lt;= 0) {</span>
+<span class="nc" id="L203">            throw new IllegalArgumentException(&quot;Target width and height must be &gt; 0&quot;);</span>
+        }
+<span class="fc" id="L205">        BufferedImage scaledImage = new BufferedImage(targetWidth, targetHeight, BufferedImage.TYPE_INT_ARGB);</span>
+<span class="fc" id="L206">        Graphics2D g2d = scaledImage.createGraphics();</span>
+<span class="fc" id="L207">        g2d.drawImage(originalImage, 0, 0, targetWidth, targetHeight, null);</span>
+<span class="fc" id="L208">        g2d.dispose();</span>
+<span class="fc" id="L209">        return scaledImage;</span>
+    }
+
+    public void drawWinScreen(){
+<span class="nc" id="L213">         g2.setFont(g2.getFont().deriveFont(50F));</span>
+<span class="nc" id="L214">            g2.setColor(Color.white); </span>
+
+            String text;
+            int textLength;
+            int x;
+            int y; 
+
+<span class="nc" id="L221">            text = &quot;You won&quot;;</span>
+<span class="nc" id="L222">            textLength = (int)g2.getFontMetrics().getStringBounds(text, g2).getWidth();</span>
+
+<span class="nc" id="L224">            x = gp.screenWidth/2 - textLength/2;</span>
+<span class="nc" id="L225">            y= gp.screenHeight/2 - (gp.tileSize * 3);</span>
+<span class="nc" id="L226">            g2.drawString(text, x, y);</span>
+
+<span class="nc" id="L228">            text = &quot;Your Time is: &quot; + dFormat.format(playTime) + &quot; s&quot;;</span>
+<span class="nc" id="L229">            textLength = (int)g2.getFontMetrics().getStringBounds(text, g2).getWidth();</span>
+
+<span class="nc" id="L231">            x = gp.screenWidth/2 - textLength/2;</span>
+<span class="nc" id="L232">            y= gp.screenHeight/2 + (gp.tileSize * 4);</span>
+<span class="nc" id="L233">            g2.drawString(text, x, y);</span>
+
+<span class="nc" id="L235">            g2.setFont(g2.getFont().deriveFont(100F));</span>
+<span class="nc" id="L236">            g2.setColor(Color.yellow);</span>
+<span class="nc" id="L237">            text = &quot;Congratulations&quot;;</span>
+<span class="nc" id="L238">            textLength = (int)g2.getFontMetrics().getStringBounds(text, g2).getWidth();</span>
+
+<span class="nc" id="L240">            x = gp.screenWidth/2 - textLength/2;</span>
+<span class="nc" id="L241">            y= gp.screenHeight/2 + (gp.tileSize * 2);</span>
+<span class="nc" id="L242">            g2.drawString(text, x, y);</span>
+
+<span class="nc" id="L244">    }</span>
+    
+    //draw title screen
+    public void drawTitleScreen() {
+<span class="fc" id="L248">    	int x = gp.screenWidth/4;</span>
+<span class="fc" id="L249">    	int y = gp.tileSize/2;</span>
+    	
+<span class="fc" id="L251">    	BufferedImage originalImage = titleImage;</span>
+<span class="fc" id="L252">    	BufferedImage scaledTitle = scaleImage(originalImage,480,270); //you can set the pixel size of the image</span>
+<span class="fc" id="L253">    	BufferedImage originalImage1 = startButton;</span>
+<span class="fc" id="L254">    	BufferedImage scaledStart = scaleImage(originalImage1,70,33);</span>
+<span class="fc" id="L255">    	BufferedImage originalImage2 = ruleButton;</span>
+<span class="fc" id="L256">    	BufferedImage scaledRule = scaleImage(originalImage2,70,33);</span>
+<span class="fc" id="L257">    	BufferedImage originalImage3 = settingButton;</span>
+<span class="fc" id="L258">    	BufferedImage scaledSetting = scaleImage(originalImage3,70,33);</span>
+<span class="fc" id="L259">    	BufferedImage originalImage4 = exitButton;</span>
+<span class="fc" id="L260">    	BufferedImage scaledExit = scaleImage(originalImage4,70,33);</span>
+    	// draw the title
+
+<span class="pc bpc" id="L263" title="1 of 2 branches missed.">        if (g2 != null) {</span>
+
+<span class="fc" id="L265">        g2.setFont(maruMonica);</span>
+<span class="fc" id="L266">        g2.setFont(g2.getFont().deriveFont(Font.BOLD, 50F));</span>
+
+<span class="fc" id="L268">        g2.drawImage(scaledTitle, x, y, null);</span>
+        //draw start button
+<span class="fc" id="L270">        g2.drawImage(scaledStart, x+gp.tileSize*4, y+gp.tileSize*6, null);</span>
+<span class="pc bpc" id="L271" title="1 of 2 branches missed.">        if(commandNum == 0){</span>
+<span class="fc" id="L272">            g2.drawString(&quot;&gt;&quot;,x+gp.tileSize*3, y+320);</span>
+        }
+        //draw rule button
+<span class="fc" id="L275">        g2.drawImage(scaledRule, x+gp.tileSize*4, y+gp.tileSize*7, null);</span>
+<span class="pc bpc" id="L276" title="1 of 2 branches missed.">        if(commandNum == 1){</span>
+<span class="nc" id="L277">            g2.drawString(&quot;&gt;&quot;,x+gp.tileSize*3, y+370);</span>
+        }
+        //draw setting button
+<span class="fc" id="L280">        g2.drawImage(scaledSetting, x+gp.tileSize*4, y+gp.tileSize*8, null);</span>
+<span class="pc bpc" id="L281" title="1 of 2 branches missed.">        if(commandNum == 2){</span>
+<span class="nc" id="L282">            g2.drawString(&quot;&gt;&quot;,x+gp.tileSize*3, y+420);</span>
+        }
+        //draw exit button
+<span class="fc" id="L285">        g2.drawImage(scaledExit, x+gp.tileSize*4, y+gp.tileSize*9, null);</span>
+<span class="pc bpc" id="L286" title="1 of 2 branches missed.">        if(commandNum == 3){</span>
+<span class="nc" id="L287">            g2.drawString(&quot;&gt;&quot;,x+gp.tileSize*3, y+470);</span>
+        }
+    }
+<span class="fc" id="L290">    }</span>
+
+    public void drawPlayerLife(){
+
+<span class="nc" id="L294">        int x = gp.tileSize*7;</span>
+<span class="nc" id="L295">        int y = gp.tileSize/2;</span>
+<span class="nc" id="L296">        int i = 0;</span>
+
+        //draw max
+<span class="nc bnc" id="L299" title="All 2 branches missed.">        while(i &lt; gp.player.maxLife/2){</span>
+<span class="nc" id="L300">            g2.drawImage(heart_blank, x, y, null);</span>
+<span class="nc" id="L301">            i++;</span>
+<span class="nc" id="L302">            x += gp.tileSize;</span>
+        }
+
+        //reset values
+<span class="nc" id="L306">        x = gp.tileSize*7;</span>
+<span class="nc" id="L307">        y = gp.tileSize/2;</span>
+<span class="nc" id="L308">        i = 0;</span>
+
+        //draw current life
+<span class="nc bnc" id="L311" title="All 2 branches missed.">        while(i &lt; gp.player.life){</span>
+<span class="nc" id="L312">            g2.drawImage(heart_half, x, y, null);</span>
+<span class="nc" id="L313">            i++;</span>
+<span class="nc bnc" id="L314" title="All 2 branches missed.">            if(i &lt; gp.player.life){</span>
+<span class="nc" id="L315">                g2.drawImage(heart_full, x, y, null);</span>
+            }
+<span class="nc" id="L317">            i++;</span>
+<span class="nc" id="L318">            x += gp.tileSize;</span>
+        }
+<span class="nc" id="L320">    }</span>
+
+    public void drawPlayerName() {
+<span class="nc" id="L323">        String playerName = gp.player.name;</span>
+<span class="nc" id="L324">        g2.setFont(maruMonica);</span>
+<span class="nc" id="L325">        g2.setFont(g2.getFont().deriveFont(Font.BOLD, 20F));</span>
+<span class="nc" id="L326">        int textWidth = g2.getFontMetrics().stringWidth(playerName);</span>
+<span class="nc" id="L327">        int textHeight = g2.getFontMetrics().getAscent();</span>
+<span class="nc" id="L328">        int x = gp.player.screenX + (gp.player.solidArea.width / 2) - (textWidth / 2);</span>
+<span class="nc" id="L329">        int y = gp.player.screenY;</span>
+<span class="nc" id="L330">        g2.setColor(Color.WHITE);</span>
+<span class="nc" id="L331">        g2.drawString(playerName, x, y);</span>
+<span class="nc" id="L332">    }</span>
+
+    public void drawPauseScreen(){
+<span class="nc" id="L335">        String text = &quot;PAUSED&quot;;</span>
+<span class="nc" id="L336">        int x = getXforCenteredText(text);</span>
+<span class="nc" id="L337">        int y = gp.screenHeight/2;</span>
+
+<span class="nc" id="L339">        g2.drawString(text, x, y);</span>
+<span class="nc" id="L340">    }</span>
+
+    public void drawSettingScreen(){
+<span class="nc" id="L343">        g2.setColor(Color.white);</span>
+<span class="nc" id="L344">        g2.setFont(maruMonica);</span>
+<span class="nc" id="L345">        g2.setFont(g2.getFont().deriveFont(40F));</span>
+
+
+<span class="nc" id="L348">        int frameX = gp.tileSize*6;</span>
+<span class="nc" id="L349">        int frameY = gp.tileSize;</span>
+<span class="nc" id="L350">        int frameWidth = gp.tileSize*8;</span>
+<span class="nc" id="L351">        int frameHeight = gp.tileSize*10;</span>
+<span class="nc" id="L352">        drawSubWindow(frameX, frameY, frameWidth, frameHeight);</span>
+
+<span class="nc bnc" id="L354" title="All 5 branches missed.">        switch (subState) {</span>
+            case 0:
+<span class="nc" id="L356">                setting_top(frameX, frameY);</span>
+<span class="nc" id="L357">                break;</span>
+            case 1:
+<span class="nc" id="L359">                fullScreenNoti(frameX, frameY);</span>
+<span class="nc" id="L360">                break;</span>
+            case 2:
+<span class="nc" id="L362">                setting_control(frameX, frameY);</span>
+<span class="nc" id="L363">                break;</span>
+            case 3:
+<span class="nc" id="L365">                endGame(frameX, frameY);</span>
+                break;
+        }
+
+<span class="nc" id="L369">        gp.keyH.enterPressed = false;</span>
+
+<span class="nc" id="L371">    }</span>
+
+    public void setting_top(int frameX, int frameY){
+        int textX;
+        int textY;
+
+<span class="nc" id="L377">        String text = &quot;Settings&quot;;</span>
+<span class="nc" id="L378">        textX = getXforCenteredText(text);</span>
+<span class="nc" id="L379">        textY = frameY + gp.tileSize;</span>
+<span class="nc" id="L380">        g2.drawString(text, textX, textY);</span>
+
+        //Fullscreen on/off
+<span class="nc" id="L383">        textX = frameX +gp.tileSize;</span>
+<span class="nc" id="L384">        textY += gp.tileSize*2;</span>
+<span class="nc" id="L385">        g2.drawString(&quot;Fullscreen&quot;, textX, textY);</span>
+<span class="nc bnc" id="L386" title="All 2 branches missed.">        if(commandNum ==0){</span>
+<span class="nc" id="L387">            g2.drawString(&quot;&gt;&quot;, textX -25, textY);</span>
+<span class="nc bnc" id="L388" title="All 2 branches missed.">            if(gp.keyH.enterPressed){</span>
+<span class="nc bnc" id="L389" title="All 2 branches missed.">                gp.fullScreenOn = !gp.fullScreenOn;</span>
+<span class="nc" id="L390">                subState = 1;</span>
+            }
+        }
+
+        //Sound
+<span class="nc" id="L395">        textY += gp.tileSize;</span>
+<span class="nc" id="L396">        g2.drawString(&quot;Sound&quot;, textX, textY);</span>
+<span class="nc bnc" id="L397" title="All 2 branches missed.">        if(commandNum ==1){</span>
+<span class="nc" id="L398">            g2.drawString(&quot;&gt;&quot;, textX -25, textY);</span>
+        }
+
+        //Control
+<span class="nc" id="L402">        textY += gp.tileSize;</span>
+<span class="nc" id="L403">        g2.drawString(&quot;Control&quot;, textX, textY);</span>
+<span class="nc bnc" id="L404" title="All 2 branches missed.">        if(commandNum ==2){</span>
+<span class="nc" id="L405">            g2.drawString(&quot;&gt;&quot;, textX -25, textY);</span>
+<span class="nc bnc" id="L406" title="All 2 branches missed.">            if(gp.keyH.enterPressed){</span>
+<span class="nc" id="L407">                subState = 2;</span>
+<span class="nc" id="L408">                commandNum =0;</span>
+            }
+        }       
+
+        //Quit
+<span class="nc" id="L413">        textY += gp.tileSize;</span>
+<span class="nc" id="L414">        g2.drawString(&quot;Quit Game&quot;, textX, textY);</span>
+<span class="nc bnc" id="L415" title="All 2 branches missed.">        if(commandNum ==3){</span>
+<span class="nc" id="L416">            g2.drawString(&quot;&gt;&quot;, textX -25, textY);</span>
+<span class="nc bnc" id="L417" title="All 2 branches missed.">            if(gp.keyH.enterPressed){</span>
+<span class="nc" id="L418">                subState = 3;</span>
+<span class="nc" id="L419">                commandNum = 0;    </span>
+            }
+        }
+
+        //Resume
+<span class="nc" id="L424">        textY += gp.tileSize*2;</span>
+<span class="nc" id="L425">        g2.drawString(&quot;Back&quot;, textX, textY);</span>
+<span class="nc bnc" id="L426" title="All 2 branches missed.">        if(commandNum ==4){</span>
+<span class="nc" id="L427">            g2.drawString(&quot;&gt;&quot;, textX -25, textY);</span>
+<span class="nc bnc" id="L428" title="All 2 branches missed.">            if(gp.keyH.enterPressed){</span>
+<span class="nc bnc" id="L429" title="All 2 branches missed.">                if (gp.previousState == gp.playState){</span>
+<span class="nc" id="L430">                    gp.gameState = gp.playState;</span>
+<span class="nc" id="L431">                    commandNum = 0;</span>
+                }
+<span class="nc bnc" id="L433" title="All 2 branches missed.">                else if(gp.previousState == gp.titleState){</span>
+<span class="nc" id="L434">                    gp.gameState=gp.titleState;</span>
+<span class="nc" id="L435">                    commandNum = 0;</span>
+                }
+                
+            }
+        }
+
+        //Fullscreen checkbox 
+<span class="nc" id="L442">        textX = frameX + (int)gp.tileSize*5;</span>
+<span class="nc" id="L443">        textY = frameY + gp.tileSize*2 + 24;</span>
+<span class="nc" id="L444">        g2.setStroke(new BasicStroke(3));</span>
+<span class="nc" id="L445">        g2.drawRect(textX, textY, 24, 24);</span>
+<span class="nc bnc" id="L446" title="All 2 branches missed.">        if(gp.fullScreenOn){</span>
+<span class="nc" id="L447">            g2.fillRect(textX, textY, 24, 24);</span>
+        }
+
+        //Volume
+<span class="nc" id="L451">        textY += gp.tileSize;</span>
+<span class="nc" id="L452">        g2.drawRect(textX, textY, 120, 24);</span>
+<span class="nc" id="L453">        int volumeWidth = 24*gp.music.volumeScale;</span>
+<span class="nc" id="L454">        g2.fillRect(textX, textY, volumeWidth, 24);</span>
+    
+<span class="nc" id="L456">    }</span>
+    
+    public void drawGameOverScreen(){
+<span class="nc" id="L459">        g2.setColor(new Color(0,0,0,150));</span>
+<span class="nc" id="L460">        g2.fillRect(0, 0, gp.screenWidth, gp.screenHeight);</span>
+
+        int x;
+        int y;
+        String text;
+        //g2.setFont(arial_40);
+<span class="nc" id="L466">        g2.setFont(g2.getFont().deriveFont(Font.BOLD,110f));</span>
+
+<span class="nc" id="L468">        text = &quot;Game Over&quot;;</span>
+<span class="nc" id="L469">        g2.setColor(Color.black);</span>
+<span class="nc" id="L470">        x= getXforCenteredText(text);</span>
+<span class="nc" id="L471">        y= gp.tileSize*4;</span>
+<span class="nc" id="L472">        g2.drawString(text, x, y);</span>
+
+<span class="nc" id="L474">        g2.setColor(Color.white);</span>
+<span class="nc" id="L475">        g2.drawString(text, x-4, y-4);</span>
+
+        //Retry
+<span class="nc" id="L478">        g2.setFont(g2.getFont().deriveFont(50f));</span>
+<span class="nc" id="L479">        text = &quot;Retry&quot;;</span>
+<span class="nc" id="L480">        x= getXforCenteredText(text);</span>
+<span class="nc" id="L481">        y += gp.tileSize*4;</span>
+<span class="nc" id="L482">        g2.drawString(text, x, y);</span>
+<span class="nc bnc" id="L483" title="All 2 branches missed.">        if(commandNum ==0){</span>
+<span class="nc" id="L484">            g2.drawString(&quot;&gt;&quot;, x -40, y);</span>
+        }
+
+        //Back to title
+<span class="nc" id="L488">        text = &quot;Quit&quot;;</span>
+<span class="nc" id="L489">        x= getXforCenteredText(text);</span>
+<span class="nc" id="L490">        y += 60;</span>
+<span class="nc" id="L491">        g2.drawString(text, x, y);</span>
+<span class="nc bnc" id="L492" title="All 2 branches missed.">        if(commandNum ==1){</span>
+<span class="nc" id="L493">            g2.drawString(&quot;&gt;&quot;, x-40, y);</span>
+        }
+<span class="nc" id="L495">    }</span>
+
+    public void fullScreenNoti(int frameX, int frameY){
+<span class="nc" id="L498">        int textX = frameX + gp.tileSize;</span>
+<span class="nc" id="L499">        int textY = frameY + gp.tileSize*3;</span>
+
+<span class="nc" id="L501">        String text = &quot;The change will take \neffect after restarting \nthe game.&quot;;</span>
+<span class="nc bnc" id="L502" title="All 2 branches missed.">        for(String line: text.split(&quot;\n&quot;)){</span>
+<span class="nc" id="L503">            g2.drawString(line, textX-35, textY);</span>
+<span class="nc" id="L504">            textY += 40;</span>
+        }
+
+        //back
+<span class="nc" id="L508">        textY = frameY + gp.tileSize*9;</span>
+<span class="nc" id="L509">        g2.drawString(&quot;Back&quot;, textX, textY);</span>
+<span class="nc bnc" id="L510" title="All 2 branches missed.">        if (commandNum ==0){</span>
+<span class="nc" id="L511">            g2.drawString(&quot;&gt;&quot;, textX-25, textY);</span>
+<span class="nc bnc" id="L512" title="All 2 branches missed.">            if(gp.keyH.enterPressed==true){</span>
+<span class="nc" id="L513">                subState =0;</span>
+            }
+        }
+<span class="nc" id="L516">    }</span>
+
+    public void setting_control(int frameX, int frameY){
+        int textX;
+        int textY;
+        
+<span class="nc" id="L522">        String text = &quot;Control&quot;;</span>
+<span class="nc" id="L523">        textX = getXforCenteredText(text);</span>
+<span class="nc" id="L524">        textY = frameY +gp.tileSize;</span>
+<span class="nc" id="L525">        g2.drawString(text, textX, textY);</span>
+
+<span class="nc" id="L527">        textX = frameX + gp.tileSize;</span>
+<span class="nc" id="L528">        textY += gp.tileSize;</span>
+<span class="nc" id="L529">        g2.drawString(&quot;Move&quot;, textX, textY); textY+=gp.tileSize;</span>
+<span class="nc" id="L530">        g2.drawString(&quot;Confirm&quot;, textX, textY); textY+=gp.tileSize;</span>
+<span class="nc" id="L531">        g2.drawString(&quot;Pause&quot;, textX, textY); textY+=gp.tileSize;</span>
+<span class="nc" id="L532">        g2.drawString(&quot;Settings&quot;, textX, textY); textY+=gp.tileSize;</span>
+
+<span class="nc" id="L534">        textX = frameX + gp.tileSize*6;</span>
+<span class="nc" id="L535">        textY = frameY + gp.tileSize*2;</span>
+<span class="nc" id="L536">        g2.drawString(&quot;WASD&quot;, textX -80, textY); textY+=gp.tileSize;</span>
+<span class="nc" id="L537">        g2.drawString(&quot;ENTER&quot;, textX - 80, textY); textY+=gp.tileSize;</span>
+<span class="nc" id="L538">        g2.drawString(&quot;P&quot;, textX - 80, textY); textY+=gp.tileSize;</span>
+<span class="nc" id="L539">        g2.drawString(&quot;ESCAPE&quot;, textX - 80, textY); textY+=gp.tileSize;</span>
+
+        //Back
+<span class="nc" id="L542">        textX = frameX + gp.tileSize;</span>
+<span class="nc" id="L543">        textY = frameY + gp.tileSize*9;</span>
+<span class="nc" id="L544">        g2.drawString(&quot;Back&quot;, textX, textY);</span>
+<span class="nc bnc" id="L545" title="All 2 branches missed.">        if (commandNum ==0){</span>
+<span class="nc" id="L546">            g2.drawString(&quot;&gt;&quot;, textX-25, textY);</span>
+<span class="nc bnc" id="L547" title="All 2 branches missed.">            if(gp.keyH.enterPressed){</span>
+<span class="nc" id="L548">                subState =0;</span>
+            }
+        }
+
+<span class="nc" id="L552">    }</span>
+
+    public void endGame(int frameX, int frameY){
+<span class="nc" id="L555">        int textX = frameX + gp.tileSize;</span>
+<span class="nc" id="L556">        int textY = frameY + gp.tileSize;</span>
+
+        
+<span class="nc" id="L559">        String text = &quot;Quit the game and return \nto the title screen?&quot;;</span>
+<span class="nc bnc" id="L560" title="All 2 branches missed.">        for(String line: text.split(&quot;\n&quot;)){</span>
+<span class="nc" id="L561">            g2.drawString(line, textX-35, textY);</span>
+<span class="nc" id="L562">            textY += 40;</span>
+        }
+
+        //YES
+<span class="nc" id="L566">        String text2 = &quot;Yes&quot;;</span>
+<span class="nc" id="L567">        textX = getXforCenteredText(text2);</span>
+<span class="nc" id="L568">        textY += gp.tileSize*3;</span>
+<span class="nc" id="L569">        g2.drawString(text2, textX, textY);</span>
+<span class="nc bnc" id="L570" title="All 2 branches missed.">        if (commandNum == 0){</span>
+<span class="nc" id="L571">            g2.drawString(&quot;&gt;&quot;, textX-25, textY);</span>
+<span class="nc bnc" id="L572" title="All 2 branches missed.">            if(gp.keyH.enterPressed){</span>
+<span class="nc" id="L573">                subState =0;</span>
+<span class="nc" id="L574">                gp.gameState = gp.titleState;</span>
+<span class="nc" id="L575">                gp.retry();</span>
+<span class="nc" id="L576">                playTime = 0;</span>
+            }
+        }
+
+
+        //NO
+<span class="nc" id="L582">        String text3 = &quot;No&quot;;</span>
+<span class="nc" id="L583">        textX = getXforCenteredText(text3);</span>
+<span class="nc" id="L584">        textY += gp.tileSize;</span>
+<span class="nc" id="L585">        g2.drawString(text3, textX, textY);</span>
+<span class="nc bnc" id="L586" title="All 2 branches missed.">        if (commandNum ==1){</span>
+<span class="nc" id="L587">            g2.drawString(&quot;&gt;&quot;, textX-25, textY);</span>
+<span class="nc bnc" id="L588" title="All 2 branches missed.">            if(gp.keyH.enterPressed){</span>
+<span class="nc" id="L589">                subState =0;</span>
+<span class="nc" id="L590">                commandNum = 3;</span>
+            }
+        }
+<span class="nc" id="L593">    }</span>
+    
+    
+    public void drawRulePage() {
+<span class="nc" id="L597">    	g2.setColor(Color.white);</span>
+<span class="nc" id="L598">        g2.setFont(maruMonica);</span>
+<span class="nc" id="L599">        g2.setFont(g2.getFont().deriveFont(40F));</span>
+
+
+<span class="nc" id="L602">        int frameX = gp.tileSize*6;</span>
+<span class="nc" id="L603">        int frameY = gp.tileSize;</span>
+<span class="nc" id="L604">        int frameWidth = gp.tileSize*8;</span>
+<span class="nc" id="L605">        int frameHeight = gp.tileSize*10;</span>
+<span class="nc" id="L606">        drawSubWindow(frameX, frameY, frameWidth, frameHeight);</span>
+
+        // Initialize variables for text positioning
+<span class="nc" id="L609">        int textX = frameX + gp.tileSize;</span>
+<span class="nc" id="L610">        int textY = frameY + gp.tileSize;</span>
+        
+        
+<span class="nc" id="L613">        String title = &quot;Rules&quot;;</span>
+<span class="nc" id="L614">        textX = getXforCenteredText(title);</span>
+<span class="nc" id="L615">        textY = frameY + gp.tileSize;</span>
+<span class="nc" id="L616">        g2.drawString(title, textX, textY);</span>
+        
+<span class="nc" id="L618">        g2.setFont(g2.getFont().deriveFont(25F));</span>
+
+        // Start listing the rules
+<span class="nc" id="L621">        textY += gp.tileSize; // Adjust the Y position for the first rule</span>
+
+<span class="nc" id="L623">        String[] rules = {</span>
+            &quot;Use WASD or arrow keys to move.&quot;,
+            &quot;Get Vaccine can kill a zombie.&quot;,
+            &quot;Try to collect 3 keys&quot;,
+            &quot;then escape the city&quot;,
+            &quot;After get keys go to the home&quot;,
+            &quot;the north west of the map&quot;,
+            &quot;DON'T DIE!&quot;
+            // Add as many rules as needed
+        };
+
+        // Iterate through the rules array and draw each rule
+<span class="nc bnc" id="L635" title="All 2 branches missed.">        for (String rule : rules) {</span>
+<span class="nc" id="L636">            g2.drawString(rule, frameX + gp.tileSize, textY);</span>
+<span class="nc" id="L637">            textY += gp.tileSize; // Increment Y position for each rule</span>
+        }
+<span class="nc" id="L639">        g2.setFont(g2.getFont().deriveFont(40F));</span>
+<span class="nc" id="L640">        g2.drawString(&quot;Back&quot;, textX, textY);</span>
+<span class="nc bnc" id="L641" title="All 2 branches missed.">        if (commandNum ==0){</span>
+<span class="nc" id="L642">            g2.drawString(&quot;&gt;&quot;, textX-25, textY);</span>
+<span class="nc bnc" id="L643" title="All 2 branches missed.">            if(gp.keyH.enterPressed==true){</span>
+<span class="nc" id="L644">                gp.gameState = gp.titleState;</span>
+            }
+        }
+<span class="nc" id="L647">    }</span>
+
+
+    public int getXforCenteredText(String text){
+<span class="nc" id="L651">        int length = (int)g2.getFontMetrics().getStringBounds(text, g2).getWidth();</span>
+<span class="nc" id="L652">        int x = gp.screenWidth/2 - length/2;</span>
+<span class="nc" id="L653">        return x;</span>
+    }
+
+    /**
+     * Draws a sub-window for nested menu items such as settings and rules.
+     * @param x The x-coordinate of the sub-window's top left corner.
+     * @param y The y-coordinate of the sub-window's top left corner.
+     * @param width The width of the sub-window.
+     * @param height The height of the sub-window.
+     */
+    public void drawSubWindow(int x, int y, int width, int height){
+<span class="nc" id="L664">        Color c = new Color(71, 53, 44, 200);</span>
+<span class="nc" id="L665">        g2.setColor(c);</span>
+<span class="nc" id="L666">        g2.fillRoundRect(x, y, width, height, 35, 35);</span>
+
+<span class="nc" id="L668">        c = new Color(255,255,255);</span>
+<span class="nc" id="L669">        g2.setColor(c);</span>
+<span class="nc" id="L670">        g2.setStroke(new BasicStroke(5));</span>
+<span class="nc" id="L671">        g2.drawRoundRect(x+5, y+5, width-10, height-10, 25, 25);</span>
+
+<span class="nc" id="L673">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

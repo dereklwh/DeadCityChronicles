@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SuperObject.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">phase2</a> &gt; <a href="index.source.html" class="el_package">com.group22.objects</a> &gt; <span class="el_source">SuperObject.java</span></div><h1>SuperObject.java</h1><pre class="source lang-java linenums">package com.group22.objects;
+
+import com.group22.GamePanel;
+import com.group22.UtilityTool;
+
+import java.awt.*;
+import java.awt.image.BufferedImage;
+
+/**
+ * SuperObject is the base class for all interactive objects in the game that can be drawn on the screen.
+ */
+<span class="fc" id="L12">public class SuperObject {</span>
+    public BufferedImage image, image2, image3;
+    public String name;
+<span class="fc" id="L15">    public boolean collision = false;</span>
+    public int worldX, worldY;
+<span class="fc" id="L17">    public Rectangle solidArea = new Rectangle(0, 0, 48, 48);</span>
+<span class="fc" id="L18">    public int solidAreaDefaultX = 0;</span>
+<span class="fc" id="L19">    public int solidAreaDefaultY = 0;</span>
+<span class="fc" id="L20">    UtilityTool uTool = new UtilityTool();</span>
+
+    /**
+     * Draws the object on the game panel.
+     * @param g2 Graphics2D object for rendering.
+     * @param gp The GamePanel object which provides context for rendering.
+     */
+    public void draw(Graphics2D g2, GamePanel gp){
+<span class="fc" id="L28">        int screenX = worldX - gp.player.worldX + gp.player.screenX;</span>
+<span class="fc" id="L29">        int screenY = worldY - gp.player.worldY + gp.player.screenY;</span>
+
+<span class="pc bpc" id="L31" title="4 of 8 branches missed.">        if(worldX + gp.tileSize &gt; gp.player.worldX - gp.player.screenX &amp;&amp;</span>
+                worldX - gp.tileSize &lt; gp.player.worldX + gp.player.screenX &amp;&amp;
+                worldY + gp.tileSize &gt; gp.player.worldY - gp.player.screenY &amp;&amp;
+                worldY - gp.tileSize &lt; gp.player.worldY + gp.player.screenY) {
+<span class="fc" id="L35">            g2.drawImage(image, screenX, screenY, gp.tileSize, gp.tileSize, null);</span>
+        }
+<span class="fc" id="L37">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Zombie.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">phase2</a> &gt; <a href="index.source.html" class="el_package">com.group22.entities</a> &gt; <span class="el_source">Zombie.java</span></div><h1>Zombie.java</h1><pre class="source lang-java linenums">package com.group22.entities;
+
+import com.group22.GamePanel;
+
+import com.group22.UtilityTool;
+
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.imageio.ImageIO;
+
+/**
+ * The Zombie class extends the Entity class with properties and methods specific to zombies in the game.
+ * It manages zombie animations, movement, AI behavior, and interaction with the player and environment.
+ */
+public class Zombie extends Entity{
+	GamePanel gp;
+    public int worldX;
+    public int worldY;
+    public int speed;
+    public String direction;
+	
+    private int zombieType;
+    public int solidAreaDefaultX, solidAreaDefaultY;
+<span class="fc" id="L28">    private boolean removeThis = false;</span>
+
+    BufferedImage up1, up2, up3,up4, down1,down2,down3, down4,left1,left2,left3,left4,right1, right2,right3,right4;
+
+    public final int screenX;
+    public final int screenY;
+<span class="fc" id="L34">    public int actionLockCounter = 0;</span>
+    private Map&lt;String, BufferedImage[]&gt; spriteMap;
+
+    /**
+     * Constructor for the Zombie class.
+     * @param gp The GamePanel object that the zombie will interact with.
+     * @param zombieType The type identifier for the zombie.
+     */
+<span class="fc" id="L42">    public Zombie(GamePanel gp, int zombieType) {</span>
+<span class="fc" id="L43">        this.gp = gp;</span>
+<span class="fc" id="L44">        this.zombieType = zombieType;</span>
+
+
+<span class="fc" id="L47">        screenX = gp.screenWidth/2 - (gp.tileSize);</span>
+<span class="fc" id="L48">        screenY = gp.screenHeight/2 - (gp.tileSize/2);</span>
+
+<span class="fc" id="L50">        solidArea = new Rectangle(8, 16, 32, 32);</span>
+
+<span class="fc" id="L52">        setDefaultValues();</span>
+<span class="fc" id="L53">        getZombieImage();</span>
+<span class="fc" id="L54">        initializeSpriteMap();</span>
+<span class="fc" id="L55">    }</span>
+
+    /**
+     * Sets the default values for the zombie's speed and initial direction.
+     * Zombie should be slower than the player.
+     */
+    public void setDefaultValues(){
+<span class="fc" id="L62">        speed = 3; </span>
+<span class="fc" id="L63">        direction = &quot;down&quot;; </span>
+<span class="fc" id="L64">    }</span>
+    
+    /**
+     * Loads and scales the image for the zombie.
+     * @param imageName Name of the image file.
+     * @return The scaled BufferedImage.
+     */
+    public BufferedImage setup(String imageName){
+<span class="fc" id="L72">        UtilityTool uTool = new UtilityTool();</span>
+<span class="fc" id="L73">        BufferedImage image = null;</span>
+
+        try{
+<span class="fc" id="L76">            image = ImageIO.read(getClass().getResourceAsStream(imageName + &quot;.png&quot;));</span>
+<span class="fc" id="L77">            image = uTool.scaleImage(image, gp.tileSize, gp.tileSize);</span>
+<span class="nc" id="L78">        }catch (IOException e){</span>
+<span class="nc" id="L79">            e.printStackTrace();</span>
+<span class="fc" id="L80">        }</span>
+<span class="fc" id="L81">        return image;</span>
+    }
+
+    /**
+     * Loads and sets up the zombie images for different directions and animations.
+     */
+    public void getZombieImage() {
+<span class="fc" id="L88">        String basePath = &quot;/zombie&quot; + zombieType + &quot;/zombie&quot; + zombieType + &quot;_&quot;;</span>
+<span class="fc" id="L89">        up1 = setup(basePath + &quot;run_right0&quot;);</span>
+<span class="fc" id="L90">        up2 = setup(basePath + &quot;run_right1&quot;);</span>
+<span class="fc" id="L91">        up3 = setup(basePath + &quot;run_right2&quot;);</span>
+<span class="fc" id="L92">        up4 = setup(basePath + &quot;run_right3&quot;);</span>
+        
+<span class="fc" id="L94">        down1 = setup(basePath + &quot;run_left0&quot;);</span>
+<span class="fc" id="L95">        down2 = setup(basePath + &quot;run_left1&quot;);</span>
+<span class="fc" id="L96">        down3 = setup(basePath + &quot;run_left2&quot;);</span>
+<span class="fc" id="L97">        down4 = setup(basePath + &quot;run_left3&quot;);</span>
+
+<span class="fc" id="L99">        left1 = setup(basePath + &quot;run_left0&quot;);</span>
+<span class="fc" id="L100">        left2 = setup(basePath + &quot;run_left1&quot;);</span>
+<span class="fc" id="L101">        left3 = setup(basePath + &quot;run_left2&quot;);</span>
+<span class="fc" id="L102">        left4 = setup(basePath + &quot;run_left3&quot;);</span>
+        
+<span class="fc" id="L104">        right1 = setup(basePath + &quot;run_right0&quot;);</span>
+<span class="fc" id="L105">        right2 = setup(basePath + &quot;run_right1&quot;);</span>
+<span class="fc" id="L106">        right3 = setup(basePath + &quot;run_right2&quot;);</span>
+<span class="fc" id="L107">        right4 = setup(basePath + &quot;run_right3&quot;);</span>
+<span class="fc" id="L108">    }</span>
+    
+    /**
+     * Updates the state and position of the zombie each frame.
+     * Handles collision detection, animation state, and direction logic for the Zombie.
+     */
+    public void update() {
+<span class="fc" id="L115">        int xDistance = gp.player.worldX - worldX;</span>
+<span class="fc" id="L116">        int yDistance = gp.player.worldY - worldY;</span>
+<span class="pc bpc" id="L117" title="1 of 2 branches missed.">        String xDirection = xDistance &gt; 0 ? &quot;right&quot; : &quot;left&quot;;</span>
+<span class="fc bfc" id="L118" title="All 2 branches covered.">        String yDirection = yDistance &gt; 0 ? &quot;down&quot; : &quot;up&quot;;</span>
+
+<span class="fc" id="L120">        setZombieDirection(xDistance, yDistance, xDirection, yDirection);</span>
+
+<span class="fc" id="L122">        int nextX = worldX;</span>
+<span class="fc" id="L123">        int nextY = worldY;</span>
+
+<span class="pc bpc" id="L125" title="3 of 5 branches missed.">        switch (direction) {</span>
+<span class="nc" id="L126">            case &quot;up&quot;: nextY -= speed; break;</span>
+<span class="fc" id="L127">            case &quot;down&quot;: nextY += speed; break;</span>
+<span class="nc" id="L128">            case &quot;left&quot;: nextX -= speed; break;</span>
+<span class="fc" id="L129">            case &quot;right&quot;: nextX += speed; break;</span>
+        }
+
+<span class="fc" id="L132">        handleCollision(xDistance, yDistance, nextX, nextY);</span>
+<span class="fc" id="L133">        updateAnimation();</span>
+<span class="fc" id="L134">    }</span>
+    
+    /**
+     * Sets the direction for a zombie based on the distances in the x and y directions from the player.
+     * This method implements a simple AI for the zombie, where the zombie moves in the direction
+     * of the greatest distance from the player. This logic is applied every 30 actions.
+     *
+     * @param xDistance the distance between the zombie and the player in the x-axis.
+     * @param yDistance the distance between the zombie and the player in the y-axis.
+     * @param xDirection the direction the zombie should move in the x-axis.
+     * @param yDirection the direction the zombie should move in the y-axis.
+     */
+    private void setZombieDirection(int xDistance, int yDistance, String xDirection, String yDirection) {
+<span class="fc" id="L147">        actionLockCounter ++;</span>
+<span class="fc bfc" id="L148" title="All 2 branches covered.">        if (actionLockCounter == 30){</span>
+<span class="pc bpc" id="L149" title="1 of 2 branches missed.">            if (Math.abs(xDistance) &gt; Math.abs(yDistance)) {</span>
+<span class="fc" id="L150">                direction = xDirection;</span>
+            } else {
+<span class="nc" id="L152">                direction = yDirection;</span>
+            }
+<span class="fc" id="L154">            actionLockCounter = 0;</span>
+        }
+<span class="fc" id="L156">    }</span>
+
+    /**
+     * Handles collision detection and response for entities
+     * This method checks for collisions with the player and other entities, and updates the state
+     * accordingly. If a collision with the player occurs, it checks the player's status (like having a vaccine
+     * or being invincible) and updates the player's state (like reducing life or curing the zombie). 
+     * The method also determines the movement of the entity after checking for possible collisions in its
+     * intended direction.
+     *
+     * @param xDistance The horizontal distance between this entity and its target or player.
+     * @param yDistance The vertical distance between this entity and its target or player.
+     * @param nextX The next x-coordinate position for this entity.
+     * @param nextY The next y-coordinate position for this entity.
+     */
+    private void handleCollision(int xDistance, int yDistance, int nextX, int nextY) {
+<span class="fc" id="L172">        collisionOn = gp.cChecker.checkCollision(this, nextX, nextY);</span>
+<span class="fc" id="L173">        boolean playerCollision = gp.cChecker.checkPlayer(this, nextX, nextY);</span>
+<span class="fc" id="L174">        gp.cChecker.checkEntity(this, gp.zombie);</span>
+
+<span class="fc bfc" id="L176" title="All 2 branches covered.">        if (playerCollision){</span>
+<span class="fc" id="L177">            collisionOn = true;</span>
+<span class="pc bpc" id="L178" title="2 of 4 branches missed.">            if (gp.player.hasVaccine == 0 &amp;&amp; gp.player.invincible == false){</span>
+<span class="fc" id="L179">                gp.player.isDamaged = true;</span>
+<span class="fc" id="L180">                gp.player.life -=1;</span>
+<span class="fc" id="L181">                gp.player.invincible = true;</span>
+<span class="fc" id="L182">                gp.playSE(3);</span>
+<span class="nc bnc" id="L183" title="All 2 branches missed.">            }else if (gp.player.hasVaccine &gt; 0){</span>
+<span class="nc" id="L184">                gp.player.hasVaccine--; </span>
+<span class="nc" id="L185">                this.setRemoveThis(true); </span>
+<span class="nc" id="L186">                gp.ui.showMessage(&quot;Zombie cured!&quot;);</span>
+            }
+        }
+
+<span class="fc bfc" id="L190" title="All 2 branches covered.">        if (collisionOn) {</span>
+<span class="pc bpc" id="L191" title="1 of 4 branches missed.">            boolean canMoveVertically = !gp.cChecker.checkCollision(this, worldX, worldY + (yDistance &gt; 0 ? speed : -speed));</span>
+<span class="pc bpc" id="L192" title="2 of 4 branches missed.">            boolean canMoveHorizontally = !gp.cChecker.checkCollision(this, worldX + (xDistance &gt; 0 ? speed : -speed), worldY);</span>
+            
+<span class="pc bpc" id="L194" title="2 of 6 branches missed.">            if ((direction.equals(&quot;left&quot;) || direction.equals(&quot;right&quot;)) &amp;&amp; canMoveVertically) {</span>
+<span class="pc bpc" id="L195" title="1 of 2 branches missed.">                direction = (yDistance &gt; 0) ? &quot;down&quot; : &quot;up&quot;;</span>
+<span class="pc bpc" id="L196" title="3 of 6 branches missed.">            } else if ((direction.equals(&quot;up&quot;) || direction.equals(&quot;down&quot;)) &amp;&amp; canMoveHorizontally) {</span>
+<span class="pc bpc" id="L197" title="1 of 2 branches missed.">                direction = (xDistance &gt; 0) ? &quot;right&quot; : &quot;left&quot;;</span>
+            }
+<span class="fc" id="L199">        } else {</span>
+<span class="fc" id="L200">            worldX = nextX;</span>
+<span class="fc" id="L201">            worldY = nextY;</span>
+        }
+<span class="fc" id="L203">    }</span>
+    
+    /**
+     * Updates the animation of a sprite by cycling through its different states.
+     * The method tracks the number of frames that have passed and changes the sprite's image
+     * every 12 frames. The sprite's image cycles through four different states.
+     * This method ensures that the animation of the sprite is updated consistently to reflect
+     * these changes in its appearance.
+     */
+    private void updateAnimation() {
+<span class="fc" id="L213">        spriteCounter++;</span>
+<span class="fc bfc" id="L214" title="All 2 branches covered.">        if(spriteCounter &gt; 12){</span>
+<span class="fc bfc" id="L215" title="All 2 branches covered.">            if(spriteNum == 1) {</span>
+<span class="fc" id="L216">                spriteNum = 2;</span>
+<span class="fc bfc" id="L217" title="All 2 branches covered.">            }else if (spriteNum == 2){</span>
+<span class="fc" id="L218">                spriteNum = 3;</span>
+            }
+<span class="fc bfc" id="L220" title="All 2 branches covered.">            else if (spriteNum == 3){</span>
+<span class="fc" id="L221">                spriteNum = 4;</span>
+            }
+<span class="pc bpc" id="L223" title="1 of 2 branches missed.">            else if (spriteNum == 4){</span>
+<span class="fc" id="L224">                spriteNum = 1;</span>
+            }
+<span class="fc" id="L226">            spriteCounter = 0;</span>
+        }
+<span class="fc" id="L228">    }</span>
+    
+    /**
+     * Initializes the spriteMap with arrays of BufferedImages for each direction.
+     * This method creates a new HashMap for spriteMap and populates it with key-value pairs.
+     * Each key is a string representing a direction (&quot;up&quot;, &quot;down&quot;, &quot;left&quot;, &quot;right&quot;),
+     * and the associated value is an array of BufferedImages for that direction.
+     * 
+     * This method should be called during the construction of the Zombie object to ensure
+     * that the spriteMap is properly initialized before it's used in the draw method.
+     */
+    private void initializeSpriteMap() {
+<span class="fc" id="L240">        spriteMap = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L241">        spriteMap.put(&quot;up&quot;, new BufferedImage[]{up1, up2, up3, up4});</span>
+<span class="fc" id="L242">        spriteMap.put(&quot;down&quot;, new BufferedImage[]{down1, down2, down3, down4});</span>
+<span class="fc" id="L243">        spriteMap.put(&quot;left&quot;, new BufferedImage[]{left1, left2, left3, left4});</span>
+<span class="fc" id="L244">        spriteMap.put(&quot;right&quot;, new BufferedImage[]{right1, right2, right3, right4});</span>
+<span class="fc" id="L245">    }</span>
+    
+    /**
+     * Draws the zombie on the screen.
+     * @param g2 Graphics2D object used for drawing.
+     */
+    public void draw(Graphics2D g2) {
+<span class="fc" id="L252">        int playerScreenX = gp.screenWidth / 2 - (gp.tileSize / 2);</span>
+<span class="fc" id="L253">        int playerScreenY = gp.screenHeight / 2 - (gp.tileSize / 2);</span>
+
+<span class="fc" id="L255">        int zombieScreenX = worldX - gp.player.worldX + playerScreenX;</span>
+<span class="fc" id="L256">        int zombieScreenY = worldY - gp.player.worldY + playerScreenY;</span>
+
+<span class="fc" id="L258">        BufferedImage[] images = spriteMap.get(direction);</span>
+<span class="fc" id="L259">        BufferedImage image = null;</span>
+
+<span class="pc bpc" id="L261" title="3 of 6 branches missed.">        if (images != null &amp;&amp; spriteNum &gt;= 1 &amp;&amp; spriteNum &lt;= images.length) {</span>
+<span class="fc" id="L262">            image = images[spriteNum - 1];</span>
+        }
+
+<span class="pc bpc" id="L265" title="1 of 2 branches missed.">        if (image != null) {</span>
+<span class="fc" id="L266">            g2.drawImage(image, zombieScreenX, zombieScreenY, gp.tileSize, gp.tileSize, null);</span>
+        }
+<span class="fc" id="L268">    }</span>
+
+    /**
+     * Sets the status of whether this zombie should be removed.
+     * @param status The removal status of the zombie.
+     */
+    public void setRemoveThis(boolean status) {
+<span class="fc" id="L275">        removeThis = status;</span>
+<span class="fc" id="L276">    }</span>
+
+    /**
+     * Checks if this zombie is marked for removal.
+     * @return The removal status of the zombie.
+     */
+    public boolean isRemoveThis() {
+<span class="fc" id="L283">        return removeThis;</span>
+    }
+
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

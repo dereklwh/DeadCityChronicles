@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>GamePanel.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">phase2</a> &gt; <a href="index.source.html" class="el_package">com.group22</a> &gt; <span class="el_source">GamePanel.java</span></div><h1>GamePanel.java</h1><pre class="source lang-java linenums">package com.group22;
+
+import java.awt.*;
+import java.awt.image.BufferedImage;
+
+import javax.swing.JPanel;
+
+import com.group22.tile.TileManager;
+import com.group22.objects.SuperObject;
+import com.group22.entities.Player;
+import com.group22.entities.Zombie;
+
+
+
+/**
+ * The GamePanel class serves as the main controller for the game. It is responsible for handling
+ * the game loop, rendering graphics, and managing the game's state. This class extends JPanel and
+ * implements Runnable for threading capabilities.
+ */
+public class GamePanel extends JPanel implements Runnable {
+    // Game world and screen settings
+<span class="fc" id="L22">    private final int originalTileSize = 16;</span>
+<span class="fc" id="L23">    public int scale = 3; //this is to scale 16</span>
+<span class="fc" id="L24">    public int tileSize = originalTileSize * scale;</span>
+
+<span class="fc" id="L26">    public final int maxScreenCol = 20; // make 20 for 16:9 ratio, 16 for 4:3</span>
+<span class="fc" id="L27">    public final int maxScreenRow = 12; //22</span>
+<span class="fc" id="L28">    public int screenWidth = tileSize * maxScreenCol; //1920</span>
+<span class="fc" id="L29">    public int screenHeight = tileSize * maxScreenRow; //1056</span>
+
+    //FULL SCREEN
+<span class="fc" id="L32">    int screenWidth2 = screenWidth;</span>
+<span class="fc" id="L33">    int screenHeight2 = screenHeight;</span>
+    BufferedImage tempScreen;
+    Graphics2D g2;
+<span class="fc" id="L36">    public boolean fullScreenOn = false;</span>
+
+    //WORLD SETTINGS
+<span class="fc" id="L39">    public final int maxWorldCol = 78; //60 original</span>
+<span class="fc" id="L40">    public final int maxWorldRow = 44; //33 original</span>
+<span class="fc" id="L41">    public final int worldWidth = tileSize * maxWorldCol;</span>
+<span class="fc" id="L42">    public final int worldHeight = tileSize * maxWorldRow;</span>
+
+    //FPS
+<span class="fc" id="L45">    int FPS = 60;</span>
+<span class="fc" id="L46">    public KeyHandler keyH = new KeyHandler(this);</span>
+    Thread gameThread;
+<span class="fc" id="L48">    public CollisionChecker cChecker = new CollisionChecker(this);</span>
+<span class="fc" id="L49">    public AssetSetter aSetter = new AssetSetter(this);</span>
+
+    //Sound
+<span class="fc" id="L52">    Sound music = new Sound();</span>
+<span class="fc" id="L53">    Sound se = new Sound();</span>
+
+    //Entity and Object
+<span class="fc" id="L56">    public Player player = new Player(this, keyH);</span>
+<span class="fc" id="L57">    public Zombie[] zombie = new Zombie[20];</span>
+<span class="fc" id="L58">    public SuperObject[] obj = new SuperObject[20]; //how many objects we can show</span>
+
+    //Tile
+<span class="fc" id="L61">    TileManager tileM = new TileManager(this);</span>
+
+    //default player's position
+<span class="fc" id="L64">    int playerX = 100;</span>
+<span class="fc" id="L65">    int playerY = 100;</span>
+<span class="fc" id="L66">    int playerSpeed = 4;</span>
+
+    //UI
+<span class="fc" id="L69">    public UI ui = new UI(this);</span>
+
+    //Game State
+    public int gameState;
+    public int previousState;
+<span class="fc" id="L74">    public final int titleState = 0;</span>
+<span class="fc" id="L75">    public final int playState = 1;</span>
+<span class="fc" id="L76">    public final int pauseState = 2;</span>
+<span class="fc" id="L77">    public final int settingState = 3;</span>
+<span class="fc" id="L78">    public final int gameOverState = 4;</span>
+<span class="fc" id="L79">    public final int ruleState = 5;</span>
+<span class="fc" id="L80">    public final int winState = 6;</span>
+
+<span class="fc" id="L82">    public EventHandler eHandler = new EventHandler(this);</span>
+
+    /**
+     * Constructs a GamePanel instance. This setup includes initializing the game environment,
+     * such as setting screen size and background color.
+     */
+<span class="fc" id="L88">    public GamePanel() {</span>
+<span class="fc" id="L89">        this.setPreferredSize(new Dimension(screenWidth, screenHeight));</span>
+        //this.setBackground(Color.black);
+<span class="fc" id="L91">        this.setBackground(new java.awt.Color(71, 53, 44));</span>
+<span class="fc" id="L92">        this.setDoubleBuffered(true);</span>
+<span class="fc" id="L93">        this.addKeyListener(keyH);</span>
+<span class="fc" id="L94">        this.setFocusable(true);</span>
+<span class="fc" id="L95">    }</span>
+
+    /**
+     * Initializes the game by setting up game objects, zombies, music, and the game's display settings.
+     */
+    public void setupGame() {
+<span class="fc" id="L101">        aSetter.setObject();</span>
+<span class="fc" id="L102">        aSetter.setZombie();</span>
+<span class="fc" id="L103">        playMusic(0);</span>
+
+<span class="fc" id="L105">        gameState = titleState;</span>
+
+<span class="fc" id="L107">        tempScreen = new BufferedImage(screenWidth, screenHeight, BufferedImage.TYPE_INT_ARGB);</span>
+<span class="fc" id="L108">        g2 = (Graphics2D) tempScreen.getGraphics();</span>
+
+<span class="fc" id="L110">        setFullScreen();</span>
+<span class="fc" id="L111">    }</span>
+
+    /**
+     * Resets the game to its initial state. This is typically used after a game over scenario.
+     */
+    public void retry() {
+<span class="fc" id="L117">        player.setDefaultValues();</span>
+<span class="fc" id="L118">        player.restorePos();</span>
+<span class="fc" id="L119">        aSetter.setObject();</span>
+<span class="fc" id="L120">        aSetter.setZombie();</span>
+<span class="fc" id="L121">    }</span>
+    
+    /**
+     * Configures the game display for full-screen mode.
+     */
+    public void setFullScreen() {
+<span class="fc" id="L127">        GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();</span>
+<span class="fc" id="L128">        GraphicsDevice gd = ge.getDefaultScreenDevice();</span>
+<span class="fc" id="L129">        gd.setFullScreenWindow(Main.window);</span>
+
+<span class="fc" id="L131">        screenWidth2 = Main.window.getWidth();</span>
+<span class="fc" id="L132">        screenHeight2 = Main.window.getHeight();</span>
+<span class="fc" id="L133">    }</span>
+    
+    /**
+     * Starts the main game loop in a new thread.
+     */
+    public void startGameThread() {
+<span class="fc" id="L139">        gameThread = new Thread(this);</span>
+<span class="fc" id="L140">        gameThread.start();</span>
+<span class="fc" id="L141">    }</span>
+
+    @Override
+    public void run() {
+
+<span class="fc" id="L146">        double drawInterval = (double) 1000000000 / FPS; //0.016666 s</span>
+<span class="fc" id="L147">        double nextDrawTime = System.nanoTime() + drawInterval;</span>
+
+<span class="pc bpc" id="L149" title="1 of 2 branches missed.">        while (gameThread != null) {</span>
+<span class="fc" id="L150">            update();</span>
+<span class="fc" id="L151">            drawToTempScreen();</span>
+<span class="fc" id="L152">            drawToScreen();</span>
+            try {
+<span class="fc" id="L154">                double remainingTime = nextDrawTime - System.nanoTime();</span>
+<span class="fc" id="L155">                remainingTime = remainingTime / 1000000;</span>
+
+<span class="pc bpc" id="L157" title="1 of 2 branches missed.">                if (remainingTime &lt; 0) {</span>
+<span class="fc" id="L158">                    remainingTime = 0;</span>
+                }
+
+<span class="fc" id="L161">                Thread.sleep((long) remainingTime);</span>
+<span class="fc" id="L162">                nextDrawTime += drawInterval;</span>
+
+<span class="nc" id="L164">            } catch (InterruptedException e) {</span>
+                //throw new RuntimeException(e);
+<span class="nc" id="L166">                e.printStackTrace();</span>
+<span class="pc" id="L167">            }</span>
+        }
+<span class="nc" id="L169">    }</span>
+    /**
+     * Updates the game state, including player and zombie movements, and other in-game interactions.
+     */
+    public void update() {
+
+<span class="pc bpc" id="L175" title="1 of 2 branches missed.">        if (gameState == playState) {</span>
+<span class="nc" id="L176">            player.update();</span>
+<span class="nc bnc" id="L177" title="All 2 branches missed.">            for (int i = 0; i &lt; zombie.length; i++) {</span>
+<span class="nc bnc" id="L178" title="All 4 branches missed.">                if (zombie[i] != null &amp;&amp; zombie[i].direction != null) {</span>
+<span class="nc bnc" id="L179" title="All 2 branches missed.">                    if (zombie[i].isRemoveThis()) {</span>
+<span class="nc" id="L180">                        zombie[i] = null;</span>
+                    } else {
+<span class="nc" id="L182">                        zombie[i].update();</span>
+                    }
+                }
+            }
+        }
+<span class="pc bpc" id="L187" title="1 of 2 branches missed.">        if (gameState == pauseState) {</span>
+
+        }
+      
+<span class="fc" id="L191">    }</span>
+    /**
+     * Draws the current game state to a temporary screen buffer.
+     */
+    public void drawToTempScreen() {
+
+<span class="pc bpc" id="L197" title="1 of 2 branches missed.">        if (gameState == titleState) {</span>
+<span class="fc" id="L198">            tileM.draw(g2);</span>
+<span class="fc" id="L199">            ui.draw(g2);</span>
+        } else {
+<span class="nc" id="L201">            tileM.draw(g2);</span>
+         
+            //Object
+<span class="nc bnc" id="L204" title="All 2 branches missed.">            for (int i = 0; i &lt; obj.length; i++) {</span>
+<span class="nc bnc" id="L205" title="All 2 branches missed.">                if (obj[i] != null) {</span>
+<span class="nc" id="L206">                    obj[i].draw(g2, this);</span>
+                }
+            }
+            //Player
+<span class="nc" id="L210">            player.draw(g2);</span>
+<span class="nc" id="L211">            ui.drawPlayerName();</span>
+            //Zombie1
+<span class="nc bnc" id="L213" title="All 2 branches missed.">            for (int i = 0; i &lt; zombie.length; i++) {</span>
+<span class="nc bnc" id="L214" title="All 2 branches missed.">                if (zombie[i] != null) {</span>
+<span class="nc" id="L215">                    zombie[i].draw(g2);</span>
+                }
+            }
+
+            //UI
+<span class="nc" id="L220">            ui.draw(g2);</span>
+           
+        }
+<span class="fc" id="L223">    }</span>
+    
+    /**
+     * Draws the contents of the temporary screen buffer to the actual screen.
+     */
+    public void drawToScreen() {
+<span class="fc" id="L229">        Graphics g = getGraphics();</span>
+<span class="fc" id="L230">        g.drawImage(tempScreen, 0, 0, screenWidth2, screenHeight2, null);</span>
+<span class="fc" id="L231">        g.dispose();</span>
+<span class="fc" id="L232">    }</span>
+
+    /**
+     * Starts playing the background music.
+     *
+     * @param i The index of the music track to play.
+     */
+    public void playMusic(int i) {
+<span class="fc" id="L240">        music.setFile(i);</span>
+<span class="fc" id="L241">        music.play();</span>
+<span class="fc" id="L242">        music.loop();</span>
+<span class="fc" id="L243">    }</span>
+
+    /**
+     * Stops the background music.
+     */
+    public void stopMusic() {
+<span class="fc" id="L249">        music.stop();</span>
+<span class="fc" id="L250">    }</span>
+
+    /**
+     * Plays a sound effect once.
+     *
+     * @param i The index of the sound effect to play.
+     */
+    public void playSE(int i) {
+<span class="fc" id="L258">        se.setFile(i);</span>
+<span class="fc" id="L259">        se.play();</span>
+<span class="fc" id="L260">    }</span>
+    
+    /**
+     * Retrieves the current player instance in the game.
+     *
+     * @return The current Player object.
+     */
+    public Player getPlayer() {
+<span class="nc" id="L268">        return player;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

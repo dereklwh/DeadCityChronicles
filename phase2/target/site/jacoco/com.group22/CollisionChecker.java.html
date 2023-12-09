@@ -1,0 +1,299 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CollisionChecker.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">phase2</a> &gt; <a href="index.source.html" class="el_package">com.group22</a> &gt; <span class="el_source">CollisionChecker.java</span></div><h1>CollisionChecker.java</h1><pre class="source lang-java linenums">package com.group22;
+
+
+import com.group22.entities.Entity;
+import com.group22.entities.Zombie;
+
+import java.awt.Rectangle;
+
+/**
+ * The CollisionChecker class is responsible for detecting and managing collisions
+ * between entities and tiles or objects within the game world.
+ */
+public class CollisionChecker {
+
+    GamePanel gp;
+
+    /**
+     * Constructor for CollisionChecker.
+     * @param gp The GamePanel instance that the collisions are checked within.
+     */
+<span class="fc" id="L21">    public CollisionChecker(GamePanel gp){</span>
+<span class="fc" id="L22">        this.gp = gp;</span>
+<span class="fc" id="L23">    }</span>
+
+    /**
+     * Checks collisions with tiles for the given entity based on their solid area and direction of movement.
+     * @param entity The entity whose tile collision is being checked.
+     */
+    public void checkTile(Entity entity){
+
+<span class="fc" id="L31">        int entityLeftWorldX = entity.worldX + entity.solidArea.x;</span>
+<span class="fc" id="L32">        int entityRightWorldX = entity.worldX + entity.solidArea.x + entity.solidArea.width;</span>
+<span class="fc" id="L33">        int entityTopWorldY = entity.worldY + entity.solidArea.y;</span>
+<span class="fc" id="L34">        int entityBottomWorldY = entity.worldY + entity.solidArea.y + entity.solidArea.height;</span>
+
+<span class="fc" id="L36">        int entityLeftCol = entityLeftWorldX/gp.tileSize;</span>
+<span class="fc" id="L37">        int entityRightCol = entityRightWorldX/gp.tileSize;</span>
+<span class="fc" id="L38">        int entityTopRow = entityTopWorldY/gp.tileSize;</span>
+<span class="fc" id="L39">        int entityBottomRow = entityBottomWorldY/gp.tileSize;</span>
+
+        int tileNum1, tileNum2;
+
+<span class="pc bpc" id="L43" title="1 of 5 branches missed.">        switch(entity.direction){</span>
+            case &quot;up&quot;:
+<span class="fc" id="L45">                entityTopRow = (entityTopWorldY - entity.speed)/gp.tileSize;</span>
+<span class="fc" id="L46">                tileNum1 = gp.tileM.mapTileNum[entityLeftCol][entityTopRow];</span>
+<span class="fc" id="L47">                tileNum2 = gp.tileM.mapTileNum[entityRightCol][entityTopRow];</span>
+<span class="pc bpc" id="L48" title="2 of 4 branches missed.">                if(gp.tileM.tile[tileNum1].collision == true || gp.tileM.tile[tileNum2].collision == true){</span>
+<span class="nc" id="L49">                    entity.collisionOn = true;</span>
+                }
+                break;
+            case &quot;down&quot;:
+<span class="fc" id="L53">                entityBottomRow = (entityBottomWorldY + entity.speed)/gp.tileSize;</span>
+<span class="fc" id="L54">                tileNum1 = gp.tileM.mapTileNum[entityLeftCol][entityBottomRow];</span>
+<span class="fc" id="L55">                tileNum2 = gp.tileM.mapTileNum[entityRightCol][entityBottomRow];</span>
+<span class="pc bpc" id="L56" title="2 of 4 branches missed.">                if(gp.tileM.tile[tileNum1].collision == true || gp.tileM.tile[tileNum2].collision == true){</span>
+<span class="nc" id="L57">                    entity.collisionOn = true;</span>
+                }
+                break;
+            case &quot;left&quot;:
+<span class="fc" id="L61">                entityLeftCol = (entityLeftWorldX - entity.speed)/gp.tileSize;</span>
+<span class="fc" id="L62">                tileNum1 = gp.tileM.mapTileNum[entityLeftCol][entityTopRow];</span>
+<span class="fc" id="L63">                tileNum2 = gp.tileM.mapTileNum[entityLeftCol][entityBottomRow];</span>
+<span class="pc bpc" id="L64" title="2 of 4 branches missed.">                if(gp.tileM.tile[tileNum1].collision == true || gp.tileM.tile[tileNum2].collision == true){</span>
+<span class="nc" id="L65">                    entity.collisionOn = true;</span>
+                }
+                break;
+            case &quot;right&quot;:
+<span class="fc" id="L69">                entityRightCol = (entityRightWorldX + entity.speed)/gp.tileSize;</span>
+<span class="fc" id="L70">                tileNum1 = gp.tileM.mapTileNum[entityRightCol][entityTopRow];</span>
+<span class="fc" id="L71">                tileNum2 = gp.tileM.mapTileNum[entityRightCol][entityBottomRow];</span>
+<span class="pc bpc" id="L72" title="2 of 4 branches missed.">                if(gp.tileM.tile[tileNum1].collision == true || gp.tileM.tile[tileNum2].collision == true){</span>
+<span class="nc" id="L73">                    entity.collisionOn = true;</span>
+                }
+                break;
+        }
+<span class="fc" id="L77">    }</span>
+
+
+    /**
+     * Checks for collisions between the specified entity and game objects, determining if the player is affected.
+     * @param entity The entity to check collisions for.
+     * @param player A boolean flag to indicate if the player is the entity being checked.
+     * @return Returns the index of the object collided with, or 999 if no collision occurred.
+     */
+    public int checkObject(Entity entity, boolean player) {
+<span class="fc" id="L87">        int index = 999;</span>
+
+<span class="fc bfc" id="L89" title="All 2 branches covered.">        for (int i = 0; i &lt; gp.obj.length; i++) {</span>
+<span class="fc bfc" id="L90" title="All 2 branches covered.">            if (gp.obj[i] != null) {</span>
+                //Get entity's solid area pos
+<span class="fc" id="L92">                entity.solidArea.x = entity.worldX + entity.solidArea.x;</span>
+<span class="fc" id="L93">                entity.solidArea.y = entity.worldY + entity.solidArea.y;</span>
+                //Get obj's solid area pos
+<span class="fc" id="L95">                gp.obj[i].solidArea.x = gp.obj[i].worldX + gp.obj[i].solidArea.x;</span>
+<span class="fc" id="L96">                gp.obj[i].solidArea.y = gp.obj[i].worldY + gp.obj[i].solidArea.y;</span>
+
+<span class="pc bpc" id="L98" title="1 of 5 branches missed.">                switch (entity.direction) {</span>
+                    case &quot;up&quot;: //print for test remove later
+<span class="fc" id="L100">                        entity.solidArea.y -= entity.speed;</span>
+<span class="pc bpc" id="L101" title="1 of 2 branches missed.">                        if (entity.solidArea.intersects(gp.obj[i].solidArea)) {</span>
+<span class="nc bnc" id="L102" title="All 2 branches missed.">                            if (gp.obj[i].collision == true) {</span>
+<span class="nc" id="L103">                                entity.collisionOn = true;</span>
+                            }
+<span class="nc bnc" id="L105" title="All 2 branches missed.">                            if (player == true) {</span>
+<span class="nc" id="L106">                                index = i;</span>
+                            }
+                        }
+                        //System.out.println(&quot;up collision&quot;);
+                        break;
+                    case &quot;down&quot;:
+<span class="fc" id="L112">                        entity.solidArea.y += entity.speed;</span>
+<span class="fc bfc" id="L113" title="All 2 branches covered.">                        if (entity.solidArea.intersects(gp.obj[i].solidArea)) {</span>
+<span class="pc bpc" id="L114" title="1 of 2 branches missed.">                            if (gp.obj[i].collision == true) {</span>
+<span class="nc" id="L115">                                entity.collisionOn = true;</span>
+                            }
+<span class="pc bpc" id="L117" title="1 of 2 branches missed.">                            if (player == true) {</span>
+<span class="fc" id="L118">                                index = i;</span>
+                            }
+                        }
+
+                        //System.out.println(&quot;down collision&quot;);
+                        break;
+                    case &quot;left&quot;:
+<span class="fc" id="L125">                        entity.solidArea.x -= entity.speed;</span>
+<span class="pc bpc" id="L126" title="1 of 2 branches missed.">                        if (entity.solidArea.intersects(gp.obj[i].solidArea)) {</span>
+
+<span class="nc bnc" id="L128" title="All 2 branches missed.">                            if (gp.obj[i].collision == true) {</span>
+<span class="nc" id="L129">                                entity.collisionOn = true;</span>
+                            }
+<span class="nc bnc" id="L131" title="All 2 branches missed.">                            if (player == true) {</span>
+<span class="nc" id="L132">                                index = i;</span>
+                            }
+                        }
+
+                        //System.out.println(&quot;left collision&quot;);
+                        break;
+                    case &quot;right&quot;:
+<span class="fc" id="L139">                        entity.solidArea.x += entity.speed;</span>
+<span class="pc bpc" id="L140" title="1 of 2 branches missed.">                        if (entity.solidArea.intersects(gp.obj[i].solidArea)) {</span>
+<span class="nc bnc" id="L141" title="All 2 branches missed.">                            if (gp.obj[i].collision == true) {</span>
+<span class="nc" id="L142">                                entity.collisionOn = true;</span>
+                            }
+<span class="nc bnc" id="L144" title="All 2 branches missed.">                            if (player == true) {</span>
+<span class="nc" id="L145">                                index = i;</span>
+                            }
+                            //System.out.println(&quot;right collision&quot;);
+                            break;
+                        }
+                }
+<span class="fc" id="L151">                entity.solidArea.x = entity.solidAreaDefaultX;</span>
+<span class="fc" id="L152">                entity.solidArea.y = entity.solidAreaDefaultY;</span>
+<span class="fc" id="L153">                gp.obj[i].solidArea.x = gp.obj[i].solidAreaDefaultX;</span>
+<span class="fc" id="L154">                gp.obj[i].solidArea.y = gp.obj[i].solidAreaDefaultY;</span>
+            }
+        }
+<span class="fc" id="L157">        return index;</span>
+    }
+
+    /**
+     * Checks for a collision in a specified next position (nextX, nextY) for the given entity.
+     * @param entity The entity to check future collision for.
+     * @param nextX The next x-coordinate the entity is attempting to move to.
+     * @param nextY The next y-coordinate the entity is attempting to move to.
+     * @return Returns true if a collision is detected in the next position.
+     */
+    public boolean checkCollision(Entity entity, int nextX, int nextY) {
+<span class="fc" id="L168">        boolean isCollisionDetected = false;</span>
+<span class="fc" id="L169">        int entityLeftCol = (nextX + entity.solidArea.x) / gp.tileSize;</span>
+<span class="fc" id="L170">        int entityRightCol = (nextX + entity.solidArea.x + entity.solidArea.width) / gp.tileSize;</span>
+<span class="fc" id="L171">        int entityTopRow = (nextY + entity.solidArea.y) / gp.tileSize;</span>
+<span class="fc" id="L172">        int entityBottomRow = (nextY + entity.solidArea.y + entity.solidArea.height) / gp.tileSize;</span>
+    
+<span class="pc bpc" id="L174" title="2 of 4 branches missed.">        if (isSolidTile(entityLeftCol, entityTopRow) || isSolidTile(entityRightCol, entityTopRow) ||</span>
+<span class="pc bpc" id="L175" title="2 of 4 branches missed.">            isSolidTile(entityLeftCol, entityBottomRow) || isSolidTile(entityRightCol, entityBottomRow)) {</span>
+<span class="nc" id="L176">            isCollisionDetected = true;</span>
+        } else {
+<span class="fc" id="L178">            isCollisionDetected = false;</span>
+        }
+<span class="fc" id="L180">        return isCollisionDetected;</span>
+    }
+    
+    private boolean isSolidTile(int col, int row) {
+<span class="fc" id="L184">        int tileNum = gp.tileM.mapTileNum[col][row];</span>
+<span class="fc" id="L185">        return gp.tileM.tile[tileNum].collision;</span>
+    }
+
+    /**
+     * Checks for a collision between a specified entity and any zombie in the provided array.
+     * @param entity The entity to check for collisions with zombies.
+     * @param target The array of zombies to check against the entity.
+     * @return Returns the index of the zombie collided with, or 999 if no collision occurred.
+     */
+    public int checkEntity(Entity entity, Zombie[] target) {
+<span class="fc" id="L195">      int index = 999;</span>
+
+<span class="fc bfc" id="L197" title="All 2 branches covered.">        for (int i = 0; i &lt; target.length; i++) {</span>
+<span class="pc bpc" id="L198" title="1 of 2 branches missed.">            if (target[i] != null) {</span>
+                //Get entiti's solid area pos
+<span class="fc" id="L200">                entity.solidArea.x = entity.worldX + entity.solidArea.x;</span>
+<span class="fc" id="L201">                entity.solidArea.y = entity.worldY + entity.solidArea.y;</span>
+                //Get obj's solid area pos
+<span class="fc" id="L203">                target[i].solidArea.x = target[i].worldX + target[i].solidArea.x;</span>
+<span class="fc" id="L204">                target[i].solidArea.y = target[i].worldY + target[i].solidArea.y;</span>
+
+<span class="pc bpc" id="L206" title="1 of 5 branches missed.">                switch (entity.direction) {</span>
+                    case &quot;up&quot;: //print for test remove later
+<span class="fc" id="L208">                        entity.solidArea.y -= entity.speed;</span>
+<span class="fc" id="L209">                        break;</span>
+                    case &quot;down&quot;:
+<span class="fc" id="L211">                        entity.solidArea.y += entity.speed;</span>
+<span class="fc" id="L212">                        break;</span>
+                    case &quot;left&quot;:
+<span class="fc" id="L214">                        entity.solidArea.x -= entity.speed;</span>
+<span class="fc" id="L215">                        break;</span>
+                    case &quot;right&quot;:
+<span class="fc" id="L217">                        entity.solidArea.x += entity.speed;</span>
+                            break;
+                }
+<span class="pc bpc" id="L220" title="1 of 2 branches missed.">                if (entity.solidArea.intersects(target[i].solidArea)) {</span>
+<span class="nc bnc" id="L221" title="All 2 branches missed.">                    if(target[i] != entity) {</span>
+<span class="nc" id="L222">                        entity.collisionOn = true;</span>
+<span class="nc" id="L223">                        index = i;</span>
+                    }
+                }
+<span class="fc" id="L226">                entity.solidArea.x = entity.solidAreaDefaultX;</span>
+<span class="fc" id="L227">                entity.solidArea.y = entity.solidAreaDefaultY;</span>
+<span class="fc" id="L228">                target[i].solidArea.x = target[i].solidAreaDefaultX;</span>
+<span class="fc" id="L229">                target[i].solidArea.y = target[i].solidAreaDefaultY;</span>
+            }
+        }
+<span class="fc" id="L232">        return index;</span>
+    }
+
+    public boolean checkPlayer(Entity entity, int nextX, int nextY) {
+        // Calculate the entity's next solid area position
+<span class="fc" id="L237">        Rectangle nextSolidArea = new Rectangle(nextX + entity.solidArea.x,</span>
+                                                nextY + entity.solidArea.y,
+                                                entity.solidArea.width,
+                                                entity.solidArea.height);
+    
+        // Get the player's solid area position
+<span class="fc" id="L243">        Rectangle playerSolidArea = new Rectangle(gp.player.worldX + gp.player.solidArea.x,</span>
+                                                  gp.player.worldY + gp.player.solidArea.y,
+                                                  gp.player.solidArea.width,
+                                                  gp.player.solidArea.height);
+    
+        // Check if the entity's next solid area intersects with the player's solid area
+<span class="fc" id="L249">        return nextSolidArea.intersects(playerSolidArea);</span>
+    }
+
+    /**
+     * Checks for collisions between a specified zombie and other zombies in the provided array.
+     * @param zombie The zombie to check for collisions with other zombies.
+     * @param target The array of zombies to check against the specified zombie.
+     */
+    public void checkEntity(Zombie zombie, Zombie[] target) {
+    //   int index = 999;
+
+<span class="fc bfc" id="L260" title="All 2 branches covered.">        for (int i = 0; i &lt; target.length; i++) {</span>
+<span class="pc bpc" id="L261" title="1 of 2 branches missed.">            if (target[i] != null) {</span>
+                //Get entiti's solid area pos
+<span class="fc" id="L263">                zombie.solidArea.x = zombie.worldX + zombie.solidArea.x;</span>
+<span class="fc" id="L264">                zombie.solidArea.y = zombie.worldY + zombie.solidArea.y;</span>
+                //Get obj's solid area pos
+<span class="fc" id="L266">                target[i].solidArea.x = target[i].worldX + target[i].solidArea.x;</span>
+<span class="fc" id="L267">                target[i].solidArea.y = target[i].worldY + target[i].solidArea.y;</span>
+
+<span class="pc bpc" id="L269" title="3 of 5 branches missed.">                switch (zombie.direction) {</span>
+                    case &quot;up&quot;: //print for test remove later
+<span class="nc" id="L271">                        zombie.solidArea.y -= zombie.speed;</span>
+<span class="nc" id="L272">                        break;</span>
+                    case &quot;down&quot;:
+<span class="fc" id="L274">                        zombie.solidArea.y += zombie.speed;</span>
+<span class="fc" id="L275">                        break;</span>
+                    case &quot;left&quot;:
+<span class="nc" id="L277">                        zombie.solidArea.x -= zombie.speed;</span>
+<span class="nc" id="L278">                        break;</span>
+                    case &quot;right&quot;:
+<span class="fc" id="L280">                        zombie.solidArea.x += zombie.speed;</span>
+                            break;
+                }
+<span class="fc bfc" id="L283" title="All 2 branches covered.">                if (zombie.solidArea.intersects(target[i].solidArea)) {</span>
+<span class="fc bfc" id="L284" title="All 2 branches covered.">                    if(target[i] != zombie) {</span>
+<span class="fc" id="L285">                        zombie.collisionOn = true;</span>
+                        //index = i;
+                    }
+                }
+<span class="fc" id="L289">                zombie.solidArea.x = zombie.solidAreaDefaultX;</span>
+<span class="fc" id="L290">                zombie.solidArea.y = zombie.solidAreaDefaultY;</span>
+<span class="fc" id="L291">                target[i].solidArea.x = target[i].solidAreaDefaultX;</span>
+<span class="fc" id="L292">                target[i].solidArea.y = target[i].solidAreaDefaultY;</span>
+            }
+        }
+        // return index;
+<span class="fc" id="L296">    }</span>
+    
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

@@ -1,1 +1,0 @@
-packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"com.group22"},{"l":"com.group22.entities"},{"l":"com.group22.objects"},{"l":"com.group22.tile"}];updateSearchResults();

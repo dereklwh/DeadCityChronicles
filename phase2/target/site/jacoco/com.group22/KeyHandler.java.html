@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>KeyHandler.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">phase2</a> &gt; <a href="index.source.html" class="el_package">com.group22</a> &gt; <span class="el_source">KeyHandler.java</span></div><h1>KeyHandler.java</h1><pre class="source lang-java linenums">package com.group22;
+
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+
+/**
+ * The KeyHandler class implements the KeyListener interface and handles all keyboard
+ * interactions for controlling the game state and player movement.
+ */
+public class KeyHandler implements KeyListener {
+
+    GamePanel gp;
+
+    public  boolean upPressed, downPressed, leftPressed, rightPressed, enterPressed;
+
+    /**
+     * Constructor for KeyHandler that initializes with a GamePanel instance.
+     * @param gp The GamePanel instance to which this KeyHandler belongs.
+     */
+<span class="fc" id="L20">    public KeyHandler(GamePanel gp){</span>
+<span class="fc" id="L21">        this.gp = gp;</span>
+        
+<span class="fc" id="L23">    }</span>
+    @Override
+    public void keyTyped(KeyEvent e){
+
+<span class="nc" id="L27">    }</span>
+    @Override
+    public void keyPressed(KeyEvent e) {
+<span class="fc" id="L30">        int code = e.getKeyCode();</span>
+
+<span class="fc bfc" id="L32" title="All 2 branches covered.">        if (gp.gameState == gp.titleState){</span>
+<span class="fc" id="L33">            titleState(code);</span>
+        }
+<span class="fc bfc" id="L35" title="All 2 branches covered.">        if (gp.gameState == gp.playState){</span>
+<span class="fc" id="L36">            playState(code);</span>
+        }
+
+<span class="fc bfc" id="L39" title="All 2 branches covered.">        else if (gp.gameState == gp.pauseState){</span>
+<span class="fc" id="L40">            pauseState(code);</span>
+        }
+
+<span class="fc bfc" id="L43" title="All 2 branches covered.">        else if (gp.gameState == gp.settingState){</span>
+<span class="fc" id="L44">            settingState(code);</span>
+        }
+<span class="fc bfc" id="L46" title="All 2 branches covered.">        else if (gp.gameState == gp.gameOverState){</span>
+<span class="fc" id="L47">            gameOverState(code);</span>
+        }
+<span class="fc bfc" id="L49" title="All 2 branches covered.">        else if(gp.gameState == gp.ruleState) {</span>
+<span class="fc" id="L50">        	ruleState(code);</span>
+        }
+<span class="pc bpc" id="L52" title="1 of 2 branches missed.">        else if(gp.gameState == gp.winState) {</span>
+<span class="nc" id="L53">        	winState(code);</span>
+        }
+<span class="fc" id="L55">    }</span>
+
+    /**
+     * Controls player movement and interactions during the play state.
+     * @param code The KeyCode associated with the key event.
+     */
+    public void playState(int code){
+<span class="pc bpc" id="L62" title="1 of 4 branches missed.">        if(code == KeyEvent.VK_W || code == KeyEvent.VK_UP){</span>
+<span class="fc" id="L63">            upPressed = true;</span>
+        }
+<span class="pc bpc" id="L65" title="1 of 4 branches missed.">        if(code == KeyEvent.VK_A || code == KeyEvent.VK_LEFT){</span>
+<span class="fc" id="L66">            leftPressed = true;</span>
+        }
+<span class="pc bpc" id="L68" title="1 of 4 branches missed.">        if(code == KeyEvent.VK_D || code == KeyEvent.VK_RIGHT){</span>
+<span class="fc" id="L69">            rightPressed = true;</span>
+        }
+<span class="pc bpc" id="L71" title="1 of 4 branches missed.">        if(code == KeyEvent.VK_S || code == KeyEvent.VK_DOWN){</span>
+<span class="fc" id="L72">            downPressed = true;</span>
+        }
+<span class="fc bfc" id="L74" title="All 2 branches covered.">        if(code == KeyEvent.VK_P){</span>
+<span class="fc" id="L75">            gp.gameState = gp.pauseState;</span>
+        }
+<span class="fc bfc" id="L77" title="All 2 branches covered.">        if(code == KeyEvent.VK_ESCAPE){</span>
+<span class="fc" id="L78">            gp.gameState = gp.settingState;</span>
+<span class="fc" id="L79">            gp.previousState = gp.playState;</span>
+        }
+<span class="fc" id="L81">    }</span>
+
+    public void winState(int code){
+        
+<span class="nc bnc" id="L85" title="All 2 branches missed.">        if(code == KeyEvent.VK_ENTER){</span>
+<span class="nc" id="L86">            gp.gameState = gp.titleState;</span>
+<span class="nc" id="L87">            gp.playMusic(0);</span>
+<span class="nc" id="L88">            gp.retry();</span>
+        }
+<span class="nc" id="L90">    }</span>
+
+    /**
+     * Controls settings and interactions during the setting state.
+     * @param code The KeyCode associated with the key event.
+     */
+    public void settingState(int code){
+<span class="fc bfc" id="L97" title="All 2 branches covered.">        if(code == KeyEvent.VK_ESCAPE){</span>
+<span class="fc" id="L98">            gp.gameState = gp.playState;</span>
+        }
+<span class="fc bfc" id="L100" title="All 2 branches covered.">        if (code == KeyEvent.VK_ENTER){</span>
+<span class="fc" id="L101">            enterPressed = true;</span>
+        }
+
+<span class="pc bpc" id="L104" title="1 of 2 branches missed.">        if (gp.ui != null) {</span>
+
+<span class="fc" id="L106">        int maxCommandNum =0;</span>
+<span class="pc bpc" id="L107" title="2 of 3 branches missed.">        switch(gp.ui.subState){</span>
+<span class="fc" id="L108">            case 0: maxCommandNum = 4; break;</span>
+<span class="nc" id="L109">            case 3: maxCommandNum = 1; break;</span>
+        
+        }
+         
+<span class="fc bfc" id="L113" title="All 2 branches covered.">        if (code == KeyEvent.VK_W){</span>
+<span class="fc" id="L114">            gp.ui.commandNum--;</span>
+<span class="fc" id="L115">            gp.playSE(5);</span>
+<span class="pc bpc" id="L116" title="1 of 2 branches missed.">            if(gp.ui.commandNum &lt;0){</span>
+<span class="nc" id="L117">                gp.ui.commandNum = maxCommandNum;</span>
+            }
+        }
+<span class="fc bfc" id="L120" title="All 2 branches covered.">        if (code == KeyEvent.VK_S){</span>
+<span class="fc" id="L121">            gp.ui.commandNum++;</span>
+<span class="fc" id="L122">            gp.playSE(5);</span>
+<span class="pc bpc" id="L123" title="1 of 2 branches missed.">            if(gp.ui.commandNum &gt; maxCommandNum){</span>
+<span class="nc" id="L124">                gp.ui.commandNum =0;</span>
+            }
+        }
+<span class="pc bpc" id="L127" title="1 of 2 branches missed.">        if (code == KeyEvent.VK_A){</span>
+<span class="nc bnc" id="L128" title="All 2 branches missed.">            if (gp.ui.subState ==0){</span>
+<span class="nc bnc" id="L129" title="All 4 branches missed.">                if(gp.ui.commandNum ==1 &amp;&amp; gp.music.volumeScale &gt; 0){</span>
+<span class="nc" id="L130">                    gp.music.volumeScale--;</span>
+<span class="nc" id="L131">                    gp.music.checkVolume();</span>
+<span class="nc" id="L132">                    gp.playSE(5);</span>
+
+                }
+            }
+        }
+<span class="pc bpc" id="L137" title="1 of 2 branches missed.">        if (code == KeyEvent.VK_D){</span>
+<span class="nc bnc" id="L138" title="All 2 branches missed.">            if (gp.ui.subState ==0){</span>
+<span class="nc bnc" id="L139" title="All 4 branches missed.">                if(gp.ui.commandNum ==1 &amp;&amp; gp.music.volumeScale &lt; 5){</span>
+<span class="nc" id="L140">                    gp.music.volumeScale++;</span>
+<span class="nc" id="L141">                    gp.music.checkVolume();</span>
+<span class="nc" id="L142">                    gp.playSE(5);</span>
+                }
+            }
+        }
+    }
+    
+<span class="fc" id="L148">    }</span>
+
+    /**
+     * Handles key events during the game's pause state, allowing the player to
+     * resume the game.
+     *
+     * @param code The KeyCode associated with the pressed key.
+     */
+    public void pauseState(int code){
+<span class="pc bpc" id="L157" title="1 of 2 branches missed.">        if(code == KeyEvent.VK_P){</span>
+<span class="fc" id="L158">            gp.gameState = gp.playState;</span>
+        }
+<span class="fc" id="L160">    }</span>
+    
+    /**
+     * Handles key events during the game's game over state, allowing the player to
+     * retry or return to the title screen.
+     *
+     * @param code The KeyCode associated with the pressed key.
+     */
+    public void gameOverState(int code){
+<span class="fc bfc" id="L169" title="All 2 branches covered.">        if(code == KeyEvent.VK_W){</span>
+<span class="fc" id="L170">            gp.ui.commandNum--;</span>
+<span class="pc bpc" id="L171" title="1 of 2 branches missed.">            if(gp.ui.commandNum &lt; 0){</span>
+<span class="nc" id="L172">                gp.ui.commandNum = 1;</span>
+            }
+<span class="fc" id="L174">            gp.playSE(5);</span>
+        }
+<span class="fc bfc" id="L176" title="All 2 branches covered.">        if(code == KeyEvent.VK_S){</span>
+<span class="fc" id="L177">            gp.ui.commandNum++;</span>
+<span class="pc bpc" id="L178" title="1 of 2 branches missed.">            if(gp.ui.commandNum &gt; 1){</span>
+<span class="nc" id="L179">                gp.ui.commandNum = 0;</span>
+            }
+<span class="fc" id="L181">            gp.playSE(5);</span>
+        }
+<span class="fc bfc" id="L183" title="All 2 branches covered.">        if(code == KeyEvent.VK_ENTER){</span>
+<span class="fc bfc" id="L184" title="All 2 branches covered.">            if(gp.ui.commandNum == 0){</span>
+<span class="fc" id="L185">                gp.gameState = gp.playState;</span>
+<span class="fc" id="L186">                gp.retry();</span>
+            }
+<span class="pc bpc" id="L188" title="1 of 2 branches missed.">            else if(gp.ui.commandNum == 1){</span>
+<span class="fc" id="L189">                gp.gameState = gp.titleState;</span>
+<span class="fc" id="L190">                gp.retry();</span>
+            }
+        }
+<span class="fc" id="L193">    }</span>
+    
+    /**
+     * Handles key events during the game's title state, allowing navigation through
+     * the game's main menu.
+     *
+     * @param code The KeyCode associated with the pressed key.
+     */
+    public void titleState(int code){
+<span class="fc bfc" id="L202" title="All 2 branches covered.">        if(code == KeyEvent.VK_W){</span>
+<span class="fc" id="L203">            gp.ui.commandNum--;</span>
+<span class="pc bpc" id="L204" title="1 of 2 branches missed.">            if(gp.ui.commandNum &lt; 0){</span>
+<span class="nc" id="L205">                gp.ui.commandNum = 3;</span>
+            }
+<span class="fc" id="L207">            gp.playSE(5);</span>
+        }
+<span class="fc bfc" id="L209" title="All 2 branches covered.">        if(code == KeyEvent.VK_S){</span>
+<span class="fc" id="L210">            gp.ui.commandNum++;</span>
+<span class="pc bpc" id="L211" title="1 of 2 branches missed.">            if(gp.ui.commandNum &gt; 3){</span>
+<span class="nc" id="L212">                gp.ui.commandNum = 0;</span>
+            }
+<span class="fc" id="L214">            gp.playSE(5);</span>
+        }
+<span class="fc bfc" id="L216" title="All 2 branches covered.">        if(code == KeyEvent.VK_ENTER){</span>
+<span class="fc bfc" id="L217" title="All 2 branches covered.">            if(gp.ui.commandNum == 0){</span>
+<span class="fc" id="L218">                gp.gameState = gp.playState;</span>
+
+            }
+<span class="fc bfc" id="L221" title="All 2 branches covered.">            else if(gp.ui.commandNum == 1){</span>
+<span class="fc" id="L222">                gp.gameState = gp.ruleState;</span>
+            }
+<span class="pc bpc" id="L224" title="1 of 2 branches missed.">             else if(gp.ui.commandNum == 2){</span>
+<span class="fc" id="L225">                gp.gameState = gp.settingState;</span>
+<span class="fc" id="L226">                gp.previousState = gp.titleState;</span>
+            }
+<span class="nc bnc" id="L228" title="All 2 branches missed.">             else if(gp.ui.commandNum == 3){</span>
+<span class="nc" id="L229">                System.exit(0);</span>
+            }
+        }
+<span class="fc" id="L232">    }</span>
+    
+    /**
+     * Handles key events during the game's rule state, providing information on
+     * game rules and controls.
+     *
+     * @param code The KeyCode associated with the pressed key.
+     */
+    public void ruleState(int code) {
+<span class="pc bpc" id="L241" title="1 of 4 branches missed.">    	if (code == KeyEvent.VK_W || code == KeyEvent.VK_UP) {</span>
+<span class="fc" id="L242">            gp.ui.commandNum--;</span>
+<span class="pc bpc" id="L243" title="1 of 2 branches missed.">            if (gp.ui.commandNum &lt; 0) {</span>
+<span class="fc" id="L244">                gp.ui.commandNum = 1; </span>
+            }
+<span class="fc" id="L246">            gp.playSE(5);</span>
+        }
+<span class="pc bpc" id="L248" title="1 of 4 branches missed.">        if (code == KeyEvent.VK_S || code == KeyEvent.VK_DOWN) {</span>
+<span class="fc" id="L249">            gp.ui.commandNum++;</span>
+<span class="pc bpc" id="L250" title="1 of 2 branches missed.">            if (gp.ui.commandNum &gt; 1) {</span>
+<span class="fc" id="L251">                gp.ui.commandNum = 0;</span>
+            }
+<span class="fc" id="L253">            gp.playSE(5);</span>
+        }
+<span class="fc bfc" id="L255" title="All 2 branches covered.">        if (code == KeyEvent.VK_ENTER) {</span>
+<span class="fc bfc" id="L256" title="All 2 branches covered.">            if (gp.ui.commandNum == 0) {</span>
+<span class="fc" id="L257">                gp.gameState = gp.titleState; </span>
+            }
+        }
+<span class="fc" id="L260">    }</span>
+
+
+    @Override
+    public void keyReleased(KeyEvent e) {
+<span class="fc" id="L265">        int code = e.getKeyCode();</span>
+<span class="pc bpc" id="L266" title="1 of 4 branches missed.">        if(code == KeyEvent.VK_W || code == KeyEvent.VK_UP){</span>
+<span class="fc" id="L267">            upPressed = false;</span>
+        }
+<span class="pc bpc" id="L269" title="1 of 4 branches missed.">        if(code == KeyEvent.VK_A || code == KeyEvent.VK_LEFT){</span>
+<span class="fc" id="L270">            leftPressed = false;</span>
+        }
+<span class="pc bpc" id="L272" title="1 of 4 branches missed.">        if(code == KeyEvent.VK_D || code == KeyEvent.VK_RIGHT){</span>
+<span class="fc" id="L273">            rightPressed = false;</span>
+        }
+<span class="pc bpc" id="L275" title="1 of 4 branches missed.">        if(code == KeyEvent.VK_S || code == KeyEvent.VK_DOWN){</span>
+<span class="fc" id="L276">            downPressed = false;</span>
+        }
+
+<span class="fc" id="L279">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>
