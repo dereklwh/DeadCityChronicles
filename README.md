@@ -36,9 +36,9 @@ java -cp .\target\phase2-1.0-SNAPSHOT.jar com.group22.Main
 mvn clean test
 ```
 ## Resources
-Java 2D Game Tutorial - [RyiSnow](https://www.youtube.com/@RyiSnow/featured)
-[Map sprite pack](https://ittaimanero.itch.io/zombie-apocalypse-tileset)
-[Syringe sprite](https://www.pixilart.com/art/syringe-02aaad1d2f3eba1)
-[Heart sprite](https://unreached-lands.itch.io/lifebar-pixelart-sprites-16x16)
-[Key sprie](https://dustdfg.itch.io/pixel-art-keys)
+Java 2D Game Tutorial - [RyiSnow](https://www.youtube.com/@RyiSnow/featured)<br>
+[Map sprite pack](https://ittaimanero.itch.io/zombie-apocalypse-tileset)<br>
+[Syringe sprite](https://www.pixilart.com/art/syringe-02aaad1d2f3eba1)<br>
+[Heart sprite](https://unreached-lands.itch.io/lifebar-pixelart-sprites-16x16)<br>
+[Key sprite](https://dustdfg.itch.io/pixel-art-keys)
 
