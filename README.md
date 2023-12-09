@@ -33,7 +33,7 @@ java -cp .\target\phase2-1.0-SNAPSHOT.jar com.group22.Main
 ```
 mvn clean test
 ```
-### Generate Jacoco test result
+### Generating Jacoco test result
 ```
 mvn jacoco:prepare-agent test install jacoco:report
 ```
