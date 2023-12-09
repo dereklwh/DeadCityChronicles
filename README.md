@@ -52,5 +52,6 @@ Java 2D Game Tutorial - [RyiSnow](https://www.youtube.com/@RyiSnow/featured)<br>
 [Syringe sprite](https://www.pixilart.com/art/syringe-02aaad1d2f3eba1)<br>
 [Heart sprite](https://unreached-lands.itch.io/lifebar-pixelart-sprites-16x16)<br>
 [Key sprite](https://dustdfg.itch.io/pixel-art-keys)<br>
-[Sound effect](https://pixabay.com/)
+[Sound effect](https://pixabay.com/)<br>
+Background music - The Walking Dead TV show
 
