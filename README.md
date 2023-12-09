@@ -11,6 +11,9 @@ In "Dead City Chronicles," the world has changed. What was once a bustling city 
 Once you have collected all the keys, you must retreat back to this house in order to win the game.
 ![house](house.png)
 
+## Game trailer
+Our game [video demo](https://www.youtube.com/watch?v=lvh7uye36d4)
+
 
 ## Instructions
 First, navigate to the root directory: "phase2". In the terminal, type the following commands to build, run, and test the game
