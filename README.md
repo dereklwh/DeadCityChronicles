@@ -29,12 +29,15 @@ mvn clean install
 ```
 java -cp .\target\phase2-1.0-SNAPSHOT.jar com.group22.Main
 ```
-
-
 ### Testing the Game
 ```
 mvn clean test
 ```
+### Javadocs
+``` 
+mvn javadoc:javadoc
+```
+
 ## Resources
 Java 2D Game Tutorial - [RyiSnow](https://www.youtube.com/@RyiSnow/featured)<br>
 [Map sprite pack](https://ittaimanero.itch.io/zombie-apocalypse-tileset)<br>
