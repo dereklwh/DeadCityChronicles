@@ -47,8 +47,10 @@ Javadocs are located in `phase2\target\site\apidocs`
 
 ## Resources
 Java 2D Game Tutorial - [RyiSnow](https://www.youtube.com/@RyiSnow/featured)<br>
+[Character design](https://0x72.itch.io/pixeldudesmaker)
 [Map sprite pack](https://ittaimanero.itch.io/zombie-apocalypse-tileset)<br>
 [Syringe sprite](https://www.pixilart.com/art/syringe-02aaad1d2f3eba1)<br>
 [Heart sprite](https://unreached-lands.itch.io/lifebar-pixelart-sprites-16x16)<br>
-[Key sprite](https://dustdfg.itch.io/pixel-art-keys)
+[Key sprite](https://dustdfg.itch.io/pixel-art-keys)<br>
+[Sound effect](https://pixabay.com/)
 
