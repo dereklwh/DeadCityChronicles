@@ -33,10 +33,17 @@ java -cp .\target\phase2-1.0-SNAPSHOT.jar com.group22.Main
 ```
 mvn clean test
 ```
+### Generate Jacoco test result
+```
+mvn jacoco:prepare-agent test install jacoco:report
+```
+The test result is located in `phase2\target\site\jacoco\index.html`
+
 ### Javadocs
 ``` 
 mvn javadoc:javadoc
 ```
+Javadocs are located in `phase2\target\site\apidocs`
 
 ## Resources
 Java 2D Game Tutorial - [RyiSnow](https://www.youtube.com/@RyiSnow/featured)<br>
